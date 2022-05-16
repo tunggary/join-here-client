@@ -1,0 +1,55 @@
+:root {
+  /*========== Colors ==========*/
+  --main: #135f9d;
+  --sub: #d4e3f8;
+  --contour: #e8e8e8;
+  --gray-hover: #aeaeae;
+
+  /*========== Font ==========*/
+  font-family: "Roboto", sans-serif;
+  --display: 3.5rem;
+  --h1: 2.5rem;
+  --h2: 2.25rem;
+  --h3: 2rem;
+  --h4: 1.75rem;
+  --h5: 1.5rem;
+  --h6: 1.25rem;
+  --title: 1.125rem;
+  --subtitle: 1rem;
+  --body: 0.875rem;
+  --description: 0.75rem;
+  --caption: 0.6875rem;
+
+  /*========== Font Weights ==========*/
+  --regular: 400;
+  --bold: 700;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  color: #101a24;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button,
+input,
+select,
+textarea {
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+ul,
+ol,
+li {
+  padding-left: 0;
+  list-style: none;
+}
