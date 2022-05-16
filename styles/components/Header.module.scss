@@ -3,14 +3,15 @@
   width: 100%;
   height: 15.1rem;
   border-bottom: 3px solid var(--contour);
-  position: relative;
 
   .infoContainer {
-    width: 100%;
+    width: 90rem;
     height: 70%;
     padding: 0 7.18rem;
+    margin: 0 auto;
     display: flex;
     align-items: center;
+    position: relative;
 
     .logo {
       font-family: "Pacifico", cursive;
@@ -28,7 +29,7 @@
         border: 2px solid #aeaeae;
         font-size: 20px;
         padding: 1rem;
-        transition: all ease 0.2s;
+        transition: all ease 0.15s;
 
         &:focus {
           border-color: var(--main);
@@ -39,14 +40,14 @@
     .information {
       display: flex;
       justify-content: space-between;
-      width: 10rem;
       font-size: 23px;
       position: absolute;
       right: 10rem;
       cursor: pointer;
 
       div {
-        transition: all ease 0.2s;
+        margin-left: 1.5rem;
+        transition: all ease 0.15s;
         &:hover {
           color: var(--gray-hover);
         }
@@ -55,10 +56,12 @@
   }
 
   .navContainer {
+    width: 90rem;
     font-size: 25px;
     font-weight: 700;
     height: 30%;
     padding: 0 10rem;
+    margin: 0 auto;
     ul {
       width: 100%;
       height: 100%;
