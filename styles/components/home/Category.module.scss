@@ -1,16 +1,13 @@
 .container {
-  margin-top: 5rem;
-  width: 100%;
   min-width: 90rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
 
   .infoContainer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     width: 75rem;
+    margin: 5rem auto 1rem auto;
 
     .title {
       font-size: 30px;
@@ -35,11 +32,34 @@
     margin-top: 1rem;
     border: 3px solid var(--main);
     border-radius: 1rem;
+    margin: 0 auto;
 
-    .swiperSlide {
-      width: 9.375rem;
-      height: 9.375rem;
-      background-color: aqua;
+    .slides {
+      width: 70rem;
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+
+      .slideContent {
+        div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          div {
+            font-size: 30px;
+            font-weight: 700;
+          }
+        }
+      }
+
+      .slickButton {
+        cursor: pointer;
+        margin-top: 0.5rem;
+      }
     }
   }
 }

@@ -18,8 +18,12 @@ export default function Header() {
       </div>
       <nav className={styles.navContainer}>
         <ul>
-          <li className={styles.navList}>홈</li>
-          <li className={styles.navList}>동아리 목록</li>
+          <li className={styles.navList}>
+            <Link href="/">홈</Link>
+          </li>
+          <li className={styles.navList}>
+            <Link href="/clublist?tab=all">동아리 목록</Link>
+          </li>
           <li className={styles.navList}>동아리 등록</li>
           <li className={styles.navList}>동아리 관리</li>
           <li className={styles.navList}>마이페이지</li>

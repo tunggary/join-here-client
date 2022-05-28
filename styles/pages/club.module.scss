@@ -1,0 +1,218 @@
+.container {
+  min-width: 90rem;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 4rem;
+  background-color: #e8e8e8;
+}
+
+.topContainer {
+  width: 100%;
+  min-height: 21rem;
+  height: max-content;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+
+  .title {
+    font-size: var(--display);
+    margin-top: 4rem;
+  }
+
+  .info {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.7rem;
+
+    .category {
+      width: 2.5rem;
+      height: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: var(--description);
+      line-height: var(--description);
+      border-radius: 5px;
+      color: #6a6a6a;
+      background-color: #e8e8e8;
+    }
+    .location {
+      width: max-content;
+      height: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--description);
+      line-height: var(--description);
+    }
+  }
+
+  .desc {
+    font-size: var(--h5);
+    line-height: var(--h5);
+    margin-top: 1.2rem;
+    width: 45rem;
+    line-height: 1.8rem;
+  }
+
+  .view {
+    margin-top: 0.7rem;
+    display: flex;
+    gap: 0.6rem;
+    span {
+      font-size: var(--tiny);
+      color: #6a6a68;
+    }
+  }
+
+  .applyButton {
+    width: 11rem;
+    height: 3rem;
+    font-size: var(--title);
+    font-weight: 700;
+    color: white;
+    background-color: var(--main);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 2rem;
+
+    &:hover {
+      background-color: var(--sub);
+    }
+  }
+}
+
+.tabListContainer {
+  width: 100%;
+  height: 5.725rem;
+  display: flex;
+  align-items: flex-end;
+  background-color: white;
+
+  .tabList {
+    background-color: white;
+    width: 16rem;
+    margin: 0 auto;
+    font-size: 25px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      height: 2.5rem;
+      cursor: pointer;
+    }
+    .active {
+      color: var(--main);
+      border-bottom: 3px solid var(--main);
+    }
+  }
+}
+
+.tabPannelContainer {
+  width: 64rem;
+  margin: 2.5rem auto 0 auto;
+
+  .introContainer {
+    width: 100%;
+    height: max-content;
+    background-color: white;
+    padding: 2rem 0 4rem 0;
+
+    .poster {
+      width: 55.625rem;
+      height: 48.75rem;
+      margin: auto;
+      margin-top: 2rem;
+    }
+
+    .description {
+      width: 55.625rem;
+      font-size: var(--h6);
+      font-weight: 500;
+      margin: auto;
+      margin-top: 4rem;
+    }
+  }
+
+  .reviewContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .reviewAssignButton {
+      width: 14rem;
+      height: 3rem;
+      font-size: var(--title);
+      font-weight: 700;
+      color: white;
+      background-color: var(--main);
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-top: 2rem;
+
+      &:hover {
+        background-color: var(--sub);
+      }
+    }
+
+    .reviewList {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .review {
+      width: 100%;
+      min-height: 7rem;
+      background-color: white;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.6rem 1.3rem;
+
+      .info {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+
+        .name {
+          font-size: var(--subtitle);
+          font-weight: 500;
+        }
+
+        .date {
+          font-size: var(--caption);
+          font-weight: 700;
+          color: #6a6a68;
+        }
+      }
+      .text {
+        font-size: var(--h6);
+        font-weight: 500;
+      }
+
+      .apply {
+        margin: 1.4rem 0 0 1.8rem;
+        position: relative;
+        svg {
+          position: absolute;
+          left: -1.8rem;
+          top: -0.8rem;
+        }
+        .name {
+          font-size: var(--subtitle);
+          color: var(--main);
+        }
+      }
+    }
+  }
+}

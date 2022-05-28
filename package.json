@@ -9,14 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-markdown": "^8.0.3",
     "react-slick": "^0.29.0",
+    "react-tabs": "^5.1.0",
+    "remark-gfm": "^3.0.1",
     "sass": "^1.51.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
+    "@svgr/webpack": "^6.2.1",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6"
   }
