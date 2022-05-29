@@ -7,15 +7,20 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Apply from "../../public/clublist/apply.svg";
+import Scrap from "../../public/clublist/scrap.svg";
+import NonScrap from "../../public/clublist/nonscrap.svg";
+
 import axios from "axios";
 import { categoryList, dictClub, dictArea } from "../../utils/util";
 
 export default function Club({ clubData }) {
-  const { area, category, introduction, logo, name, scrap, view } = clubData[0];
+  const { area, category, introduction, logo, name, scrap: scrapCount, view: viewCount } = clubData[0];
 
   const [index, setIndex] = useState(0);
 
-  const categoryList = ["소개", "후기", "Q&A"];
+  const [scrap, setScrap] = useState(false);
+
+  const categoryList = ["모집 공고", "후기", "Q&A"];
 
   const text = `토론모임 🏛 아고라, 서울🏛 부원 모집
   \n\n&nbsp;\n\n
@@ -52,7 +57,10 @@ export default function Club({ clubData }) {
     <div className={styles.container}>
       <Header />
       <div className={styles.topContainer}>
-        <div className={styles.title}>{name}</div>
+        <div className={styles.title}>
+          {name}
+          {scrap ? <Scrap className={`${styles.scrap} ${styles.bounce}`} onClick={() => setScrap((prev) => !prev)} /> : <NonScrap className={styles.scrap} onClick={() => setScrap((prev) => !prev)} />}
+        </div>
         <div className={styles.info}>
           <div className={styles.category}>{dictClub[category][0]}</div>
           <div className={styles.location}>
@@ -61,10 +69,10 @@ export default function Club({ clubData }) {
           </div>
         </div>
         <div className={styles.view}>
-          <span>조회수 {view}</span>
-          <span>찜한수 {scrap}</span>
+          <span>조회수 {viewCount}</span>
+          <span>찜한수 {scrapCount}</span>
         </div>
-        <div className={styles.desc}>{introduction}</div>
+        <div className={`${styles.desc} ${introduction.length < 60 ? styles.center : undefined}`}>{introduction}</div>
         <input type="button" value="지원하기" className={styles.applyButton} />
       </div>
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
