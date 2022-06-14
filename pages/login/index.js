@@ -26,7 +26,8 @@ export default function Login({ loginInfo }) {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     if (email === "") {
       alert("이메일을 입력해주세요.");
       return;
@@ -52,16 +53,26 @@ export default function Login({ loginInfo }) {
       });
     if (error === "not_matching") {
       alert("email혹은 비밀번호를 확인해주세요.");
+      setData({
+        email: "",
+        password: "",
+      });
       return;
     }
     back();
+  };
+
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      onSubmit(e);
+    }
   };
 
   return (
     <div className={styles.container}>
       <Header loginInfo={loginInfo} />
       <div className={styles.title}>로그인</div>
-      <section className={styles.loginContainer}>
+      <form className={styles.loginContainer} onSubmit={onSubmit} onKeyDown={onKeyPress}>
         <div className={styles.input}>
           <label htmlFor="email">이메일</label>
           <input type="email" autoComplete="off" id="email" placeholder="이메일을 입력해주세요" value={email} onChange={onChange} />
@@ -70,13 +81,11 @@ export default function Login({ loginInfo }) {
           <label htmlFor="password">비밀번호</label>
           <input type="password" id="password" placeholder="비밀번호를 입력해주세요" value={password} onChange={onChange} />
         </div>
-        <button className={styles.loginButton} onClick={onSubmit}>
-          로그인
-        </button>
+        <button className={styles.loginButton}>로그인</button>
         <div className={styles.signup}>
           <Link href="/login/signup">아직 계정이 없으신가요?</Link>
         </div>
-      </section>
+      </form>
     </div>
   );
 }
