@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { categoryList, dictClub, dictArea } from "../../utils/util";
 
-export default function Home({ data }) {
+export default function Home({ data, loginInfo }) {
   const {
     query: { tab },
     push,
@@ -24,7 +24,7 @@ export default function Home({ data }) {
         <Link href={`clublist/${club.id}`} key={club.id}>
           <div className={styles.clubContainer}>
             <div className={styles.poster}>
-              <Image src="/clublist/default.png" alt="동아리 사진" width={115} height={163} />
+              <Image src={club.logo || "/clublist/default.png"} alt="동아리 사진" width={115} height={163} />
             </div>
             <div className={styles.clubInfo}>
               <div className={styles.title}>{club.name}</div>
@@ -46,7 +46,7 @@ export default function Home({ data }) {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header loginInfo={loginInfo} />
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
         <div className={styles.tabListContainer}>
           <TabList className={styles.tabList}>

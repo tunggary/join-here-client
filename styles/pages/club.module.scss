@@ -40,7 +40,7 @@
     30% {
       transform: translateY(-100%);
     }
-    60% {
+    50% {
       transform: translateY(0%);
     }
     80% {
@@ -82,6 +82,7 @@
   .desc {
     font-size: var(--h5);
     line-height: var(--h5);
+    font-weight: 500;
     margin-top: 1.2rem;
     width: 45rem;
     line-height: 1.8rem;
@@ -162,6 +163,9 @@
       height: 48.75rem;
       margin: auto;
       margin-top: 2rem;
+      img {
+        object-fit: contain;
+      }
     }
 
     .description {

@@ -13,7 +13,7 @@ import NonScrap from "../../public/clublist/nonscrap.svg";
 import axios from "axios";
 import { categoryList, dictClub, dictArea } from "../../utils/util";
 
-export default function Club({ clubData }) {
+export default function Club({ clubData, loginInfo }) {
   const { area, category, introduction, logo, name, scrap: scrapCount, view: viewCount } = clubData[0];
 
   const [index, setIndex] = useState(0);
@@ -55,7 +55,7 @@ export default function Club({ clubData }) {
   `;
   return (
     <div className={styles.container}>
-      <Header />
+      <Header loginInfo={loginInfo} />
       <div className={styles.topContainer}>
         <div className={styles.title}>
           {name}
@@ -89,7 +89,7 @@ export default function Club({ clubData }) {
           <TabPanel>
             <div className={styles.introContainer}>
               <div className={styles.poster}>
-                <Image src="/clublist/dummy.png" alt="포스터" width={890} height={780} quality={100} />
+                <Image src={logo || "/clublist/dummy.png"} alt="포스터" width={890} height={780} quality={100} />
               </div>
               <ReactMarkdown remarkPlugins={[remarkGfm]} className={styles.description}>
                 {text}

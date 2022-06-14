@@ -1,7 +1,8 @@
 :root {
   /*========== Colors ==========*/
   --main: #135f9d;
-  --sub: #d4e3f8;
+  --sub: #6699cc;
+  --sub-light: #d4e3f8;
   --contour: #e8e8e8;
   --gray-hover: #aeaeae;
 
@@ -30,6 +31,12 @@
   margin: 0;
   box-sizing: border-box;
   color: #101a24;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 a {

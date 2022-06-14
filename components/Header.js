@@ -1,7 +1,9 @@
 import Link from "next/link";
 import styles from "../styles/components/Header.module.scss";
 
-export default function Header() {
+export default function Header({ loginInfo }) {
+  const { isLoggedIn, userName } = loginInfo;
+
   return (
     <header className={styles.container}>
       <div className={styles.infoContainer}>
@@ -12,8 +14,20 @@ export default function Header() {
           <input type="text" placeholder="어떤 동아리를 검색할까요?" />
         </div>
         <div className={styles.information}>
-          <div>로그인</div>
-          <div>회원가입</div>
+          {isLoggedIn ? (
+            <div>
+              <span>{userName}</span>님
+            </div>
+          ) : (
+            <>
+              <Link href="/login">
+                <div>로그인</div>
+              </Link>
+              <Link href="/login/signup">
+                <div>회원가입</div>
+              </Link>
+            </>
+          )}
         </div>
       </div>
       <nav className={styles.navContainer}>

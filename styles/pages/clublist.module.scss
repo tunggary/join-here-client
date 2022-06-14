@@ -49,8 +49,7 @@
 
 .clubContainer {
   width: 28.8rem;
-  min-height: 12rem;
-  height: max-content;
+  height: 14rem;
   background-color: white;
   border-radius: 0.5rem;
   display: flex;
@@ -80,15 +79,18 @@
 
   .clubInfo {
     width: 18rem;
-    min-height: 9.4rem;
+    height: 9.4rem;
     height: max-content;
     font-weight: 700;
     position: relative;
 
     .title {
-      font-size: var(--h6);
+      font-size: var(--title);
       margin-bottom: 0.6rem;
-      max-width: 86%;
+      width: 16rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .category {
       width: 2.5rem;
@@ -116,9 +118,16 @@
 
     .desc {
       font-size: var(--description);
-      line-height: var(--description);
       margin-bottom: 1.5rem;
-      line-height: 0.9rem;
+      line-height: 1rem;
+      width: 18rem;
+      height: 3rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: wrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; //원하는 라인수
+      -webkit-box-orient: vertical;
     }
 
     .view {

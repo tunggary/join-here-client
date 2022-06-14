@@ -49,6 +49,11 @@
       div {
         margin-left: 1.5rem;
         transition: all ease 0.15s;
+
+        span {
+          font-weight: 600;
+          margin-right: 0.2rem;
+        }
         &:hover {
           color: var(--gray-hover);
         }
