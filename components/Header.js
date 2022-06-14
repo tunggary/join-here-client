@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/components/Header.module.scss";
 
@@ -6,6 +7,11 @@ export default function Header({ loginInfo }) {
 
   return (
     <header className={styles.container}>
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+      </Head>
       <div className={styles.infoContainer}>
         <div className={styles.logo}>
           <Link href="/">join here</Link>
