@@ -31,7 +31,7 @@ export default function Category() {
     <section className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.title}>원하는 카테고리를 둘러보세요!</div>
-        <div className={styles.subtitle}>전체 카테고리 보기</div>
+        {/* <div className={styles.subtitle}>전체 카테고리 보기</div> */}
       </div>
       <div className={styles.categoryContainer}>
         <Slider {...settings} className={styles.slides}>
