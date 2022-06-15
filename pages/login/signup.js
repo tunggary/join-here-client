@@ -136,7 +136,7 @@ export default function Signup({ loginInfo }) {
           <input type="number" id="phone" placeholder="핸드폰번호를 입력해주세요" value={phone} onChange={onChange} />
         </div>
         <button className={styles.signupButton} onClick={onSubmit}>
-          로그인
+          회원가입
         </button>
       </section>
     </div>
