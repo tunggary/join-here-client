@@ -10,6 +10,7 @@ export const engRegex = /[a-zA-Z]/g;
 //숫자
 export const numRegex = /[0-9]/g;
 
+//d
 //특수문자
 export const specRegex = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 
