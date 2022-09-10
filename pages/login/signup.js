@@ -99,6 +99,7 @@ export default function Signup({ loginInfo }) {
 
   useEffect(() => {
     document.addEventListener("wheel", function (event) {
+      console.log(document.activeElement.type);
       if (document.activeElement.type === "number") {
         document.activeElement.blur();
       }
