@@ -11,11 +11,11 @@ export default function Login({ loginInfo }) {
   const { back } = useRouter();
 
   const [data, setData] = useState({
-    email: "",
+    loginId: "",
     password: "",
   });
 
-  const { email, password } = data;
+  const { loginId, password } = data;
 
   const onChange = (e) => {
     const { value, id } = e.target;
@@ -28,8 +28,8 @@ export default function Login({ loginInfo }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (email === "") {
-      alert("이메일을 입력해주세요.");
+    if (loginId === "") {
+      alert("ID을 입력해주세요.");
       return;
     }
     if (password === "") {
@@ -40,26 +40,35 @@ export default function Login({ loginInfo }) {
   };
 
   const login = async () => {
-    const {
-      data: { error },
-    } = await axios
-      .post("/api/login", {
-        email,
+    const data = await axios
+      .post("http://3.36.36.87:8080/members/login", {
+        id: loginId,
         password,
       })
-      .catch(() => {
-        alert("로그인 과정에서 오류가 발생했습니다. 다시 시도해주세요.");
-        return;
+      .catch((err) => {
+        console.log(err.message);
       });
-    if (error === "not_matching") {
-      alert("email혹은 비밀번호를 확인해주세요.");
-      setData({
-        email: "",
-        password: "",
-      });
-      return;
-    }
-    back();
+    console.log(data);
+    // const {
+    //   data: { error },
+    // } = await axios
+    //   .post("/api/login", {
+    //     loginId,
+    //     password,
+    //   })
+    //   .catch(() => {
+    //     alert("로그인 과정에서 오류가 발생했습니다. 다시 시도해주세요.");
+    //     return;
+    //   });
+    // if (error === "not_matching") {
+    //   alert("loginId혹은 비밀번호를 확인해주세요.");
+    //   setData({
+    //     loginId: "",
+    //     password: "",
+    //   });
+    //   return;
+    // }
+    // back();
   };
 
   const onKeyPress = (e) => {
@@ -74,8 +83,8 @@ export default function Login({ loginInfo }) {
       <div className={styles.title}>로그인</div>
       <form className={styles.loginContainer} onSubmit={onSubmit} onKeyDown={onKeyPress}>
         <div className={styles.input}>
-          <label htmlFor="email">이메일</label>
-          <input type="email" autoComplete="off" id="email" placeholder="이메일을 입력해주세요" value={email} onChange={onChange} />
+          <label htmlFor="loginId">이메일</label>
+          <input type="text" autoComplete="off" id="loginId" placeholder="이메일을 입력해주세요" value={loginId} onChange={onChange} />
         </div>
         <div className={styles.input}>
           <label htmlFor="password">비밀번호</label>
