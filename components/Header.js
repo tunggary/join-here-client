@@ -26,12 +26,12 @@ export default function Header({ loginInfo }) {
             </div>
           ) : (
             <>
-              <Link href="/login">
+              {/* <Link href="/login">
                 <div>로그인</div>
               </Link>
               <Link href="/login/signup">
                 <div>회원가입</div>
-              </Link>
+              </Link> */}
             </>
           )}
         </div>
