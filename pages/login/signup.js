@@ -1,7 +1,6 @@
 import styles from "../../styles/pages/signup.module.scss";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
-import { emailRegex } from "../../utils/regex";
 import { useRouter } from "next/router";
 import axios from "axios";
 import cookies from "next-cookies";
@@ -11,7 +10,7 @@ export default function Signup({ loginInfo }) {
   const { push } = useRouter();
 
   const [data, setData] = useState({
-    email: "",
+    loginId: "",
     name: "",
     password: "",
     confirm: "",
@@ -23,7 +22,7 @@ export default function Signup({ loginInfo }) {
     password: false,
   });
 
-  const { email, name, password, confirm, birth, phone } = data;
+  const { loginId, name, password, confirm, birth, phone } = data;
 
   const onChange = (e) => {
     const { value, id } = e.target;
@@ -52,8 +51,8 @@ export default function Signup({ loginInfo }) {
   };
 
   const onSubmit = () => {
-    if (!emailRegex.test(email)) {
-      alert("올바른 형식의 이메일을 입력해주세요.");
+    if (loginId.length < 6 || loginId.length > 18) {
+      alert("id는 6~18 자리로 입력해주세요");
       return;
     }
     if (name === "") {
@@ -81,11 +80,13 @@ export default function Signup({ loginInfo }) {
 
   const signup = async () => {
     const res = await axios.post(
-      "http://13.125.66.90:3000/auth/signup",
+      "http://3.36.36.87:8080/members",
       {
-        member_id: email,
-        password,
+        id: loginId,
         name,
+        password,
+        birthday: `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`,
+        phone,
       },
       {
         headers: {
@@ -93,12 +94,14 @@ export default function Signup({ loginInfo }) {
         },
       }
     );
+    console.log(res);
     alert("회원가입이 성공적으로 되었습니다.");
     push("/login");
   };
 
   useEffect(() => {
     document.addEventListener("wheel", function (event) {
+      console.log(document.activeElement.type);
       if (document.activeElement.type === "number") {
         document.activeElement.blur();
       }
@@ -111,8 +114,8 @@ export default function Signup({ loginInfo }) {
       <div className={styles.title}>회원가입</div>
       <section className={styles.signupContainer}>
         <div className={styles.input}>
-          <label htmlFor="email">이메일</label>
-          <input type="email" autoComplete="off" id="email" placeholder="이메일을 입력해주세요" value={email} onChange={onChange} />
+          <label htmlFor="loginId">ID</label>
+          <input type="text" autoComplete="off" id="loginId" placeholder="이메일을 입력해주세요" value={loginId} onChange={onChange} />
         </div>
         <div className={styles.input}>
           <label htmlFor="name">이름</label>

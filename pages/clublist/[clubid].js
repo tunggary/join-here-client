@@ -59,7 +59,11 @@ export default function Club({ clubData, loginInfo }) {
       <div className={styles.topContainer}>
         <div className={styles.title}>
           {name}
-          {scrap ? <Scrap className={`${styles.scrap} ${styles.bounce}`} onClick={() => setScrap((prev) => !prev)} /> : <NonScrap className={styles.scrap} onClick={() => setScrap((prev) => !prev)} />}
+          {!loginInfo.isLoggedIn ? null : scrap ? (
+            <Scrap className={`${styles.scrap} ${styles.bounce}`} onClick={() => setScrap((prev) => !prev)} />
+          ) : (
+            <NonScrap className={styles.scrap} onClick={() => setScrap((prev) => !prev)} />
+          )}
         </div>
         <div className={styles.info}>
           <div className={styles.category}>{dictClub[category][0]}</div>

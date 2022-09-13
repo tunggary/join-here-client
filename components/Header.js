@@ -26,12 +26,12 @@ export default function Header({ loginInfo }) {
             </div>
           ) : (
             <>
-              <Link href="/login">
+              {/* <Link href="/login">
                 <div>로그인</div>
               </Link>
               <Link href="/login/signup">
                 <div>회원가입</div>
-              </Link>
+              </Link> */}
             </>
           )}
         </div>
@@ -44,7 +44,9 @@ export default function Header({ loginInfo }) {
           <li className={styles.navList}>
             <Link href="/clublist?tab=all">동아리 목록</Link>
           </li>
-          <li className={styles.navList}>동아리 등록</li>
+          <li className={styles.navList}>
+            <Link href="/register">동아리 등록</Link>
+          </li>
           <li className={styles.navList}>동아리 관리</li>
           <li className={styles.navList}>마이페이지</li>
         </ul>
