@@ -37,13 +37,12 @@ export default function Home({ data, loginInfo }) {
               <div className={styles.view}>
                 <span>조회수 {club.view}</span> <span>찜한수 {club.scrap}</span>
               </div>
-              <div className={styles.dDay}>D-7</div>
+              <div className={styles.dDay}>{club.endDate ? Math.floor((new Date(club.endDate) - new Date()) / (1000 * 60 * 60 * 24)) : null}</div>
             </div>
           </div>
         </Link>
       ));
   };
-
   return (
     <div className={styles.container}>
       <Header loginInfo={loginInfo} />
@@ -79,7 +78,7 @@ export default function Home({ data, loginInfo }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const { data } = await axios.get("https://tunggary.github.io/joinhere-json/data.json");
+  const { data } = await axios.get("http://3.36.36.87:8080/clubs");
   return {
     props: {
       data,
