@@ -36,24 +36,24 @@ export default function Register({ loginInfo }) {
       });
     }
   };
-
   const onSubmit = async () => {
+    console.log({
+      id: loginInfo.userName,
+      name: clubName,
+      introduction: clubDesc,
+      category: clubCategory,
+      area: clubLocation,
+      image: "",
+    });
     const data = await axios
-      .post(
-        "http://3.36.36.87:8080/clubs",
-        {
-          name: clubName,
-          introduction: clubDesc,
-          category: clubCategory,
-          area: clubLocation,
-          image: "",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("http://3.36.36.87:8080/clubs", {
+        id: loginInfo.userName,
+        name: clubName,
+        introduction: clubDesc,
+        category: clubCategory,
+        area: clubLocation,
+        image: "",
+      })
       .catch((err) => {
         console.log(err.message);
         alert("서버 오류가 발생했습니다. 잠시후 다시 시도해주세요");

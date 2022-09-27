@@ -1,6 +1,5 @@
 import "../styles/global.scss";
 import cookies from "next-cookies";
-import jwt from "jsonwebtoken";
 import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }) {
@@ -17,7 +16,7 @@ export default function MyApp({ Component, pageProps }) {
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const { joinhere } = cookies(ctx);
+  const { id } = cookies(ctx);
 
   let pageProps = {};
   if (Component.getInitialProps) {
@@ -27,8 +26,8 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   pageProps = {
     ...pageProps,
     loginInfo: {
-      isLoggedIn: joinhere ? true : false,
-      userName: joinhere ? jwt.decode(joinhere).name.toString() : "조인히어",
+      isLoggedIn: id ? true : false,
+      userName: id || "조인히어",
     },
   };
 
