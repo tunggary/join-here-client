@@ -5,6 +5,17 @@
   padding-bottom: 5rem;
   background-color: #e8e8e8;
 
+  .titleContainer {
+    width: 100%;
+    height: 15.68rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: var(--bold);
+  }
+
   .registerContainer {
     width: 90%;
     padding: 2.75rem 0 0 0;
@@ -18,9 +29,19 @@
     align-items: center;
     margin-top: 1.75rem;
 
+    .titleMargin {
+      margin-top: 4rem;
+      margin-bottom: 2rem;
+    }
+
+    .boxMargin {
+      margin-bottom: 1.5rem;
+    }
+
     .box {
       width: 30.375rem;
       padding: 0 2.68rem;
+      position: relative;
 
       .label {
         font-size: var(--h6);
@@ -143,10 +164,33 @@
         margin: 3rem auto;
         display: block;
       }
+
+      .minusBtn {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+
+        .barrier {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
     .title {
       font-size: var(--h1);
       font-weight: 700;
+    }
+
+    .plus {
+      width: 25rem;
+      svg {
+        cursor: pointer;
+      }
     }
   }
 }

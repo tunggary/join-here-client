@@ -40,35 +40,39 @@ export default function Login({ loginInfo }) {
   };
 
   const login = async () => {
+    // const data = await axios
+    //   .post(
+    //     "http://3.36.36.87:8080/members/login",
+    //     {
+    //       id: loginId,
+    //       password,
+    //     },
+    //     {
+    //       withCredentials: true,
+    //     }
+    //   )
+    //   .catch((err) => {
+    //     console.log(err.message);
+    //   });
+    // console.log(data);
     const data = await axios
-      .post("http://3.36.36.87:8080/members/login", {
-        id: loginId,
+      .post("/api/login", {
+        loginId,
         password,
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        alert("로그인 과정에서 오류가 발생했습니다. 다시 시도해주세요.");
+        return;
       });
-    console.log(data);
-    // const {
-    //   data: { error },
-    // } = await axios
-    //   .post("/api/login", {
-    //     loginId,
-    //     password,
-    //   })
-    //   .catch(() => {
-    //     alert("로그인 과정에서 오류가 발생했습니다. 다시 시도해주세요.");
-    //     return;
-    //   });
-    // if (error === "not_matching") {
-    //   alert("loginId혹은 비밀번호를 확인해주세요.");
-    //   setData({
-    //     loginId: "",
-    //     password: "",
-    //   });
-    //   return;
-    // }
-    // back();
+    if (data?.data?.error === "not_matching") {
+      alert("loginId혹은 비밀번호를 확인해주세요.");
+      setData({
+        loginId: "",
+        password: "",
+      });
+      return;
+    }
+    back();
   };
 
   const onKeyPress = (e) => {

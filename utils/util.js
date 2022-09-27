@@ -34,3 +34,9 @@ export const dictArea = {
   JJ: "제주",
   ET: "기타",
 };
+
+export const dictPosition = {
+  pre: "회장",
+  man: "운영진",
+  nor: "회원",
+};

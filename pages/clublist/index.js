@@ -18,6 +18,7 @@ export default function Home({ data, loginInfo }) {
   const [index, setIndex] = useState(dictClub[tab][1]);
 
   const filterClubList = (category) => {
+    console.log(data);
     return data
       .filter((club) => category === "all" || club.category == category)
       .map((club) => (
@@ -37,7 +38,7 @@ export default function Home({ data, loginInfo }) {
               <div className={styles.view}>
                 <span>조회수 {club.view}</span> <span>찜한수 {club.scrap}</span>
               </div>
-              <div className={styles.dDay}>{club.endDate ? Math.floor((new Date(club.endDate) - new Date()) / (1000 * 60 * 60 * 24)) : null}</div>
+              <div className={styles.dDay}>{club.endDate ? "D - " + Math.floor((new Date(club.endDate) - new Date()) / (1000 * 60 * 60 * 24)) : null}</div>
             </div>
           </div>
         </Link>

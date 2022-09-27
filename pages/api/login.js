@@ -14,11 +14,6 @@ export default async function login(req, res) {
       console.log(err.message);
       res.status(500);
     });
+  res.setHeader("Set-Cookie", `id=${data.data.id}; path=/;`);
   res.status(200).json({ error: null });
-  // if (data?.data) {
-  //   res.setHeader("Set-Cookie", `joinhere=${data.data.accessToken}; path=/;`);
-  //   res.status(200).json({ error: null });
-  // } else {
-  //   res.status(200).json({ error: "not_matching" });
-  // }
 }
