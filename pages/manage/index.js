@@ -3,10 +3,8 @@ import Header from "../../components/Header";
 import Location from "../../public/clublist/location.svg";
 import Arrow from "../../public/clublist/arrow-right.svg";
 import cookies from "next-cookies";
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import axios from "axios";
 import { categoryList, dictArea, dictPosition } from "../../utils/util";
 
@@ -18,7 +16,7 @@ export default function Manage({ loginInfo, data }) {
       <div className={styles.contentContainer}>
         {data.map(({ belong }, index) => {
           const {
-            club: { name, category, area, image },
+            club: { id: clubId, name, category, area, image },
             position,
           } = belong;
           return (
@@ -42,10 +40,12 @@ export default function Manage({ loginInfo, data }) {
               </div>
               <ul className={styles.list}>
                 {position === "pre" ? (
-                  <li className={styles.element}>
-                    모집공고 등록
-                    <Arrow />
-                  </li>
+                  <Link href={`/register/recruitment/${clubId}`}>
+                    <li className={styles.element}>
+                      모집공고 등록
+                      <Arrow />
+                    </li>
+                  </Link>
                 ) : null}
                 {position === "pre" ? (
                   <li className={styles.element}>

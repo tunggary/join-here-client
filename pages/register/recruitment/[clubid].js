@@ -113,7 +113,7 @@ export default function Recruitment({ loginInfo, clubId }) {
       id: clubId, //
       title: recruitmentName,
       description: recruitmentDesc,
-      poster: recruitmentImage,
+      poster: "", //recruitmentImage,
       startDate: `${recruitmentStart.slice(0, 4)}-${recruitmentStart.slice(4, 6)}-${recruitmentStart.slice(6, 8)}`,
       endDate: `${recruitmentEnd.slice(0, 4)}-${recruitmentEnd.slice(4, 6)}-${recruitmentEnd.slice(6, 8)}`,
       question: [...Object.values(resumeData).map(({ question }) => question)],
