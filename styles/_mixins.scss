@@ -1,6 +1,7 @@
-@mixin display-flex($dir: row, $jus: center, $ali: center) {
+@mixin display-flex($dir: row, $jus: center, $ali: center, $gap: 0) {
   display: flex;
   justify-content: $jus;
   align-items: $ali;
   flex-direction: $dir;
+  gap: $gap;
 }

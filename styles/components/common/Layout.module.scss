@@ -7,7 +7,7 @@
   .contentContainer {
     padding-bottom: 2rem;
     .pageTitle {
-      width: 100%;
+      min-width: 90rem;
       height: 15.6rem;
       font-size: 3.125rem;
       font-weight: 700;
@@ -17,7 +17,7 @@
 
     .content {
       width: 90rem;
-      min-height: 45rem;
+      min-height: calc(100vh - 34.7rem);
       height: max-content;
       background-color: var(--white);
       margin: 2rem auto 0 auto;
