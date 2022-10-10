@@ -112,6 +112,7 @@ export default function Applicant({ loginInfo }) {
             </button>
           </div>
         </div>
+        <button className={styles.submitButton}>결과 문자 발송하기</button>
       </div>
     </Layout>
   );

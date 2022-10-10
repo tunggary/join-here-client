@@ -1,7 +1,18 @@
 .container {
+  position: relative;
   width: 51.5rem;
   height: max-content;
-  padding: 4rem 0;
+  padding: 4rem 0 13rem 0;
+
+  button {
+    color: var(--white);
+    border: none;
+    outline: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
 
   .tab {
     width: 100%;
@@ -97,13 +108,6 @@
       .button {
         width: 11.43rem;
         height: 2.94rem;
-        color: var(--white);
-        border: none;
-        outline: none;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        font-weight: 700;
-        cursor: pointer;
       }
       .pass {
         background-color: var(--green);
@@ -116,5 +120,14 @@
         background-color: var(--category);
       }
     }
+  }
+  .submitButton {
+    width: 16.6rem;
+    height: 2.94rem;
+    background-color: var(--main);
+    position: absolute;
+    left: 50%;
+    bottom: 6rem;
+    transform: translateX(-50%);
   }
 }
