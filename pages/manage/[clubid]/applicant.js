@@ -1,45 +1,28 @@
 import { useState } from "react";
-import Layout from "../../components/common/Layout";
-import styles from "../../styles/pages/applicant.module.scss";
-import { formatting } from "../../utils/util";
-import Arrow from "../../public/clublist/arrow-right.svg";
+import Layout from "../../../components/common/Layout";
+import styles from "../../../styles/pages/applicant.module.scss";
+import { formatting } from "../../../utils/util";
+import Arrow from "../../../public/clublist/arrow-right.svg";
 
-export default function Applicant({ loginInfo }) {
+export default function Applicant({ loginInfo, data }) {
   const tabElement = {
     all: "전체",
     pass: "합격",
     fail: "불합격",
     hold: "미결정",
   };
-
-  const props = [
-    {
-      name: "이호석",
-      createdAt: new Date("2022-01-01"),
-      state: "pass",
-      resume: [],
-    },
-    {
-      name: "정성윤",
-      createdAt: new Date("2022-01-01"),
-      state: "fail",
-      resume: [],
-    },
-    {
-      name: "정석환",
-      createdAt: new Date("2022-01-01"),
-      state: "hold",
-      resume: [],
-    },
-  ];
   const [tab, setTab] = useState("all");
   const [applicantList, setApplicantList] = useState(
-    props.map((each) => {
-      return { ...each, checked: false };
+    data.map((applicant) => {
+      return {
+        ...applicant,
+        createdAt: new Date(applicant.createdAt),
+        checked: false,
+      };
     })
   );
   const onClickApplicant = ({ target }) => {
-    const index = target.parentNode.dataset.index || target.parentNode.parentNode.dataset.index;
+    const index = target.dataset.index;
     if (!index) return;
     updateApplicantsChecked(Number(index));
   };
@@ -87,17 +70,17 @@ export default function Applicant({ loginInfo }) {
             {applicantList
               .filter(({ state }) => state === tab || tab === "all")
               .map(({ name, createdAt, state, checked }, index) => (
-                <div key={index} className={styles.applicant} data-index={index} onClick={onClickApplicant}>
+                <label key={index} htmlFor={`id-${index}`} className={styles.applicant}>
                   <div className={styles.checkbox}>
-                    <input type="checkbox" checked={checked} />
+                    <input type="checkbox" checked={checked} id={`id-${index}`} data-index={index} onChange={onClickApplicant} />
                   </div>
                   <h2 className={styles.name}>{name}</h2>
                   <h3 className={styles.date}>{formatting(createdAt)}</h3>
-                  <h3 className={`${styles.state} ${styles[state]}`}>{tabElement[state]}</h3>
+                  <h3 className={`${styles[state]}`}>{tabElement[state]}</h3>
                   <h3 className={styles.resume}>
                     <p>상세보기</p> <Arrow />
                   </h3>
-                </div>
+                </label>
               ))}
           </ul>
           <div className={styles.buttonContainer} onClick={onClickStateButton}>
@@ -116,4 +99,33 @@ export default function Applicant({ loginInfo }) {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const { clubid } = ctx.params;
+  console.log(clubid);
+  return {
+    props: {
+      data: [
+        {
+          name: "이호석",
+          createdAt: "2022-01-01",
+          state: "pass",
+          resume: [],
+        },
+        {
+          name: "정성윤",
+          createdAt: "2022-01-01",
+          state: "fail",
+          resume: [],
+        },
+        {
+          name: "정석환",
+          createdAt: "2022-01-01",
+          state: "hold",
+          resume: [],
+        },
+      ],
+    },
+  };
 }
