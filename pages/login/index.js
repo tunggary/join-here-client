@@ -1,11 +1,10 @@
-import styles from "../../styles/pages/login.module.scss";
-import Header from "../../components/Header";
-import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import cookies from "next-cookies";
-import jwt from "jsonwebtoken";
+import { useRouter } from "next/router";
+import styles from "@styles/pages/login.module.scss";
+import Header from "@components/common/Header";
 
 export default function Login({ loginInfo }) {
   const { back } = useRouter();

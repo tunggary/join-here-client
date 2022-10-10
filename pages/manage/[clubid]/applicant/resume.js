@@ -1,7 +1,7 @@
-import Layout from "../../../../components/common/Layout";
-import Form from "../../../../components/common/inputTemplate/Form";
-import Title from "../../../../components/common/inputTemplate/Title";
-import Input from "../../../../components/common/inputTemplate/Input";
+import Layout from "@components/common/Layout";
+import Form from "@components/common/inputTemplate/Form";
+import Title from "@components/common/inputTemplate/Title";
+import Input from "@components/common/inputTemplate/Input";
 
 export default function Resume({ loginInfo }) {
   return (

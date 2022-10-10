@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Layout from "../../../components/common/Layout";
-import styles from "../../../styles/pages/applicant.module.scss";
-import { formatting } from "../../../utils/util";
-import Arrow from "../../../public/clublist/arrow-right.svg";
+import Layout from "@components/common/Layout";
+import styles from "@styles/pages/applicant.module.scss";
+import { formatting } from "@utils/util";
+import Arrow from "@public/clublist/arrow-right.svg";
 
 export default function Applicant({ loginInfo, data }) {
   const tabElement = {

@@ -1,6 +1,6 @@
-import "../styles/global.scss";
 import cookies from "next-cookies";
 import Head from "next/head";
+import "@styles/global.scss";
 
 export default function MyApp({ Component, pageProps }) {
   return (

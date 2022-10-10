@@ -1,17 +1,17 @@
-import styles from "../../styles/pages/club.module.scss";
-import Header from "../../components/Header";
-import Location from "../../public/clublist/location.svg";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useState } from "react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Apply from "../../public/clublist/apply.svg";
-import Scrap from "../../public/clublist/scrap.svg";
-import NonScrap from "../../public/clublist/nonscrap.svg";
+import styles from "@styles/pages/club.module.scss";
+import Header from "@components/common/Header";
+import Location from "@public/clublist/location.svg";
+import Apply from "@public/clublist/apply.svg";
+import Scrap from "@public/clublist/scrap.svg";
+import NonScrap from "@public/clublist/nonscrap.svg";
 
 import axios from "axios";
-import { categoryList, dictClub, dictArea } from "../../utils/util";
+import { categoryList, dictClub, dictArea } from "@utils/util";
 
 export default function Club({ data, loginInfo }) {
   const { area, category, introduction, name, scrap: scrapCount, view: viewCount } = data.club;

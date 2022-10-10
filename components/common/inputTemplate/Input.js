@@ -1,4 +1,4 @@
-import styles from "../../../styles/components/common/inputTemplate.module.scss";
+import styles from "@styles/components/common/inputTemplate.module.scss";
 export default function Input({ id, label, value, readOnly = false }) {
   return (
     <div className={styles.inputContainer}>

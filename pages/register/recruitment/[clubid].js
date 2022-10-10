@@ -1,11 +1,11 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Header from "../../../components/Header";
-import styles from "../../../styles/pages/register.module.scss";
-import Plus from "../../../public/clublist/plus.svg";
-import Minus from "../../../public/clublist/minus.svg";
+import Header from "@components/common/Header";
+import styles from "@styles/pages/register.module.scss";
+import Plus from "@public/clublist/plus.svg";
+import Minus from "@public/clublist/minus.svg";
 
 export default function Recruitment({ loginInfo, clubId }) {
   const { push } = useRouter();

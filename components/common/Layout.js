@@ -1,5 +1,5 @@
-import Header from "../Header";
-import styles from "../../styles/components/common/Layout.module.scss";
+import Header from "@components/common/Header";
+import styles from "@styles/components/common/Layout.module.scss";
 
 export default function Layout({ children, loginInfo, pageTitle = "" }) {
   return (

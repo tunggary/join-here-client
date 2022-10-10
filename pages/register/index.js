@@ -1,10 +1,10 @@
+import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import styles from "../../styles/pages/register.module.scss";
-import { dictClub, dictArea } from "../../utils/util";
+import Header from "@components/common/Header";
+import styles from "@styles/pages/register.module.scss";
+import { dictClub, dictArea } from "@utils/util";
 
 export default function Register({ loginInfo }) {
   const { push } = useRouter();
