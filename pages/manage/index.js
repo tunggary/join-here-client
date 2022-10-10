@@ -9,6 +9,7 @@ import axios from "axios";
 import { categoryList, dictArea, dictPosition } from "@utils/util";
 
 export default function Manage({ loginInfo, data }) {
+  console.log(data);
   return (
     <div className={styles.container}>
       <Header loginInfo={loginInfo} />
