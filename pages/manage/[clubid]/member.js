@@ -24,10 +24,9 @@ export default function Member({ loginInfo, data, clubid }) {
   };
 
   const onClickAddButton = async () => {
-    const newMemberList = await addMemberList(plusId);
+    const newMemberList = await addMember(plusId);
     if (newMemberList === null) return setPlusId("");
-    setMemberList(newMemberList);
-    setMyPosition(getMyPosition(newMemberList));
+    updateMember(newMemberList);
   };
 
   const onClickModal = async ({ target }) => {
@@ -36,12 +35,36 @@ export default function Member({ loginInfo, data, clubid }) {
 
     if (!position || !index) return;
     const newMemberList = await changePosition(position, Number(index));
+    updateMember(newMemberList);
+  };
+
+  const onClickDelete = async ({ target }) => {
+    const index = target.dataset.index;
+    const newMemberList = await deleteMember(index);
+    updateMember(newMemberList);
+  };
+
+  const updateMember = (newMemberList) => {
     if (newMemberList === null) return;
     setMemberList(newMemberList);
     setMyPosition(getMyPosition(newMemberList));
   };
 
-  const addMemberList = async (memberId) => {
+  const deleteMember = async (index) => {
+    try {
+      const { data } = await axios.delete(`http://3.36.36.87:8080/clubs/${clubid}/belong`, {
+        data: {
+          belongId: memberList[index].belongId,
+        },
+      });
+      return data;
+    } catch (error) {
+      alert("회장은 최소 1명 이상입니다");
+      return null;
+    }
+  };
+
+  const addMember = async (memberId) => {
     try {
       const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubid}/belong`, {
         memberId,
@@ -97,6 +120,11 @@ export default function Member({ loginInfo, data, clubid }) {
                               <span>{positionList[p]}</span>으로 변경
                             </div>
                           ))}
+                        {position !== "pre" && (
+                          <div className={`${styles.modalElement} ${styles.error}`} data-index={index} onClick={onClickDelete}>
+                            동아리 내보내기
+                          </div>
+                        )}
                       </div>
                     </label>
                   </div>
