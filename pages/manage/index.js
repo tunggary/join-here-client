@@ -9,7 +9,6 @@ import axios from "axios";
 import { categoryList, dictArea, dictPosition } from "@utils/util";
 
 export default function Manage({ loginInfo, data }) {
-  console.log(data);
   return (
     <div className={styles.container}>
       <Header loginInfo={loginInfo} />
@@ -54,10 +53,12 @@ export default function Manage({ loginInfo, data }) {
                     <Arrow />
                   </li>
                 ) : null}
-                <li className={styles.element}>
-                  동아리원 보기
-                  <Arrow />
-                </li>
+                <Link href={`/manage/${belong.id}/member`}>
+                  <li className={styles.element}>
+                    동아리원 보기
+                    <Arrow />
+                  </li>
+                </Link>
                 {position === "pre" ? (
                   <li className={styles.element}>
                     동아리 정보 수정
@@ -78,7 +79,7 @@ export async function getServerSideProps(ctx) {
   const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/clubs`);
   return {
     props: {
-      data,
+      data: data || [],
     },
   };
 }
