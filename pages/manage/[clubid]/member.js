@@ -3,38 +3,51 @@ import Layout from "@components/common/Layout";
 import styles from "@styles/pages/member.module.scss";
 import Option from "@public/manage/option.svg";
 import Input from "@components/common/inputTemplate/Input";
+import axios from "axios";
+import { useEffect } from "react";
 
-export default function Member({ loginInfo }) {
+export default function Member({ loginInfo, data, clubid }) {
   const [plusId, setPlusId] = useState("");
+  const [memberList, setMemberList] = useState(data);
 
-  const [memberList, setMemberList] = useState([
-    {
-      name: "이호석",
-      id: "tunggary",
-      rank: "회장",
-    },
-    {
-      name: "이호석",
-      id: "tunggary2",
-      rank: "회장",
-    },
-  ]);
-
-  const rankList = ["회장", "운영진", "부원"];
-
-  const onClickModal = ({ target }) => {
-    const rank = target.dataset.rank || target.parentNode.dataset.rank;
-    const index = target.dataset.index || target.parentNode.dataset.index;
-
-    if (!rank || !index) return;
-    changeRank(rank, Number(index));
+  const positionList = {
+    pre: "회장",
+    man: "매니저",
+    nor: "부원",
   };
 
-  const changeRank = (newRank, index) => {
+  const onClickAddButton = async () => {
+    const newMemberList = await addMemberList(plusId);
+    if (newMemberList === null) return setPlusId("");
+    setMemberList(newMemberList);
+    setPresidnet(findPresident(newMemberList));
+  };
+
+  const onClickModal = ({ target }) => {
+    const position = target.dataset.position || target.parentNode.dataset.position;
+    const index = target.dataset.index || target.parentNode.dataset.index;
+
+    if (!position || !index) return;
+    changePosition(position, Number(index));
+  };
+
+  const addMemberList = async (memberId) => {
+    try {
+      const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubid}/belong`, {
+        memberId,
+      });
+      return data;
+    } catch (error) {
+      alert("해당 ID가 존재하지 않습니다.");
+      return null;
+    }
+  };
+
+  const changePosition = (newPosition, index) => {
     setMemberList((prev) => {
       const newMemberData = {
         ...prev[index],
-        rank: newRank,
+        position: newPosition,
       };
       return prev.map((member, idx) => (index === idx ? newMemberData : member));
     });
@@ -45,30 +58,34 @@ export default function Member({ loginInfo }) {
       <div className={styles.memberContainer}>
         <div className={styles.top}>
           <Input id="plus" placeholder="ID로 동아리원 추가" value={plusId} onChange={(e) => setPlusId(e.target.value)} />
-          <button className={styles.plusButton}>추가하기</button>
+          <button className={styles.plusButton} onClick={onClickAddButton}>
+            추가하기
+          </button>
         </div>
         <div className={styles.listContainer}>
           <ul>
-            {memberList.map(({ name, id, rank }, index) => (
-              <div key={id} className={styles.member}>
-                <h1 className={styles.name}>{name}</h1>
-                <h3 className={styles.id}>{id}</h3>
-                <h1 className={styles.class}>{rank}</h1>
-                <div className={styles.option}>
-                  <input type="checkbox" id={id} />
-                  <label htmlFor={id}>
-                    <Option />
-                    <div className={styles.modal}>
-                      {rankList
-                        .filter((r) => r !== rank)
-                        .map((r, idx) => (
-                          <div key={idx} className={styles.modalElement} data-rank={r} data-index={index} onClick={onClickModal}>
-                            <span>{r}</span>으로 변경
-                          </div>
-                        ))}
-                    </div>
-                  </label>
-                </div>
+            {memberList.map(({ memberName, memberId, position }, index) => (
+              <div key={memberId} className={styles.member}>
+                <h1 className={styles.name}>{memberName}</h1>
+                <h3 className={styles.id}>{memberId}</h3>
+                <h1 className={styles.class}>{positionList[position]}</h1>
+                {
+                  <div className={styles.option}>
+                    <input type="checkbox" id={memberId} />
+                    <label htmlFor={memberId}>
+                      <Option />
+                      <div className={styles.modal}>
+                        {Object.keys(positionList)
+                          .filter((p) => p !== position)
+                          .map((p, idx) => (
+                            <div key={idx} className={styles.modalElement} data-position={p} data-index={index} onClick={onClickModal}>
+                              <span>{positionList[p]}</span>으로 변경
+                            </div>
+                          ))}
+                      </div>
+                    </label>
+                  </div>
+                }
               </div>
             ))}
           </ul>
@@ -76,4 +93,16 @@ export default function Member({ loginInfo }) {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const { clubid } = ctx.params;
+  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubid}/belong`);
+
+  return {
+    props: {
+      clubid,
+      data: data || [],
+    },
+  };
 }
