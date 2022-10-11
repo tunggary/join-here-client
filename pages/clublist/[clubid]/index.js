@@ -12,6 +12,7 @@ import NonScrap from "@public/clublist/nonscrap.svg";
 
 import axios from "axios";
 import { categoryList, dictClub, dictArea } from "@utils/util";
+import Link from "next/link";
 
 export default function Club({ data, loginInfo }) {
   const { area, category, introduction, name, scrap: scrapCount, view: viewCount } = data.club;
@@ -20,7 +21,7 @@ export default function Club({ data, loginInfo }) {
 
   const [scrap, setScrap] = useState(false);
 
-  const [currentDate, startDate, endDate] = [new Date(), new Date(data.announcement.startDate), new Date(data.announcement.endDate)];
+  const [currentDate, startDate, endDate] = [new Date(), new Date(data.announcement?.startDate), new Date(data.announcement?.endDate)];
 
   const categoryList = data.announcement ? ["모집공고", "후기", "Q&A"] : ["후기", "Q&A"];
 
@@ -79,7 +80,11 @@ export default function Club({ data, loginInfo }) {
           <span>찜한수 {scrapCount}</span>
         </div>
         <div className={`${styles.desc} ${introduction.length < 60 ? styles.center : undefined}`}>{introduction}</div>
-        {currentDate >= startDate && currentDate <= endDate ? <input type="button" value="지원하기" className={styles.applyButton} /> : null}
+        {currentDate >= startDate && currentDate <= endDate ? (
+          <Link href={`/clublist/${data.announcement?.id}/apply`}>
+            <input type="button" value="지원하기" className={styles.applyButton} />
+          </Link>
+        ) : null}
       </div>
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
         <div className={styles.tabListContainer}>

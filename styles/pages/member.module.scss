@@ -3,7 +3,7 @@
   padding-bottom: 4rem;
 
   .top {
-    margin: 1.5rem 0;
+    margin-top: 4rem;
     @include display-flex($jus: flex-start);
 
     .plusButton {
@@ -26,9 +26,7 @@
     width: 100%;
     min-height: 45rem;
     border: 1px solid var(--gray-hover);
-    // display: flex;
-    // flex-wrap: wrap;
-
+    margin-top: 4rem;
     padding: 5rem 8rem;
 
     ul {

@@ -53,7 +53,7 @@ export default function Manage({ loginInfo, data }) {
                     <Arrow />
                   </li>
                 ) : null}
-                <Link href={`/manage/${belong.id}/member`}>
+                <Link href={`/manage/${clubId}/member`}>
                   <li className={styles.element}>
                     동아리원 보기
                     <Arrow />
