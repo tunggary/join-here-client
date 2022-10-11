@@ -38,7 +38,7 @@ export default function Member({ loginInfo, data, clubid }) {
     const newMemberList = await changePosition(position, Number(index));
     if (newMemberList === null) return;
     setMemberList(newMemberList);
-    setMyPosition(newMemberList);
+    setMyPosition(getMyPosition(newMemberList));
   };
 
   const addMemberList = async (memberId) => {
