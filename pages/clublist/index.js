@@ -1,13 +1,13 @@
-import styles from "../../styles/pages/clublist.module.scss";
-import Header from "../../components/Header";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useState } from "react";
+import axios from "axios";
 import Image from "next/image";
-import Location from "../../public/clublist/location.svg";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import axios from "axios";
-import { categoryList, dictClub, dictArea } from "../../utils/util";
+import styles from "@styles/pages/clublist.module.scss";
+import Header from "@components/common/Header";
+import Location from "@public/clublist/location.svg";
+import { categoryList, dictClub, dictArea } from "@utils/util";
 
 export default function Home({ data, loginInfo }) {
   const {

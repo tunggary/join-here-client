@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  height: max-content;
+  min-height: 100vh;
+  background-color: var(--gray2);
+
+  .contentContainer {
+    padding-bottom: 2rem;
+    .pageTitle {
+      min-width: 90rem;
+      height: 15.6rem;
+      font-size: 3.125rem;
+      font-weight: 700;
+      background-color: var(--white);
+      @include display-flex;
+    }
+
+    .content {
+      width: 90rem;
+      min-height: calc(100vh - 34.7rem);
+      height: max-content;
+      background-color: var(--white);
+      margin: 2rem auto 0 auto;
+      border-radius: 1rem;
+      @include display-flex($ali: flex-start);
+    }
+  }
+}

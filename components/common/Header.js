@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/components/Header.module.scss";
+import styles from "@styles/components/Header.module.scss";
 
 export default function Header({ loginInfo }) {
   const { isLoggedIn, userName } = loginInfo;

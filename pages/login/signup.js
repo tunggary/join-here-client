@@ -1,10 +1,9 @@
-import styles from "../../styles/pages/signup.module.scss";
-import Header from "../../components/Header";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
+import { useRouter } from "next/router";
 import cookies from "next-cookies";
-import jwt from "jsonwebtoken";
+import styles from "@styles/pages/signup.module.scss";
+import Header from "@components/common/Header";
 
 export default function Signup({ loginInfo }) {
   const { push } = useRouter();

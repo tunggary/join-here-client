@@ -1,12 +1,12 @@
-import styles from "../../styles/pages/manage.module.scss";
-import Header from "../../components/Header";
-import Location from "../../public/clublist/location.svg";
-import Arrow from "../../public/clublist/arrow-right.svg";
+import styles from "@styles/pages/manage.module.scss";
+import Header from "@components/common/Header";
+import Location from "@public/clublist/location.svg";
+import Arrow from "@public/clublist/arrow-right.svg";
 import cookies from "next-cookies";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import { categoryList, dictArea, dictPosition } from "../../utils/util";
+import { categoryList, dictArea, dictPosition } from "@utils/util";
 
 export default function Manage({ loginInfo, data }) {
   return (
@@ -53,10 +53,12 @@ export default function Manage({ loginInfo, data }) {
                     <Arrow />
                   </li>
                 ) : null}
-                <li className={styles.element}>
-                  동아리원 보기
-                  <Arrow />
-                </li>
+                <Link href={`/manage/${clubId}/member`}>
+                  <li className={styles.element}>
+                    동아리원 보기
+                    <Arrow />
+                  </li>
+                </Link>
                 {position === "pre" ? (
                   <li className={styles.element}>
                     동아리 정보 수정
@@ -77,7 +79,7 @@ export async function getServerSideProps(ctx) {
   const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/clubs`);
   return {
     props: {
-      data,
+      data: data || [],
     },
   };
 }

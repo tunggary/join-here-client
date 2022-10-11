@@ -1,0 +1,133 @@
+.container {
+  position: relative;
+  width: 51.5rem;
+  height: max-content;
+  padding: 4rem 0 13rem 0;
+
+  button {
+    color: var(--white);
+    border: none;
+    outline: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .tab {
+    width: 100%;
+    height: 3rem;
+    @include display-flex($gap: 2rem);
+
+    .tabElement {
+      width: max-content;
+      height: 100%;
+      line-height: 3rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .active {
+      color: var(--main);
+      border-bottom: 2px solid var(--main);
+    }
+  }
+
+  .applicantContainer {
+    @include display-flex($dir: column, $jus: flex-start);
+    border: 1px solid var(--gray-hover);
+    .total {
+      width: 100%;
+      padding: 1rem 2rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .applicantList {
+      width: 85%;
+      min-height: 40rem;
+      height: max-content;
+      @include display-flex($dir: column, $jus: flex-start);
+
+      .applicant {
+        width: 100%;
+        height: 3.8rem;
+        background-color: var(--white);
+        display: grid;
+        grid-template-columns: 10% 15% 35% 23% 17%;
+        border-bottom: 1px solid var(--gray-hover);
+        &:last-child {
+          border-bottom: none;
+        }
+
+        & > div,
+        h2,
+        h3 {
+          font-size: 1.6rem;
+          font-weight: 700;
+          @include display-flex;
+        }
+
+        .checkbox input {
+          accent-color: var(--main);
+        }
+
+        .date,
+        .resume {
+          font-size: 1.2rem;
+        }
+
+        .name {
+          justify-content: flex-start;
+        }
+
+        .resume {
+          cursor: pointer;
+          p {
+            margin-bottom: 0.1rem;
+            margin-right: 0.3rem;
+          }
+        }
+
+        .pass {
+          color: var(--green);
+        }
+        .fail {
+          color: var(--red);
+        }
+
+        .hold {
+          color: var(--category);
+        }
+      }
+    }
+    .buttonContainer {
+      @include display-flex($gap: 2rem);
+      margin-bottom: 2.5rem;
+      .button {
+        width: 11.43rem;
+        height: 2.94rem;
+      }
+      .pass {
+        background-color: var(--green);
+      }
+      .fail {
+        background-color: var(--red);
+      }
+
+      .hold {
+        background-color: var(--category);
+      }
+    }
+  }
+  .submitButton {
+    width: 16.6rem;
+    height: 2.94rem;
+    background-color: var(--main);
+    position: absolute;
+    left: 50%;
+    bottom: 6rem;
+    transform: translateX(-50%);
+  }
+}

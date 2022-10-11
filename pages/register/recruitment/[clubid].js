@@ -1,11 +1,11 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Header from "../../../components/Header";
-import styles from "../../../styles/pages/register.module.scss";
-import Plus from "../../../public/clublist/plus.svg";
-import Minus from "../../../public/clublist/minus.svg";
+import Header from "@components/common/Header";
+import styles from "@styles/pages/register.module.scss";
+import Plus from "@public/clublist/plus.svg";
+import Minus from "@public/clublist/minus.svg";
 
 export default function Recruitment({ loginInfo, clubId }) {
   const { push } = useRouter();
@@ -38,6 +38,7 @@ export default function Recruitment({ loginInfo, clubId }) {
       if (!e.target.files || e.target.files.length === 0) {
         return;
       }
+      console.log(new Blob(URL.createObjectURL(e.target.files[0])));
       setRecruitmentData({
         ...recruitmentData,
         [name]: URL.createObjectURL(e.target.files[0]),
@@ -92,8 +93,10 @@ export default function Recruitment({ loginInfo, clubId }) {
     }
     const startDate = new Date(`${recruitmentStart.slice(0, 4)}-${recruitmentStart.slice(4, 6)}-${recruitmentStart.slice(6, 8)}`);
     const endDate = new Date(`${recruitmentEnd.slice(0, 4)}-${recruitmentEnd.slice(4, 6)}-${recruitmentEnd.slice(6, 8)}`);
+    const current = new Date();
+    current.setHours(0, 0, 0, 0);
 
-    if (startDate < new Date() || startDate > endDate) {
+    if (startDate < current || startDate > endDate) {
       alert("시작일이 현재보다 전이거나 시작일이 마감일보다 늦을 수 없습니다.");
       return false;
     }

@@ -40,3 +40,21 @@ export const dictPosition = {
   man: "운영진",
   nor: "회원",
 };
+
+export const formatting = (date) => {
+  const yyyy = date.getFullYear().toString();
+  const MM = pad(date.getMonth() + 1, 2);
+  const dd = pad(date.getDate(), 2);
+  const hh = pad(date.getHours(), 2);
+  const mm = pad(date.getMinutes(), 2);
+
+  return `${yyyy}.${MM}.${dd} ${hh}시${mm}분`;
+};
+
+function pad(number, length) {
+  var str = "" + number;
+  while (str.length < length) {
+    str = "0" + str;
+  }
+  return str;
+}
