@@ -85,12 +85,12 @@ export default function Recruitment({ loginInfo, clubId }) {
   };
 
   const validationCheck = () => {
-    for (const key in recruitmentData) {
-      if (recruitmentData[key] === null || recruitmentData[key] === "") {
-        alert("기본 정보를 입력해주세요");
-        return false;
-      }
-    }
+    // for (const key in recruitmentData) {
+    //   if (recruitmentData[key] === null || recruitmentData[key] === "") {
+    //     alert("기본 정보를 입력해주세요");
+    //     return false;
+    //   }
+    // }
     const startDate = new Date(`${recruitmentStart.slice(0, 4)}-${recruitmentStart.slice(4, 6)}-${recruitmentStart.slice(6, 8)}`);
     const endDate = new Date(`${recruitmentEnd.slice(0, 4)}-${recruitmentEnd.slice(4, 6)}-${recruitmentEnd.slice(6, 8)}`);
     const current = new Date();
@@ -101,12 +101,12 @@ export default function Recruitment({ loginInfo, clubId }) {
       return false;
     }
 
-    for (const key in resumeData) {
-      if (resumeData[key].question === "") {
-        alert("질문 정보를 입력해주세요");
-        return false;
-      }
-    }
+    // for (const key in resumeData) {
+    //   if (resumeData[key].question === "") {
+    //     alert("질문 정보를 입력해주세요");
+    //     return false;
+    //   }
+    // }
     return true;
   };
 

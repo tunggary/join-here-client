@@ -3,6 +3,7 @@ import Layout from "@components/common/Layout";
 import styles from "@styles/pages/applicant.module.scss";
 import { formatting } from "@utils/util";
 import Arrow from "@public/clublist/arrow-right.svg";
+import axios from "axios";
 
 export default function Applicant({ loginInfo, data }) {
   const tabElement = {
@@ -69,12 +70,12 @@ export default function Applicant({ loginInfo, data }) {
           <ul className={styles.applicantList}>
             {applicantList
               .filter(({ state }) => state === tab || tab === "all")
-              .map(({ name, createdAt, state, checked }, index) => (
+              .map(({ memberName, createdAt, state, checked }, index) => (
                 <label key={index} htmlFor={`id-${index}`} className={styles.applicant}>
                   <div className={styles.checkbox}>
                     <input type="checkbox" checked={checked} id={`id-${index}`} data-index={index} onChange={onClickApplicant} />
                   </div>
-                  <h2 className={styles.name}>{name}</h2>
+                  <h2 className={styles.name}>{memberName}</h2>
                   <h3 className={styles.date}>{formatting(createdAt)}</h3>
                   <h3 className={`${styles[state]}`}>{tabElement[state]}</h3>
                   <h3 className={styles.resume}>
@@ -103,29 +104,10 @@ export default function Applicant({ loginInfo, data }) {
 
 export async function getServerSideProps(ctx) {
   const { clubid } = ctx.params;
-  console.log(clubid);
+  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubid}/belong`);
   return {
     props: {
-      data: [
-        {
-          name: "이호석",
-          createdAt: "2022-01-01",
-          state: "pass",
-          resume: [],
-        },
-        {
-          name: "정성윤",
-          createdAt: "2022-01-01",
-          state: "fail",
-          resume: [],
-        },
-        {
-          name: "정석환",
-          createdAt: "2022-01-01",
-          state: "hold",
-          resume: [],
-        },
-      ],
+      data,
     },
   };
 }
