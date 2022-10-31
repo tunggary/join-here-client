@@ -1,14 +1,19 @@
 import styles from "@styles/components/common/inputTemplate.module.scss";
 export default function Input({ id, label, value = "", name, readOnly = false, placeholder = "", onChange }) {
+  const autoResizeTextarea = ({ target }) => {
+    target.style.height = "auto";
+    target.style.height = target.defaultValue.length > 20 ? `${target.scrollHeight + 8}px` : `56px`;
+  };
+
   return (
     <div className={styles.inputContainer}>
       <label htmlFor={id} className={styles.label}>
         {label}
       </label>
-      {value.length > 30 && readOnly ? (
+      {readOnly ? (
         <div className={`${styles.input} ${styles.readBox}`}>{value}</div>
       ) : (
-        <input type="text" className={styles.input} id={id} name={name} value={value} placeholder={placeholder} readOnly={readOnly} onChange={onChange} />
+        <textarea className={styles.textarea} id={id} name={name} defaultValue={value} placeholder={placeholder} onChange={onChange} onKeyDown={autoResizeTextarea} onKeyUp={autoResizeTextarea}></textarea>
       )}
     </div>
   );
