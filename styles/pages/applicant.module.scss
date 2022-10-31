@@ -121,13 +121,19 @@
       }
     }
   }
-  .submitButton {
-    width: 16.6rem;
-    height: 2.94rem;
-    background-color: var(--main);
+
+  .submit {
+    width: 100%;
     position: absolute;
-    left: 50%;
     bottom: 6rem;
+    left: 50%;
     transform: translateX(-50%);
+    @include display-flex($gap: 3rem);
+
+    .submitButton {
+      width: 16.6rem;
+      height: 2.94rem;
+      background-color: var(--main);
+    }
   }
 }

@@ -14,7 +14,7 @@ export default function Manage({ loginInfo, data }) {
       <Header loginInfo={loginInfo} />
       <div className={styles.titleContainer}>동아리 관리</div>
       <div className={styles.contentContainer}>
-        {data.map(({ belong }, index) => {
+        {data.map(({ belong, hasAnnouncement }, index) => {
           const {
             club: { id: clubId, name, category, area, image },
             position,
@@ -22,7 +22,7 @@ export default function Manage({ loginInfo, data }) {
           return (
             <div key={index} className={styles.clubContainer}>
               <Image
-                src={image || "https://images.unsplash.com/photo-1663841226199-a35e5b9c7261?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=192&q=80"}
+                src={"https://images.unsplash.com/photo-1663841226199-a35e5b9c7261?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=192&q=80"}
                 alt=""
                 width={192}
                 height={192}
@@ -47,11 +47,13 @@ export default function Manage({ loginInfo, data }) {
                     </li>
                   </Link>
                 ) : null}
-                {position === "pre" ? (
-                  <li className={styles.element}>
-                    지원자 관리
-                    <Arrow />
-                  </li>
+                {position === "pre" && hasAnnouncement ? (
+                  <Link href={`/manage/${clubId}/applicant`}>
+                    <li className={styles.element}>
+                      지원자 관리
+                      <Arrow />
+                    </li>
+                  </Link>
                 ) : null}
                 <Link href={`/manage/${clubId}/member`}>
                   <li className={styles.element}>
@@ -60,10 +62,12 @@ export default function Manage({ loginInfo, data }) {
                   </li>
                 </Link>
                 {position === "pre" ? (
-                  <li className={styles.element}>
-                    동아리 정보 수정
-                    <Arrow />
-                  </li>
+                  <Link href={`/register?update=yes&clubId=${clubId}`}>
+                    <li className={styles.element}>
+                      동아리 정보 수정
+                      <Arrow />
+                    </li>
+                  </Link>
                 ) : null}
               </ul>
             </div>
@@ -76,7 +80,7 @@ export default function Manage({ loginInfo, data }) {
 
 export async function getServerSideProps(ctx) {
   const { id: userId } = cookies(ctx);
-  const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/clubs`);
+  const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/belongs`);
   return {
     props: {
       data: data || [],

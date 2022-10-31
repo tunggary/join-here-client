@@ -7,11 +7,11 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-top: 4.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 .inputContainer {
   width: 25rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 2rem;
   @include display-flex($dir: column, $gap: 0.5rem);
 
   .label {
@@ -21,13 +21,26 @@
   }
 
   .input {
+    font-family: inherit;
     font-size: 1.25rem;
     width: 100%;
     height: 3.5rem;
     border-radius: 0.5rem;
     border: 2px solid var(--gray-hover);
     outline: none;
-    padding-left: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .textarea {
+    font-size: 1.25rem;
+    width: 100%;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--gray-hover);
+    outline: none;
+    padding: 0.5rem 0.75rem;
+    font-family: inherit;
+    resize: vertical;
   }
 
   .readBox {
