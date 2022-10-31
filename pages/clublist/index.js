@@ -18,7 +18,6 @@ export default function Home({ data, loginInfo }) {
   const [index, setIndex] = useState(dictClub[tab][1]);
 
   const filterClubList = (category) => {
-    console.log(data);
     return data
       .filter((club) => category === "all" || club.category == category)
       .map((club) => (
