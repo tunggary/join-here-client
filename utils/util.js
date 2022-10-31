@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const categoryList = [
   { id: "all", title: "전체" },
   { id: "stu", title: "학술" },
@@ -58,3 +60,15 @@ function pad(number, length) {
   }
   return str;
 }
+
+export const isManagement = async (clubId, userId) => {
+  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/belongs`);
+  const result = data.find(({ memberId, position }) => memberId === userId && position !== "nor");
+  return result !== undefined;
+};
+
+export const isMember = async (clubId, userId) => {
+  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/belongs`);
+  const result = data.find(({ memberId }) => memberId === userId);
+  return result !== undefined;
+};
