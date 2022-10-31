@@ -11,10 +11,11 @@ import Scrap from "@public/clublist/scrap.svg";
 import NonScrap from "@public/clublist/nonscrap.svg";
 
 import axios from "axios";
-import { categoryList, dictClub, dictArea } from "@utils/util";
+import { categoryList, dictClub, dictArea, isMember } from "@utils/util";
 import Link from "next/link";
+import cookies from "next-cookies";
 
-export default function Club({ data, loginInfo }) {
+export default function Club({ data, loginInfo, isBelong }) {
   const { area, category, introduction, name, scrap: scrapCount, view: viewCount } = data.club;
 
   const [index, setIndex] = useState(0);
@@ -80,7 +81,7 @@ export default function Club({ data, loginInfo }) {
           <span>찜한수 {scrapCount}</span>
         </div>
         <div className={`${styles.desc} ${introduction.length < 60 ? styles.center : undefined}`}>{introduction}</div>
-        {currentDate >= startDate && currentDate <= endDate ? (
+        {currentDate >= startDate && currentDate <= endDate && !isBelong ? (
           <Link href={`/clublist/${data.announcement?.id}/apply`}>
             <input type="button" value="지원하기" className={styles.applyButton} />
           </Link>
@@ -179,10 +180,13 @@ export default function Club({ data, loginInfo }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const { clubid } = ctx.params;
-  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubid}`);
+  const { id } = cookies(ctx);
+  const { clubId } = ctx.params;
+  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
+  const isBelong = await isMember(clubId, id);
   return {
     props: {
+      isBelong,
       data,
     },
   };
