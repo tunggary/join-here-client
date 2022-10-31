@@ -73,7 +73,7 @@ export default function Register({ loginInfo, defaultInfo = false }) {
           return;
         });
     }
-    push("/clublist?tab=all");
+    push("/manage");
   };
 
   return (
@@ -122,23 +122,24 @@ export default function Register({ loginInfo, defaultInfo = false }) {
 export async function getServerSideProps(ctx) {
   const { id: userId } = cookies(ctx);
   const { update, clubId } = ctx.query;
-  const isManager = await isManagement(clubId, userId);
 
-  if (update && !isManager) {
-    return {
-      redirect: {
-        destination: "/manage",
-        permanent: false,
-      },
-    };
-  }
   if (update) {
-    const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
-    return {
-      props: {
-        defaultInfo: data.club,
-      },
-    };
+    const isManager = await isManagement(clubId, userId);
+    if (!isManager) {
+      return {
+        redirect: {
+          destination: "/manage",
+          permanent: false,
+        },
+      };
+    } else {
+      const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
+      return {
+        props: {
+          defaultInfo: data.club,
+        },
+      };
+    }
   } else {
     return {
       props: {},
