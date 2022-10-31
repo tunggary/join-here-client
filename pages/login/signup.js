@@ -146,10 +146,10 @@ export default function Signup({ loginInfo }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const { joinhere } = cookies(ctx);
+  const { id } = cookies(ctx);
 
   //cookie 확인 후 token이 있으면 홈화면으로 redirect
-  if (joinhere) {
+  if (id) {
     return {
       redirect: {
         destination: "/",
