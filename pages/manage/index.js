@@ -62,10 +62,12 @@ export default function Manage({ loginInfo, data }) {
                   </li>
                 </Link>
                 {position === "pre" ? (
-                  <li className={styles.element}>
-                    동아리 정보 수정
-                    <Arrow />
-                  </li>
+                  <Link href={`/register?update=yes&clubId=${clubId}`}>
+                    <li className={styles.element}>
+                      동아리 정보 수정
+                      <Arrow />
+                    </li>
+                  </Link>
                 ) : null}
               </ul>
             </div>
