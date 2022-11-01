@@ -16,6 +16,7 @@ export default function Recruitment({ loginInfo, clubId }) {
     recruitmentStart: "",
     recruitmentEnd: "",
     recruitmentImage: null,
+    recruitmentPreview: null,
   });
   const [resumeCount, setResumeCount] = useState(1);
   const [resumeData, setResumeData] = useState({
@@ -30,7 +31,7 @@ export default function Recruitment({ loginInfo, clubId }) {
     },
   });
 
-  const { recruitmentName, recruitmentDesc, recruitmentStart, recruitmentEnd, recruitmentImage } = recruitmentData;
+  const { recruitmentName, recruitmentDesc, recruitmentStart, recruitmentEnd, recruitmentImage, recruitmentPreview } = recruitmentData;
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -38,10 +39,11 @@ export default function Recruitment({ loginInfo, clubId }) {
       if (!e.target.files || e.target.files.length === 0) {
         return;
       }
-      console.log(new Blob(URL.createObjectURL(e.target.files[0])));
+      console.log(e.target.files[0] instanceof Blob);
       setRecruitmentData({
         ...recruitmentData,
         [name]: URL.createObjectURL(e.target.files[0]),
+        recruitmentPreview: e.target.files[0],
       });
       return;
     }
@@ -112,11 +114,13 @@ export default function Recruitment({ loginInfo, clubId }) {
 
   const onSubmit = async () => {
     if (!validationCheck()) return;
+    console.log(recruitmentPreview instanceof Blob);
+
     const submitData = {
       id: clubId, //
       title: recruitmentName,
       description: recruitmentDesc,
-      poster: "", //recruitmentImage,
+      poster: "",
       startDate: `${recruitmentStart.slice(0, 4)}-${recruitmentStart.slice(4, 6)}-${recruitmentStart.slice(6, 8)}`,
       endDate: `${recruitmentEnd.slice(0, 4)}-${recruitmentEnd.slice(4, 6)}-${recruitmentEnd.slice(6, 8)}`,
       question: [...Object.values(resumeData).map(({ question }) => question)],
@@ -182,10 +186,10 @@ export default function Recruitment({ loginInfo, clubId }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const { clubid } = ctx.params;
+  const { clubid: clubId } = ctx.params;
   return {
     props: {
-      clubId: clubid,
+      clubId,
     },
   };
 }

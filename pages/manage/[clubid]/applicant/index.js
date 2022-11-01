@@ -143,7 +143,7 @@ export default function Applicant({ loginInfo, data, clubId }) {
 
 export async function getServerSideProps(ctx) {
   const { id } = cookies(ctx);
-  const { clubId } = ctx.params;
+  const { clubid: clubId } = ctx.params;
   const isManager = await isManagement(clubId, id);
   if (isManager) {
     const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/applications`);

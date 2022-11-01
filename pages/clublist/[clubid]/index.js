@@ -181,7 +181,7 @@ export default function Club({ data, loginInfo, isBelong }) {
 
 export async function getServerSideProps(ctx) {
   const { id } = cookies(ctx);
-  const { clubId } = ctx.params;
+  const { clubid: clubId } = ctx.params;
   const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
   const isBelong = await isMember(clubId, id);
   return {
