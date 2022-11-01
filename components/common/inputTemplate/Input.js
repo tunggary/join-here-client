@@ -11,7 +11,7 @@ export default function Input({ id, label, value = "", name, readOnly = false, p
   };
 
   useEffect(() => {
-    autoResizeTextarea();
+    !readOnly && autoResizeTextarea();
   }, []);
 
   return (
