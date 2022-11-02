@@ -5,10 +5,27 @@ import { useRouter } from "next/router";
 import cookies from "next-cookies";
 import Header from "@components/common/Header";
 import styles from "@styles/pages/register.module.scss";
-import { dictClub, dictArea, isManagement } from "@utils/util";
+import { dictClub, dictArea, isManagement, blobToBase64 } from "@utils/util";
 import Form from "@components/common/inputTemplate/Form";
 import Input from "@components/common/inputTemplate/Input";
 import Title from "@components/common/inputTemplate/Title";
+
+const message = [
+  {
+    //
+    q: "회비는 보통 얼마정도",
+    reply: [
+      {
+        id: "tunggary",
+        position: "nor",
+        sendedAt: "1112",
+        content: "학기당 십만원",
+      },
+      "ㄴㅇㄹㄴㅇㄹㄴㄹ",
+    ],
+  },
+  {},
+];
 
 export default function Register({ loginInfo, defaultInfo = false }) {
   const { push } = useRouter();
@@ -18,20 +35,24 @@ export default function Register({ loginInfo, defaultInfo = false }) {
     clubDesc: defaultInfo ? defaultInfo.introduction : "",
     clubCategory: defaultInfo ? defaultInfo.category : "",
     clubLocation: defaultInfo ? defaultInfo.area : "",
-    clubImage: null,
+    clubImage: defaultInfo ? defaultInfo.image : null,
+    clubImageBase64: null,
   });
 
-  const { clubName, clubDesc, clubCategory, clubLocation, clubImage } = submitData;
+  const { clubName, clubDesc, clubCategory, clubLocation, clubImage, clubImageBase64 } = submitData;
 
-  const onChange = (e) => {
+  const onChange = async (e) => {
     const { name, value } = e.target;
     if (name === "clubImage") {
       if (!e.target.files || e.target.files.length === 0) {
         return;
       }
+
+      const base64Array = await blobToBase64(e.target.files[0]);
       setSubmitData({
         ...submitData,
         [name]: URL.createObjectURL(e.target.files[0]),
+        clubImageBase64: base64Array,
       });
     } else {
       setSubmitData({
@@ -50,7 +71,7 @@ export default function Register({ loginInfo, defaultInfo = false }) {
           introduction: clubDesc,
           category: clubCategory,
           area: clubLocation,
-          image: "",
+          image: clubImageBase64,
         })
         .catch((err) => {
           console.log(err.message);

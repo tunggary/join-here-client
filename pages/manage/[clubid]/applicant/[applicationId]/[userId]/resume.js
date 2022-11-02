@@ -30,7 +30,7 @@ export async function getServerSideProps(ctx) {
   const { userid: userId, applicationid: applicationId, clubid: clubId } = ctx.params;
   const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/applications/${applicationId}`);
   const isManager = await isManagement(clubId, id);
-  if (isManager) {
+  if (isManager || id === userId) {
     return {
       props: {
         clubId,

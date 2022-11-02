@@ -1,19 +1,13 @@
 import { useState } from "react";
 import Layout from "@components/common/Layout";
 import styles from "@styles/pages/applicant.module.scss";
-import { formatting, isManagement } from "@utils/util";
+import { formatting, isManagement, stateDict } from "@utils/util";
 import Arrow from "@public/clublist/arrow-right.svg";
 import axios from "axios";
 import cookies from "next-cookies";
 import Link from "next/link";
 
 export default function Applicant({ loginInfo, data, clubId }) {
-  const tabElement = {
-    all: "전체",
-    pass: "합격",
-    fail: "불합격",
-    hold: "미결정",
-  };
   const [tab, setTab] = useState("all");
   const [applicantList, setApplicantList] = useState(
     data.map((applicant) => {
@@ -89,7 +83,7 @@ export default function Applicant({ loginInfo, data, clubId }) {
     <Layout loginInfo={loginInfo} pageTitle="지원자 관리">
       <div className={styles.container}>
         <div className={styles.tab}>
-          {Object.entries(tabElement).map(([ele, kor], index) => (
+          {Object.entries(stateDict).map(([ele, kor], index) => (
             <div key={index} className={`${styles.tabElement} ${tab === ele ? styles.active : null}`} onClick={() => setTab(ele)}>
               {kor}
             </div>
@@ -107,7 +101,7 @@ export default function Applicant({ loginInfo, data, clubId }) {
                   </div>
                   <h2 className={styles.name}>{memberName}</h2>
                   <h3 className={styles.date}>{formatting(new Date(applicationTime))}</h3>
-                  <h3 className={`${styles[passState]}`}>{tabElement[passState]}</h3>
+                  <h3 className={`${styles[passState]}`}>{stateDict[passState]}</h3>
                   <Link href={`/manage/${clubId}/applicant/${applicationId}/${memberId}/resume`}>
                     <h3 className={styles.resume}>
                       <p>상세보기</p> <Arrow />

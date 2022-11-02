@@ -50,7 +50,9 @@ export default function Header({ loginInfo }) {
           <li className={styles.navList}>
             <Link href="/manage">동아리 관리</Link>
           </li>
-          <li className={styles.navList}>마이페이지</li>
+          <li className={styles.navList}>
+            <Link href="/mypage">마이페이지</Link>
+          </li>
         </ul>
       </nav>
     </header>

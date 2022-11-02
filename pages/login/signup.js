@@ -93,7 +93,6 @@ export default function Signup({ loginInfo }) {
         },
       }
     );
-    console.log(res);
     alert("회원가입이 성공적으로 되었습니다.");
     push("/login");
   };

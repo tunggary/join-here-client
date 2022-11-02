@@ -1,6 +1,6 @@
 import styles from "@styles/components/common/inputTemplate.module.scss";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+
 export default function Input({ id, label, value = "", name, readOnly = false, placeholder = "", onChange }) {
   const ref = useRef(null);
 

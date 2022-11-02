@@ -1,5 +1,31 @@
 import axios from "axios";
 
+export const blobToBase64 = (blob) => {
+  let reader = new FileReader();
+  let base64data;
+  reader.readAsDataURL(blob);
+
+  return new Promise((resolve) => {
+    reader.onloadend = function () {
+      base64data = reader.result;
+      resolve(base64data);
+    };
+  });
+};
+
+export const stateDict = {
+  all: "전체",
+  pass: "합격",
+  fail: "불합격",
+  hold: "미결정",
+};
+
+export const mypageList = [
+  { id: "update", title: "내 정보 수정" },
+  { id: "belong", title: "소속 동아리" },
+  { id: "apply", title: "지원 동아리" },
+];
+
 export const categoryList = [
   { id: "all", title: "전체" },
   { id: "stu", title: "학술" },

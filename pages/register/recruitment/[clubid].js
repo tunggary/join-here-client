@@ -6,6 +6,7 @@ import Header from "@components/common/Header";
 import styles from "@styles/pages/register.module.scss";
 import Plus from "@public/clublist/plus.svg";
 import Minus from "@public/clublist/minus.svg";
+import { blobToBase64 } from "@utils/util";
 
 export default function Recruitment({ loginInfo, clubId }) {
   const { push } = useRouter();
@@ -33,17 +34,19 @@ export default function Recruitment({ loginInfo, clubId }) {
 
   const { recruitmentName, recruitmentDesc, recruitmentStart, recruitmentEnd, recruitmentImage, recruitmentPreview } = recruitmentData;
 
-  const onChange = (e) => {
+  const onChange = async (e) => {
     const { name, value } = e.target;
     if (name === "recruitmentImage") {
       if (!e.target.files || e.target.files.length === 0) {
         return;
       }
-      console.log(e.target.files[0] instanceof Blob);
+      const blob = e.target.files[0];
+      const base64 = await blobToBase64(blob);
+      console.log(base64);
       setRecruitmentData({
         ...recruitmentData,
-        [name]: URL.createObjectURL(e.target.files[0]),
-        recruitmentPreview: e.target.files[0],
+        [name]: URL.createObjectURL(blob),
+        recruitmentPreview: base64,
       });
       return;
     }
@@ -120,7 +123,7 @@ export default function Recruitment({ loginInfo, clubId }) {
       id: clubId, //
       title: recruitmentName,
       description: recruitmentDesc,
-      poster: "",
+      poster: recruitmentPreview,
       startDate: `${recruitmentStart.slice(0, 4)}-${recruitmentStart.slice(4, 6)}-${recruitmentStart.slice(6, 8)}`,
       endDate: `${recruitmentEnd.slice(0, 4)}-${recruitmentEnd.slice(4, 6)}-${recruitmentEnd.slice(6, 8)}`,
       question: [...Object.values(resumeData).map(({ question }) => question)],
