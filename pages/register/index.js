@@ -10,10 +10,36 @@ import Form from "@components/common/inputTemplate/Form";
 import Input from "@components/common/inputTemplate/Input";
 import Title from "@components/common/inputTemplate/Title";
 
+// post
+// 1. 질문
+//    - 질문 삭제
+// 2. 질문에 대한 답변
+//    - 질문에 대한 답변 삭제
 const message = [
   {
     //
+    messageId: 1,
     q: "회비는 보통 얼마정도",
+    reply: [
+      {
+        replyId: 2,
+        id: "tunggary",
+        position: "nor",
+        sendedAt: "1112",
+        content: "학기당 십만원",
+      },
+      {
+        replyId: 2,
+        id: "tunggary",
+        position: "nor",
+        sendedAt: "1112",
+        content: "학기당 십만원",
+      },
+    ],
+  },
+  {
+    //
+    q: "활동시간은 언제인가요?",
     reply: [
       {
         id: "tunggary",
@@ -21,10 +47,15 @@ const message = [
         sendedAt: "1112",
         content: "학기당 십만원",
       },
-      "ㄴㅇㄹㄴㅇㄹㄴㄹ",
+      {
+        id: "tunggary",
+        position: "nor",
+        sendedAt: "1112",
+        content: "학기당 십만원",
+      },
+      
     ],
   },
-  {},
 ];
 
 export default function Register({ loginInfo, defaultInfo = false }) {

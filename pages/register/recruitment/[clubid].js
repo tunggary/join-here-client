@@ -42,7 +42,6 @@ export default function Recruitment({ loginInfo, clubId }) {
       }
       const blob = e.target.files[0];
       const base64 = await blobToBase64(blob);
-      console.log(base64);
       setRecruitmentData({
         ...recruitmentData,
         [name]: URL.createObjectURL(blob),
@@ -90,12 +89,13 @@ export default function Recruitment({ loginInfo, clubId }) {
   };
 
   const validationCheck = () => {
-    // for (const key in recruitmentData) {
-    //   if (recruitmentData[key] === null || recruitmentData[key] === "") {
-    //     alert("기본 정보를 입력해주세요");
-    //     return false;
-    //   }
-    // }
+    for (const key in recruitmentData) {
+      if (key === "recruitmentPreview" || key === "recruitmentImage") continue;
+      if (recruitmentData[key] === null || recruitmentData[key] === "") {
+        alert("기본 정보를 입력해주세요");
+        return false;
+      }
+    }
     const startDate = new Date(`${recruitmentStart.slice(0, 4)}-${recruitmentStart.slice(4, 6)}-${recruitmentStart.slice(6, 8)}`);
     const endDate = new Date(`${recruitmentEnd.slice(0, 4)}-${recruitmentEnd.slice(4, 6)}-${recruitmentEnd.slice(6, 8)}`);
     const current = new Date();
@@ -106,19 +106,17 @@ export default function Recruitment({ loginInfo, clubId }) {
       return false;
     }
 
-    // for (const key in resumeData) {
-    //   if (resumeData[key].question === "") {
-    //     alert("질문 정보를 입력해주세요");
-    //     return false;
-    //   }
-    // }
+    for (const key in resumeData) {
+      if (resumeData[key].question === "") {
+        alert("질문 정보를 입력해주세요");
+        return false;
+      }
+    }
     return true;
   };
 
   const onSubmit = async () => {
     if (!validationCheck()) return;
-    console.log(recruitmentPreview instanceof Blob);
-
     const submitData = {
       id: clubId, //
       title: recruitmentName,
@@ -128,6 +126,8 @@ export default function Recruitment({ loginInfo, clubId }) {
       endDate: `${recruitmentEnd.slice(0, 4)}-${recruitmentEnd.slice(4, 6)}-${recruitmentEnd.slice(6, 8)}`,
       question: [...Object.values(resumeData).map(({ question }) => question)],
     };
+
+    console.log(submitData.poster);
     try {
       await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/announcements`, submitData);
       alert("성공적으로 모집공고를 등록했습니다.");

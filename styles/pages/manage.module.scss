@@ -32,6 +32,10 @@
       display: flex;
       justify-content: space-between;
       padding: 1.8rem 2.5rem;
+      img {
+        object-fit: contain;
+      }
+
       .info {
         width: 40%;
         display: flex;

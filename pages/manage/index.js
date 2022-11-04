@@ -21,12 +21,7 @@ export default function Manage({ loginInfo, data }) {
           } = belong;
           return (
             <div key={index} className={styles.clubContainer}>
-              <Image
-                src={"https://images.unsplash.com/photo-1663841226199-a35e5b9c7261?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=192&q=80"}
-                alt=""
-                width={192}
-                height={192}
-              ></Image>
+              <Image src={image || "/clublist/default.png"} alt="" width={192} height={192} />
               <div className={styles.info}>
                 <div className={styles.title}>{name}</div>
                 <div className={styles.badge}>
