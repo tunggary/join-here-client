@@ -1,9 +1,18 @@
 import Head from "next/head";
 import Link from "next/link";
 import styles from "@styles/components/Header.module.scss";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
-export default function Header({ loginInfo }) {
+export default function Header({ loginInfo, searchValue }) {
   const { isLoggedIn, userName } = loginInfo;
+  const { push } = useRouter();
+  const [search, setSearch] = useState(searchValue || "");
+
+  const submitSearchData = (e) => {
+    e.preventDefault();
+    push(`/clublist?tab=all${search ? `&search=${search}` : ""}`);
+  };
 
   return (
     <header className={styles.container}>
@@ -16,9 +25,9 @@ export default function Header({ loginInfo }) {
         <div className={styles.logo}>
           <Link href="/">join here</Link>
         </div>
-        <div className={styles.searchBar}>
-          <input type="text" placeholder="어떤 동아리를 검색할까요?" />
-        </div>
+        <form className={styles.searchBar} onSubmit={submitSearchData}>
+          <input type="text" placeholder="어떤 동아리를 검색할까요?" value={search} onChange={(e) => setSearch(e.target.value)} />
+        </form>
         <div className={styles.information}>
           {isLoggedIn ? (
             <div>

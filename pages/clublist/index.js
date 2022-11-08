@@ -9,7 +9,7 @@ import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import { categoryList, dictClub, dictArea } from "@utils/util";
 
-export default function Home({ data, loginInfo }) {
+export default function Home({ data, search, loginInfo }) {
   const {
     query: { tab },
     push,
@@ -48,7 +48,7 @@ export default function Home({ data, loginInfo }) {
   };
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
+      <Header loginInfo={loginInfo} searchValue={decodeURI(search)} />
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
         <div className={styles.tabListContainer}>
           <TabList className={styles.tabList}>
@@ -57,7 +57,7 @@ export default function Home({ data, loginInfo }) {
                 <div
                   className={index == idx ? styles.active : undefined}
                   onClick={() => {
-                    push(`clublist?tab=${category.id}`, undefined, {
+                    push(`clublist?tab=${category.id}${search ? `&search=${search}` : ""}`, undefined, {
                       shallow: true,
                     });
                   }}
@@ -81,10 +81,22 @@ export default function Home({ data, loginInfo }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const { data } = await axios.get("http://3.36.36.87:8080/clubs");
-  return {
-    props: {
-      data,
-    },
-  };
+  const { search } = ctx.query;
+  const encodeURISearch = encodeURI(search);
+  if (search) {
+    const { data } = await axios.get(`http://3.36.36.87:8080/clubs/search?query=${encodeURISearch}`);
+    return {
+      props: {
+        search: encodeURISearch,
+        data,
+      },
+    };
+  } else {
+    const { data } = await axios.get("http://3.36.36.87:8080/clubs");
+    return {
+      props: {
+        data,
+      },
+    };
+  }
 }
