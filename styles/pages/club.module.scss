@@ -250,9 +250,14 @@
           left: -1.8rem;
           top: -0.8rem;
         }
+
+        .manager {
+          color: var(--main);
+          font-size: var(--subtitle);
+          font-weight: 500;
+        }
         .name {
           font-size: var(--subtitle);
-          color: var(--main);
         }
       }
     }

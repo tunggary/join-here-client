@@ -11,7 +11,7 @@ import Scrap from "@public/clublist/scrap.svg";
 import NonScrap from "@public/clublist/nonscrap.svg";
 
 import axios from "axios";
-import { categoryList, dictClub, dictArea, isMember } from "@utils/util";
+import { categoryList, dictClub, dictArea, isMember, formatting } from "@utils/util";
 import Link from "next/link";
 import cookies from "next-cookies";
 
@@ -91,27 +91,15 @@ export default function Club({ data, loginInfo, isBelong }) {
             <div className={styles.reviewContainer}>
               <input type="button" value="후기 등록하기" className={styles.reviewAssignButton} />
               <div className={styles.reviewList}>
-                <section className={styles.review}>
-                  <div className={styles.info}>
-                    <div className={styles.name}>세오칸</div>
-                    <div className={styles.date}>05/29 03:22</div>
-                  </div>
-                  <div className={styles.text}>아무 생각 없이 들어갔는데 유익하고 재밌었습니다!</div>
-                </section>
-                <section className={styles.review}>
-                  <div className={styles.info}>
-                    <div className={styles.name}>세오칸</div>
-                    <div className={styles.date}>05/29 03:22</div>
-                  </div>
-                  <div className={styles.text}>아무 생각 없이 들어갔는데 유익하고 재밌었습니다!</div>
-                </section>
-                <section className={styles.review}>
-                  <div className={styles.info}>
-                    <div className={styles.name}>세오칸</div>
-                    <div className={styles.date}>05/29 03:22</div>
-                  </div>
-                  <div className={styles.text}>아무 생각 없이 들어갔는데 유익하고 재밌었습니다!</div>
-                </section>
+                {data.reviews.map(({ reviewId, reviewContent, memberId, reviewTime }) => (
+                  <section key={reviewId} className={styles.review}>
+                    <div className={styles.info}>
+                      <div className={styles.name}>{memberId}</div>
+                      <div className={styles.date}>{formatting(new Date(reviewTime))}</div>
+                    </div>
+                    <div className={styles.text}>{reviewContent}</div>
+                  </section>
+                ))}
               </div>
             </div>
           </TabPanel>
@@ -119,29 +107,25 @@ export default function Club({ data, loginInfo, isBelong }) {
             <div className={styles.reviewContainer}>
               <input type="button" value="질문 등록하기" className={styles.reviewAssignButton} />
               <div className={styles.reviewList}>
-                <section className={styles.review}>
-                  <div className={styles.info}>
-                    <div className={styles.name}>세오칸</div>
-                    <div className={styles.date}>05/29 03:22</div>
-                  </div>
-                  <div className={styles.text}>회비는 얼마 정도인가요?</div>
-                  <div className={styles.apply}>
-                    <Apply />
+                {data.qnas.map(({ question, answers }) => (
+                  <section key={question.id} className={styles.review}>
                     <div className={styles.info}>
-                      <div className={styles.name}>담당자</div>
-                      <div className={styles.date}>05/29 09:22</div>
+                      <div className={styles.name}>{question.memberId}</div>
+                      <div className={styles.date}>{formatting(new Date(question.time))}</div>
                     </div>
-                    <div className={styles.text}>학기당 10만원 입니다!</div>
-                  </div>
-                  <div className={styles.apply}>
-                    <Apply />
-                    <div className={styles.info}>
-                      <div className={styles.name}>세오칸</div>
-                      <div className={styles.date}>05/29 10:01</div>
-                    </div>
-                    <div className={styles.text}>감사합니다😄</div>
-                  </div>
-                </section>
+                    <div className={styles.text}>{question.content}</div>
+                    {answers.map((answer) => (
+                      <div key={answer.id} className={styles.apply}>
+                        <Apply />
+                        <div className={styles.info}>
+                          {answer.isManager ? <div className={styles.manager}>{`${answer.memberId}(담당자)`}</div> : <div className={styles.name}>{answer.memberId}</div>}
+                          <div className={styles.date}>{formatting(new Date(answer.time))}</div>
+                        </div>
+                        <div className={styles.text}>{answer.content}</div>
+                      </div>
+                    ))}
+                  </section>
+                ))}
               </div>
             </div>
           </TabPanel>
