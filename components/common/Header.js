@@ -14,6 +14,11 @@ export default function Header({ loginInfo, searchValue }) {
     push(`/clublist?tab=all${search ? `&search=${search}` : ""}`);
   };
 
+  const logout = () => {
+    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    window.location.href = "/";
+  };
+
   return (
     <header className={styles.container}>
       <Head>
@@ -32,6 +37,9 @@ export default function Header({ loginInfo, searchValue }) {
           {isLoggedIn ? (
             <div>
               <span>{userName}</span>님
+              <div className={styles.logout} onClick={logout}>
+                로그아웃
+              </div>
             </div>
           ) : (
             <>

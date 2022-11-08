@@ -47,12 +47,38 @@
       cursor: pointer;
 
       div {
+        height: 3rem;
         margin-left: 1.5rem;
         transition: all ease 0.15s;
 
         span {
           font-weight: 600;
           margin-right: 0.2rem;
+        }
+
+        .logout {
+          display: none;
+          position: absolute;
+          top: 3rem;
+          right: 0;
+          cursor: pointer;
+          padding: 5px 10px;
+          border-radius: 8px;
+          border: 2px solid #aeaeae;
+          background-color: var(--white);
+          font-size: var(--h6);
+          color: #aeaeae;
+
+          &:hover {
+            color: var(--red);
+            border-color: var(--red);
+          }
+        }
+
+        &:hover {
+          .logout {
+            display: block;
+          }
         }
       }
     }
