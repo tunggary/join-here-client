@@ -169,6 +169,15 @@ export async function getServerSideProps(ctx) {
   const { id: userId } = cookies(ctx);
   const { update, clubId } = ctx.query;
 
+  if (!userId) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   if (update) {
     const isManager = await isManagement(clubId, userId);
     if (!isManager) {
