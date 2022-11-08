@@ -10,11 +10,6 @@ import Form from "@components/common/inputTemplate/Form";
 import Input from "@components/common/inputTemplate/Input";
 import Title from "@components/common/inputTemplate/Title";
 
-// post
-// 1. 질문
-//    - 질문 삭제
-// 2. 질문에 대한 답변
-//    - 질문에 대한 답변 삭제
 const message = [
   {
     //

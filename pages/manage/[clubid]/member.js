@@ -52,7 +52,7 @@ export default function Member({ loginInfo, data, clubId }) {
 
   const deleteMember = async (index) => {
     try {
-      const { data } = await axios.delete(`http://3.36.36.87:8080/clubs/${clubId}/belong`, {
+      const { data } = await axios.delete(`http://3.36.36.87:8080/clubs/${clubId}/belongs`, {
         data: {
           belongId: memberList[index].belongId,
         },
@@ -66,7 +66,7 @@ export default function Member({ loginInfo, data, clubId }) {
 
   const addMember = async (memberId) => {
     try {
-      const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/belong`, {
+      const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/belongs`, {
         memberId,
       });
       return data;
@@ -78,7 +78,7 @@ export default function Member({ loginInfo, data, clubId }) {
 
   const changePosition = async (newPosition, index) => {
     try {
-      const { data } = await axios.patch(`http://3.36.36.87:8080/clubs/${clubid}/belong`, {
+      const { data } = await axios.patch(`http://3.36.36.87:8080/clubs/${clubId}/belongs`, {
         belongId: memberList[index].belongId,
         position: newPosition,
       });
