@@ -48,7 +48,7 @@ export default function Home({ data, search, loginInfo }) {
   };
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} searchValue={decodeURI(search)} />
+      <Header loginInfo={loginInfo} searchValue={search ? decodeURI(search) : null} />
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
         <div className={styles.tabListContainer}>
           <TabList className={styles.tabList}>
