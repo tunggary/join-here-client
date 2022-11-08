@@ -53,7 +53,6 @@ const message = [
         sendedAt: "1112",
         content: "학기당 십만원",
       },
-      
     ],
   },
 ];
@@ -117,7 +116,7 @@ export default function Register({ loginInfo, defaultInfo = false }) {
           introduction: clubDesc,
           category: clubCategory,
           area: clubLocation,
-          image: "",
+          image: clubImageBase64,
         })
         .catch((err) => {
           console.log(err.message);
