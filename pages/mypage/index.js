@@ -185,7 +185,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       userData,
-      clubData,
+      clubData: clubData || [],
       applicationData,
     },
   };
