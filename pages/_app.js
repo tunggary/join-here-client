@@ -3,7 +3,14 @@ import Head from "next/head";
 import "@styles/global.scss";
 
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Head>
+        <title>조인히어</title>
+      </Head>
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
