@@ -10,48 +10,6 @@ import Form from "@components/common/inputTemplate/Form";
 import Input from "@components/common/inputTemplate/Input";
 import Title from "@components/common/inputTemplate/Title";
 
-const message = [
-  {
-    //
-    messageId: 1,
-    q: "회비는 보통 얼마정도",
-    reply: [
-      {
-        replyId: 2,
-        id: "tunggary",
-        position: "nor",
-        sendedAt: "1112",
-        content: "학기당 십만원",
-      },
-      {
-        replyId: 2,
-        id: "tunggary",
-        position: "nor",
-        sendedAt: "1112",
-        content: "학기당 십만원",
-      },
-    ],
-  },
-  {
-    //
-    q: "활동시간은 언제인가요?",
-    reply: [
-      {
-        id: "tunggary",
-        position: "nor",
-        sendedAt: "1112",
-        content: "학기당 십만원",
-      },
-      {
-        id: "tunggary",
-        position: "nor",
-        sendedAt: "1112",
-        content: "학기당 십만원",
-      },
-    ],
-  },
-];
-
 export default function Register({ loginInfo, defaultInfo = false }) {
   const { push } = useRouter();
 
