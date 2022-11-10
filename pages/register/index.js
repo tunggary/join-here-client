@@ -19,7 +19,7 @@ export default function Register({ loginInfo, defaultInfo = false }) {
     clubCategory: defaultInfo ? defaultInfo.category : "",
     clubLocation: defaultInfo ? defaultInfo.area : "",
     clubImage: defaultInfo ? defaultInfo.image : null,
-    clubImageBase64: null,
+    clubImageBase64: defaultInfo ? defaultInfo.image : null,
   });
 
   const { clubName, clubDesc, clubCategory, clubLocation, clubImage, clubImageBase64 } = submitData;
