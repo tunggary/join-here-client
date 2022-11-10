@@ -12,17 +12,52 @@ import NonScrap from "@public/clublist/nonscrap.svg";
 
 import axios from "axios";
 import { categoryList, dictClub, dictArea, isMember, formatting } from "@utils/util";
+import Reply from "@components/club/Reply";
 import Link from "next/link";
 import cookies from "next-cookies";
 
-export default function Club({ data, loginInfo, isBelong }) {
+export default function Club({ data, loginInfo, isBelong, clubId }) {
   const { area, category, introduction, name, scrap: scrapCount, view: viewCount } = data.club;
 
   const [index, setIndex] = useState(0);
-
   const [scrap, setScrap] = useState(false);
+
+  const [reviewList, setReviewList] = useState(data.reviews);
+  const [reviewInput, setReviewInput] = useState("");
+
+  const [qnaList, setQnaList] = useState(data.qnas);
+  const [qnaInput, setQnaInput] = useState("");
+
   const [currentDate, startDate, endDate] = [new Date(), new Date(data.announcement?.startDate), new Date(data.announcement?.endDate)];
   const categoryList = data.announcement ? ["모집공고", "후기", "Q&A"] : ["후기", "Q&A"];
+
+  const submitReview = async () => {
+    if (confirm("후기를 남기시겠습니까?")) {
+      try {
+        const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/reviews`, {
+          memberId: loginInfo.userName,
+          reviewContent: reviewInput,
+        });
+        setReviewList(data);
+      } catch (error) {
+        alert("다시 시도해주세요");
+      }
+    }
+  };
+
+  const submitQna = async () => {
+    if (confirm("질문을 남기시겠습니까?")) {
+      try {
+        const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/qnas/questions`, {
+          memberId: loginInfo.userName,
+          questionContent: qnaInput,
+        });
+        setQnaList(data);
+      } catch (error) {
+        alert("다시 시도해주세요");
+      }
+    }
+  };
   return (
     <div className={styles.container}>
       <Header loginInfo={loginInfo} />
@@ -89,9 +124,10 @@ export default function Club({ data, loginInfo, isBelong }) {
 
           <TabPanel>
             <div className={styles.reviewContainer}>
-              <input type="button" value="후기 등록하기" className={styles.reviewAssignButton} />
+              <textarea className={styles.reviewInput} defaultValue={reviewInput} onChange={(e) => setReviewInput(e.target.value)}></textarea>
+              <input type="button" value="후기 등록하기" className={styles.reviewAssignButton} onClick={submitReview} />
               <div className={styles.reviewList}>
-                {data.reviews.map(({ reviewId, reviewContent, memberId, reviewTime }) => (
+                {reviewList.map(({ reviewId, reviewContent, memberId, reviewTime }) => (
                   <section key={reviewId} className={styles.review}>
                     <div className={styles.info}>
                       <div className={styles.name}>{memberId}</div>
@@ -105,9 +141,10 @@ export default function Club({ data, loginInfo, isBelong }) {
           </TabPanel>
           <TabPanel>
             <div className={styles.reviewContainer}>
-              <input type="button" value="질문 등록하기" className={styles.reviewAssignButton} />
+              <textarea className={styles.reviewInput} defaultValue={qnaInput} onChange={(e) => setQnaInput(e.target.value)}></textarea>
+              <input type="button" value="질문 등록하기" className={styles.reviewAssignButton} onClick={submitQna} />
               <div className={styles.reviewList}>
-                {data.qnas.map(({ question, answers }) => (
+                {qnaList.map(({ question, answers }) => (
                   <section key={question.id} className={styles.review}>
                     <div className={styles.info}>
                       <div className={styles.name}>{question.memberId}</div>
@@ -124,6 +161,9 @@ export default function Club({ data, loginInfo, isBelong }) {
                         <div className={styles.text}>{answer.content}</div>
                       </div>
                     ))}
+                    <div className={styles.apply}>
+                      <Reply clubId={clubId} questionId={question.id} memberId={loginInfo.userName} setQnaList={setQnaList} />
+                    </div>
                   </section>
                 ))}
               </div>
@@ -142,6 +182,7 @@ export async function getServerSideProps(ctx) {
   const isBelong = await isMember(clubId, id);
   return {
     props: {
+      clubId,
       isBelong,
       data,
     },
