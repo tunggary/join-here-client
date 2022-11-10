@@ -39,6 +39,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
           reviewContent: reviewInput,
         });
         setReviewList(data);
+        setReviewInput("");
       } catch (error) {
         alert("다시 시도해주세요");
       }
@@ -51,6 +52,46 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
         const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/qnas/questions`, {
           memberId: loginInfo.userName,
           questionContent: qnaInput,
+        });
+        setQnaList(data);
+        setQnaInput("");
+      } catch (error) {
+        alert("다시 시도해주세요");
+      }
+    }
+  };
+
+  const deleteReview = async (reviewId) => {
+    if (confirm("후기를 삭제하시겠습니까?")) {
+      try {
+        const { data } = await axios.delete(`http://3.36.36.87:8080/clubs/${clubId}/reviews`, {
+          data: { reviewId },
+        });
+        setReviewList(data);
+      } catch (error) {
+        alert("다시 시도해주세요");
+      }
+    }
+  };
+
+  const deleteQna = async (questionId) => {
+    if (confirm("질문을 삭제하시겠습니까?")) {
+      try {
+        const { data } = await axios.delete(`http://3.36.36.87:8080/clubs/${clubId}/qnas/questions`, {
+          data: { questionId },
+        });
+        setQnaList(data);
+      } catch (error) {
+        alert("다시 시도해주세요");
+      }
+    }
+  };
+
+  const deleteReply = async (answerId) => {
+    if (confirm("대댓글을 삭제하시겠습니까?")) {
+      try {
+        const { data } = await axios.delete(`http://3.36.36.87:8080/clubs/${clubId}/qnas/answers`, {
+          data: { answerId },
         });
         setQnaList(data);
       } catch (error) {
@@ -124,7 +165,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
 
           <TabPanel>
             <div className={styles.reviewContainer}>
-              <textarea className={styles.reviewInput} defaultValue={reviewInput} onChange={(e) => setReviewInput(e.target.value)}></textarea>
+              <textarea className={styles.reviewInput} value={reviewInput} onChange={(e) => setReviewInput(e.target.value)}></textarea>
               <input type="button" value="후기 등록하기" className={styles.reviewAssignButton} onClick={submitReview} />
               <div className={styles.reviewList}>
                 {reviewList.map(({ reviewId, reviewContent, memberId, reviewTime }) => (
@@ -132,6 +173,11 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
                     <div className={styles.info}>
                       <div className={styles.name}>{memberId}</div>
                       <div className={styles.date}>{formatting(new Date(reviewTime))}</div>
+                      {memberId === loginInfo.userName && (
+                        <div className={styles.delete} onClick={() => deleteReview(reviewId)}>
+                          삭제
+                        </div>
+                      )}
                     </div>
                     <div className={styles.text}>{reviewContent}</div>
                   </section>
@@ -141,7 +187,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
           </TabPanel>
           <TabPanel>
             <div className={styles.reviewContainer}>
-              <textarea className={styles.reviewInput} defaultValue={qnaInput} onChange={(e) => setQnaInput(e.target.value)}></textarea>
+              <textarea className={styles.reviewInput} value={qnaInput} onChange={(e) => setQnaInput(e.target.value)}></textarea>
               <input type="button" value="질문 등록하기" className={styles.reviewAssignButton} onClick={submitQna} />
               <div className={styles.reviewList}>
                 {qnaList.map(({ question, answers }) => (
@@ -149,6 +195,11 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
                     <div className={styles.info}>
                       <div className={styles.name}>{question.memberId}</div>
                       <div className={styles.date}>{formatting(new Date(question.time))}</div>
+                      {question.memberId === loginInfo.userName && (
+                        <div className={styles.delete} onClick={() => deleteQna(question.id)}>
+                          삭제
+                        </div>
+                      )}
                     </div>
                     <div className={styles.text}>{question.content}</div>
                     {answers.map((answer) => (
@@ -157,6 +208,11 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
                         <div className={styles.info}>
                           {answer.isManager ? <div className={styles.manager}>{`${answer.memberId}(담당자)`}</div> : <div className={styles.name}>{answer.memberId}</div>}
                           <div className={styles.date}>{formatting(new Date(answer.time))}</div>
+                          {answer.memberId === loginInfo.userName && (
+                            <div className={styles.delete} onClick={() => deleteReply(answer.id)}>
+                              삭제
+                            </div>
+                          )}
                         </div>
                         <div className={styles.text}>{answer.content}</div>
                       </div>

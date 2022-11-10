@@ -232,6 +232,13 @@
       justify-content: space-between;
       padding: 1.6rem 1.3rem;
 
+      .delete {
+        font-size: var(--caption);
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--main);
+      }
+
       .info {
         display: flex;
         align-items: center;
