@@ -112,7 +112,7 @@ export default function Member({ loginInfo, data, clubId }) {
                     <input type="checkbox" id={memberId} />
                     <label htmlFor={memberId}>
                       <Option />
-                      <div className={styles.modal}>
+                      <div className={styles.modal} style={{ zIndex: 1 }}>
                         {Object.keys(positionList)
                           .filter((p) => p !== position)
                           .map((p, idx) => (
