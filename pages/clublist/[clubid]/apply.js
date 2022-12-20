@@ -4,8 +4,8 @@ import Form from "@components/common/inputTemplate/Form";
 import Title from "@components/common/inputTemplate/Title";
 import Input from "@components/common/inputTemplate/Input";
 import axios from "axios";
-import cookies from "next-cookies";
 import { useRouter } from "next/router";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Apply({ loginInfo, data, userId, clubId }) {
   const { push } = useRouter();
@@ -55,15 +55,15 @@ export default function Apply({ loginInfo, data, userId, clubId }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id } = cookies(ctx);
-  const { clubid: clubId } = ctx.params;
+export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {
+  if (!userId) {
+    throw { url: "/login" };
+  }
+  const { clubid: clubId } = context.params;
   const { data } = await axios.get(`http://3.36.36.87:8080/announcements/${clubId}/questions`);
   return {
-    props: {
-      userId: id,
-      clubId,
-      data: data || [],
-    },
+    userId,
+    clubId,
+    data: data || [],
   };
-}
+});
