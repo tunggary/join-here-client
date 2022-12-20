@@ -3,15 +3,14 @@ import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import styles from "@styles/pages/mypage.module.scss";
 import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
-import { categoryList, dictClub, dictArea, mypageList, stateDict } from "@utils/util";
-import cookies from "next-cookies";
+import { dictClub, dictArea, mypageList, stateDict } from "@utils/util";
 import Input from "@components/common/inputTemplate/Input";
 import Form from "@components/common/inputTemplate/Form";
 import Arrow from "@public/manage/arrow-right.svg";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Home({ loginInfo, userData, clubData, applicationData }) {
   const [index, setIndex] = useState(0);
@@ -168,25 +167,20 @@ export default function Home({ loginInfo, userData, clubData, applicationData })
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id } = cookies(ctx);
-
-  if (!id) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
+export const getServerSideProps = ssrWrapper(async ({ userId }) => {
+  if (!userId) {
+    throw { url: "/login" };
   }
-  const { data: userData } = await axios.get(`http://3.36.36.87:8080/members/${id}`);
-  const { data: clubData } = await axios.get(`http://3.36.36.87:8080/members/${id}/belongs`);
-  const { data: applicationData } = await axios.get(`http://3.36.36.87:8080/members/${id}/applications`);
-  return {
-    props: {
-      userData,
-      clubData: clubData || [],
-      applicationData,
-    },
-  };
-}
+
+  return await Promise.all([
+    axios.get(`http://3.36.36.87:8080/members/${userId}`), //
+    axios.get(`http://3.36.36.87:8080/members/${userId}/belongs`),
+    axios.get(`http://3.36.36.87:8080/members/${userId}/applications`),
+  ]).then(([userData, clubData, applicationData]) => {
+    return {
+      userData: userData.data,
+      clubData: clubData.data || [],
+      applicationData: applicationData.data,
+    };
+  });
+});
