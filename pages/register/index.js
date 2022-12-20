@@ -2,13 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import cookies from "next-cookies";
 import Header from "@components/common/Header";
 import styles from "@styles/pages/register.module.scss";
 import { dictClub, dictArea, isManagement, blobToBase64 } from "@utils/util";
 import Form from "@components/common/inputTemplate/Form";
 import Input from "@components/common/inputTemplate/Input";
 import Title from "@components/common/inputTemplate/Title";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Register({ loginInfo, defaultInfo = false }) {
   const { push } = useRouter();
@@ -123,39 +123,17 @@ export default function Register({ loginInfo, defaultInfo = false }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id: userId } = cookies(ctx);
-  const { update, clubId } = ctx.query;
+export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {
+  const { update, clubId } = context.query;
 
-  if (!userId) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  if (!userId) throw { url: "/login" };
 
+  // 동아리 정보 수정인 경우
   if (update) {
-    const isManager = await isManagement(clubId, userId);
-    if (!isManager) {
-      return {
-        redirect: {
-          destination: "/manage",
-          permanent: false,
-        },
-      };
-    } else {
-      const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
-      return {
-        props: {
-          defaultInfo: data.club,
-        },
-      };
-    }
-  } else {
-    return {
-      props: {},
-    };
+    if (!(await isManagement(clubId, userId))) throw { url: "/manage" };
+
+    const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
+
+    return { defaultInfo: data.club };
   }
-}
+});

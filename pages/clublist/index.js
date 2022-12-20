@@ -8,6 +8,7 @@ import styles from "@styles/pages/clublist.module.scss";
 import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import { categoryList, dictClub, dictArea } from "@utils/util";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Home({ data, search, loginInfo }) {
   const {
@@ -80,23 +81,17 @@ export default function Home({ data, search, loginInfo }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { search } = ctx.query;
+export const getServerSideProps = ssrWrapper(async ({ context }) => {
+  const { search } = context.query;
   const encodeURISearch = encodeURI(search);
   if (search) {
     const { data } = await axios.get(`http://3.36.36.87:8080/clubs/search?query=${encodeURISearch}`);
     return {
-      props: {
-        search: encodeURISearch,
-        data,
-      },
+      search: encodeURISearch,
+      data,
     };
   } else {
     const { data } = await axios.get("http://3.36.36.87:8080/clubs");
-    return {
-      props: {
-        data,
-      },
-    };
+    return { data };
   }
-}
+});

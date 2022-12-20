@@ -6,7 +6,8 @@ import Header from "@components/common/Header";
 import styles from "@styles/pages/register.module.scss";
 import Plus from "@public/clublist/plus.svg";
 import Minus from "@public/clublist/minus.svg";
-import { blobToBase64 } from "@utils/util";
+import { blobToBase64, isManagement } from "@utils/util";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Recruitment({ loginInfo, clubId }) {
   const { push } = useRouter();
@@ -188,11 +189,9 @@ export default function Recruitment({ loginInfo, clubId }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { clubid: clubId } = ctx.params;
-  return {
-    props: {
-      clubId,
-    },
-  };
-}
+export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
+  const { clubid: clubId } = context.params;
+  if (!userId) throw { url: "/login" };
+  if (!(await isManagement(clubId, userId))) throw { url: "/manage" };
+  return { clubId };
+});

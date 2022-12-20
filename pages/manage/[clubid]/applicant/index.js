@@ -4,8 +4,8 @@ import styles from "@styles/pages/applicant.module.scss";
 import { formatting, isManagement, stateDict } from "@utils/util";
 import Arrow from "@public/clublist/arrow-right.svg";
 import axios from "axios";
-import cookies from "next-cookies";
 import Link from "next/link";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Applicant({ loginInfo, data, clubId }) {
   const [tab, setTab] = useState("all");
@@ -135,24 +135,16 @@ export default function Applicant({ loginInfo, data, clubId }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id } = cookies(ctx);
-  const { clubid: clubId } = ctx.params;
-  const isManager = await isManagement(clubId, id);
-  if (isManager) {
-    const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/applications`);
-    return {
-      props: {
-        clubId,
-        data: data || [],
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/manage",
-        permanent: false,
-      },
-    };
-  }
-}
+export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
+  const { clubid: clubId } = context.params;
+
+  if (!userId) throw { url: "/login" };
+  if (!(await isManagement(clubId, userId))) throw { url: "/manage" };
+
+  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/applications`);
+
+  return {
+    clubId,
+    data: data || [],
+  };
+});

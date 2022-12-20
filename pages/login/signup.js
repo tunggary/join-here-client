@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import cookies from "next-cookies";
 import styles from "@styles/pages/signup.module.scss";
 import Header from "@components/common/Header";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Signup({ loginInfo }) {
   const { push } = useRouter();
@@ -144,20 +144,8 @@ export default function Signup({ loginInfo }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id } = cookies(ctx);
-
-  //cookie 확인 후 token이 있으면 홈화면으로 redirect
-  if (id) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  } else {
-    return {
-      props: {},
-    };
+export const getServerSideProps = ssrWrapper(async ({ userId }) => {
+  if (userId) {
+    throw { url: "/" };
   }
-}
+});

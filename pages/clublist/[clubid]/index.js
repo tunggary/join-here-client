@@ -9,12 +9,11 @@ import Location from "@public/clublist/location.svg";
 import Apply from "@public/clublist/apply.svg";
 import Scrap from "@public/clublist/scrap.svg";
 import NonScrap from "@public/clublist/nonscrap.svg";
-
 import axios from "axios";
-import { categoryList, dictClub, dictArea, isMember, formatting } from "@utils/util";
+import { dictClub, dictArea, isMember, formatting } from "@utils/util";
 import Reply from "@components/club/Reply";
 import Link from "next/link";
-import cookies from "next-cookies";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Club({ data, loginInfo, isBelong, clubId }) {
   const { area, category, introduction, name, scrap: scrapCount, view: viewCount } = data.club;
@@ -231,16 +230,13 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id } = cookies(ctx);
-  const { clubid: clubId } = ctx.params;
+export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {
+  const { clubid: clubId } = context.params;
   const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
-  const isBelong = await isMember(clubId, id);
+  const isBelong = await isMember(clubId, userId);
   return {
-    props: {
-      clubId,
-      isBelong,
-      data,
-    },
+    clubId,
+    isBelong,
+    data,
   };
-}
+});

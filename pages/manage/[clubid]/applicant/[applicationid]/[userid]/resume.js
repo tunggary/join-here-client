@@ -6,6 +6,7 @@ import Form from "@components/common/inputTemplate/Form";
 import Title from "@components/common/inputTemplate/Title";
 import Input from "@components/common/inputTemplate/Input";
 import { isManagement } from "@utils/util";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Resume({ loginInfo, data, clubId }) {
   const { push } = useRouter();
@@ -25,24 +26,16 @@ export default function Resume({ loginInfo, data, clubId }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id } = cookies(ctx);
-  const { userid: userId, applicationid: applicationId, clubid: clubId } = ctx.params;
-  const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/applications/${applicationId}`);
-  const isManager = await isManagement(clubId, id);
-  if (isManager || id === userId) {
-    return {
-      props: {
-        clubId,
-        data: data || [],
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/manage",
-        permanent: false,
-      },
-    };
-  }
-}
+export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
+  const { userid: resumeId, applicationid: applicationId, clubid: clubId } = context.params;
+
+  if (!userId) throw { url: "/login" };
+  if (!(await isManagement(clubId, userId)) && userId !== resumeId) throw { url: "/manage" };
+
+  const { data } = await axios.get(`http://3.36.36.87:8080/members/${resumeId}/applications/${applicationId}`);
+
+  return {
+    clubId,
+    data: data || [],
+  };
+});
