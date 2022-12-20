@@ -4,6 +4,8 @@ import styles from "@styles/pages/member.module.scss";
 import Option from "@public/manage/option.svg";
 import Input from "@components/common/inputTemplate/Input";
 import axios from "axios";
+import ssrWrapper from "@utils/wrapper";
+import { isMember } from "@utils/util";
 
 export default function Member({ loginInfo, data, clubId }) {
   const [plusId, setPlusId] = useState("");
@@ -138,14 +140,16 @@ export default function Member({ loginInfo, data, clubId }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { clubid: clubId } = ctx.params;
+export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
+  const { clubid: clubId } = context.params;
+
+  if (!userId) throw { url: "/login" };
+  if (!isMember(clubId, userId)) throw { url: "/manage" };
+
   const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/belongs`);
 
   return {
-    props: {
-      clubId,
-      data: data || [],
-    },
+    clubId,
+    data: data || [],
   };
-}
+});
