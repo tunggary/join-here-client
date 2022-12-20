@@ -2,11 +2,11 @@ import styles from "@styles/pages/manage.module.scss";
 import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import Arrow from "@public/clublist/arrow-right.svg";
-import cookies from "next-cookies";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { categoryList, dictArea, dictPosition } from "@utils/util";
+import ssrWrapper from "@utils/wrapper";
 
 export default function Manage({ loginInfo, data }) {
   return (
@@ -73,12 +73,12 @@ export default function Manage({ loginInfo, data }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id: userId } = cookies(ctx);
+export const getServerSideProps = ssrWrapper(async ({ userId }) => {
+  if (!userId) {
+    throw { url: "/login" };
+  }
   const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/belongs`);
   return {
-    props: {
-      data: data || [],
-    },
+    data: data || [],
   };
-}
+});
