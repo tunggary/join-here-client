@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "@utils/axios";
 
 export const blobToBase64 = (blob) => {
   let reader = new FileReader();
@@ -88,13 +88,13 @@ function pad(number, length) {
 }
 
 export const isManagement = async (clubId, userId) => {
-  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/belongs`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
   const result = data.find(({ memberId, position }) => memberId === userId && position !== "nor");
   return result !== undefined;
 };
 
 export const isMember = async (clubId, userId) => {
-  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/belongs`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
   const result = data.find(({ memberId }) => memberId === userId);
   return result !== undefined;
 };

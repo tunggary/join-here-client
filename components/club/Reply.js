@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Apply from "@public/clublist/apply.svg";
-import axios from "axios";
+import axiosInstance from "@utils/axios";
 
 export default function Reply({ clubId, memberId, questionId, setQnaList }) {
   const [reply, setReply] = useState("");
   const submitReply = async () => {
     try {
-      const { data } = await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/qnas/answers`, {
+      const data = await axiosInstance.post(`/clubs/${clubId}/qnas/answers`, {
         memberId,
         questionId,
         answerContent: reply,

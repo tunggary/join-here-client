@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
-import axios from "axios";
-import cookies from "next-cookies";
 import Layout from "@components/common/Layout";
 import Form from "@components/common/inputTemplate/Form";
 import Title from "@components/common/inputTemplate/Title";
 import Input from "@components/common/inputTemplate/Input";
 import { isManagement } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Resume({ loginInfo, data, clubId }) {
   const { push } = useRouter();
@@ -32,7 +31,7 @@ export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
   if (!userId) throw { url: "/login" };
   if (!(await isManagement(clubId, userId)) && userId !== resumeId) throw { url: "/manage" };
 
-  const { data } = await axios.get(`http://3.36.36.87:8080/members/${resumeId}/applications/${applicationId}`);
+  const data = await axiosInstance.get(`/members/${resumeId}/applications/${applicationId}`);
 
   return {
     clubId,

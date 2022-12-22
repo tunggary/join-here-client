@@ -1,6 +1,5 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@styles/pages/mypage.module.scss";
@@ -11,6 +10,7 @@ import Input from "@components/common/inputTemplate/Input";
 import Form from "@components/common/inputTemplate/Form";
 import Arrow from "@public/manage/arrow-right.svg";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Home({ loginInfo, userData, clubData, applicationData }) {
   const [index, setIndex] = useState(0);
@@ -24,8 +24,6 @@ export default function Home({ loginInfo, userData, clubData, applicationData })
   const [check, setCheck] = useState({
     password: false,
   });
-
-  console.log(clubData);
 
   const { name, birth, phone } = data;
 
@@ -73,21 +71,13 @@ export default function Home({ loginInfo, userData, clubData, applicationData })
 
   const signup = async () => {
     try {
-      await axios.patch(
-        "http://3.36.36.87:8080/members",
-        {
-          id: userData.id,
-          name,
-          password: userData.password,
-          birthday: `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`,
-          phone,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axiosInstance.patch("/members", {
+        id: userData.id,
+        name,
+        password: userData.password,
+        birthday: `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`,
+        phone,
+      });
       alert("성공적으로 수정했습니다.");
     } catch (error) {
       alert("잠시후 다시 시도해주세요.");
@@ -173,14 +163,12 @@ export const getServerSideProps = ssrWrapper(async ({ userId }) => {
   }
 
   return await Promise.all([
-    axios.get(`http://3.36.36.87:8080/members/${userId}`), //
-    axios.get(`http://3.36.36.87:8080/members/${userId}/belongs`),
-    axios.get(`http://3.36.36.87:8080/members/${userId}/applications`),
-  ]).then(([userData, clubData, applicationData]) => {
-    return {
-      userData: userData.data,
-      clubData: clubData.data || [],
-      applicationData: applicationData.data,
-    };
-  });
+    axiosInstance.get(`/members/${userId}`), //
+    axiosInstance.get(`/members/${userId}/belongs`),
+    axiosInstance.get(`/members/${userId}/applications`),
+  ]).then(([userData, clubData, applicationData]) => ({
+    userData,
+    clubData: clubData || [],
+    applicationData,
+  }));
 });

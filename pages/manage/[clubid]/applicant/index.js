@@ -3,9 +3,9 @@ import Layout from "@components/common/Layout";
 import styles from "@styles/pages/applicant.module.scss";
 import { formatting, isManagement, stateDict } from "@utils/util";
 import Arrow from "@public/clublist/arrow-right.svg";
-import axios from "axios";
 import Link from "next/link";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Applicant({ loginInfo, data, clubId }) {
   const [tab, setTab] = useState("all");
@@ -24,7 +24,7 @@ export default function Applicant({ loginInfo, data, clubId }) {
         return { applicationId, passState };
       });
       try {
-        await axios.patch(`http://3.36.36.87:8080/clubs/${clubId}/applications`, submitData);
+        await axiosInstance.patch(`/clubs/${clubId}/applications`, submitData);
         alert("성공적으로 저장했습니다.");
       } catch (error) {
         alert("임시 저장에 실패했습니다. 잠시후 다시 시도해주세요.");
@@ -38,7 +38,7 @@ export default function Applicant({ loginInfo, data, clubId }) {
         return { applicationId, passState, memberId };
       });
       try {
-        await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/applications/publish`, submitData);
+        await axiosInstance.post(`/clubs/${clubId}/applications/publish`, submitData);
         alert("성공적으로 완료했습니다.");
       } catch (error) {
         alert("최종 결과 저장에 실패했습니다. 잠시후 다시 시도해주세요.");
@@ -141,7 +141,7 @@ export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
   if (!userId) throw { url: "/login" };
   if (!(await isManagement(clubId, userId))) throw { url: "/manage" };
 
-  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/applications`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/applications`);
 
   return {
     clubId,

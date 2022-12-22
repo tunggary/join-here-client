@@ -3,9 +3,9 @@ import Layout from "@components/common/Layout";
 import Form from "@components/common/inputTemplate/Form";
 import Title from "@components/common/inputTemplate/Title";
 import Input from "@components/common/inputTemplate/Input";
-import axios from "axios";
 import { useRouter } from "next/router";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Apply({ loginInfo, data, userId, clubId }) {
   const { push } = useRouter();
@@ -35,7 +35,7 @@ export default function Apply({ loginInfo, data, userId, clubId }) {
     });
     if (confirm("해당 지원서를 지원하겠습니까?")) {
       try {
-        await axios.post(`http://3.36.36.87:8080/announcements/${clubId}/answers`, submitData);
+        await axiosInstance.post(`/announcements/${clubId}/answers`, submitData);
         alert("해당 지원서를 성공적으로 지원했습니다.");
         push("/clublist?tab=all");
       } catch (error) {
@@ -60,7 +60,7 @@ export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {
     throw { url: "/login" };
   }
   const { clubid: clubId } = context.params;
-  const { data } = await axios.get(`http://3.36.36.87:8080/announcements/${clubId}/questions`);
+  const data = await axiosInstance.get(`/announcements/${clubId}/questions`);
   return {
     userId,
     clubId,
