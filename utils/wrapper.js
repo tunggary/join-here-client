@@ -14,7 +14,7 @@ const ssrWrapper = (callback) => {
       },
     };
     try {
-      const { id: userId } = cookies(context);
+      const { user_id: userId } = cookies(context);
       if (userId) {
         returnData.props.isLoggedIn = true;
         returnData.props.userId = userId;
