@@ -132,7 +132,7 @@ export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {
   if (update) {
     if (!(await isManagement(clubId, userId))) throw { url: "/manage" };
 
-    const { data } = await axiosInstance.get(`/clubs/${clubId}`);
+    const data = await axiosInstance.get(`/clubs/${clubId}`);
 
     return { defaultInfo: data.club };
   }

@@ -77,7 +77,7 @@ export const getServerSideProps = ssrWrapper(async ({ userId }) => {
   if (!userId) {
     throw { url: "/login" };
   }
-  const { data } = await axiosInstance.get(`/members/${userId}/belongs`);
+  const data = await axiosInstance.get(`/members/${userId}/belongs`);
   return {
     data: data || [],
   };

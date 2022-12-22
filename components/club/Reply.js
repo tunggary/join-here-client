@@ -6,7 +6,7 @@ export default function Reply({ clubId, memberId, questionId, setQnaList }) {
   const [reply, setReply] = useState("");
   const submitReply = async () => {
     try {
-      const { data } = await axiosInstance.post(`/clubs/${clubId}/qnas/answers`, {
+      const data = await axiosInstance.post(`/clubs/${clubId}/qnas/answers`, {
         memberId,
         questionId,
         answerContent: reply,

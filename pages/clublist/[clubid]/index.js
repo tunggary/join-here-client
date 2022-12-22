@@ -33,7 +33,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
   const submitReview = async () => {
     if (confirm("후기를 남기시겠습니까?")) {
       try {
-        const { data } = await axiosInstance.post(`/clubs/${clubId}/reviews`, {
+        const data = await axiosInstance.post(`/clubs/${clubId}/reviews`, {
           memberId: loginInfo.userName,
           reviewContent: reviewInput,
         });
@@ -48,7 +48,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
   const submitQna = async () => {
     if (confirm("질문을 남기시겠습니까?")) {
       try {
-        const { data } = await axiosInstance.post(`/clubs/${clubId}/qnas/questions`, {
+        const data = await axiosInstance.post(`/clubs/${clubId}/qnas/questions`, {
           memberId: loginInfo.userName,
           questionContent: qnaInput,
         });
@@ -63,7 +63,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
   const deleteReview = async (reviewId) => {
     if (confirm("후기를 삭제하시겠습니까?")) {
       try {
-        const { data } = await axiosInstance.delete(`/clubs/${clubId}/reviews`, {
+        const data = await axiosInstance.delete(`/clubs/${clubId}/reviews`, {
           data: { reviewId },
         });
         setReviewList(data);
@@ -76,7 +76,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
   const deleteQna = async (questionId) => {
     if (confirm("질문을 삭제하시겠습니까?")) {
       try {
-        const { data } = await axiosInstance.delete(`/clubs/${clubId}/qnas/questions`, {
+        const data = await axiosInstance.delete(`/clubs/${clubId}/qnas/questions`, {
           data: { questionId },
         });
         setQnaList(data);
@@ -89,7 +89,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
   const deleteReply = async (answerId) => {
     if (confirm("대댓글을 삭제하시겠습니까?")) {
       try {
-        const { data } = await axiosInstance.delete(`/clubs/${clubId}/qnas/answers`, {
+        const data = await axiosInstance.delete(`/clubs/${clubId}/qnas/answers`, {
           data: { answerId },
         });
         setQnaList(data);
@@ -232,7 +232,7 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
 
 export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {
   const { clubid: clubId } = context.params;
-  const { data } = await axiosInstance.get(`/clubs/${clubId}`);
+  const data = await axiosInstance.get(`/clubs/${clubId}`);
   const isBelong = await isMember(clubId, userId);
   return {
     clubId,

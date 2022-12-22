@@ -54,7 +54,7 @@ export default function Member({ loginInfo, data, clubId }) {
 
   const deleteMember = async (index) => {
     try {
-      const { data } = await axiosInstance.delete(`/clubs/${clubId}/belongs`, {
+      const data = await axiosInstance.delete(`/clubs/${clubId}/belongs`, {
         data: {
           belongId: memberList[index].belongId,
         },
@@ -68,7 +68,7 @@ export default function Member({ loginInfo, data, clubId }) {
 
   const addMember = async (memberId) => {
     try {
-      const { data } = await axiosInstance.post(`/clubs/${clubId}/belongs`, {
+      const data = await axiosInstance.post(`/clubs/${clubId}/belongs`, {
         memberId,
       });
       return data;
@@ -80,7 +80,7 @@ export default function Member({ loginInfo, data, clubId }) {
 
   const changePosition = async (newPosition, index) => {
     try {
-      const { data } = await axiosInstance.patch(`/clubs/${clubId}/belongs`, {
+      const data = await axiosInstance.patch(`/clubs/${clubId}/belongs`, {
         belongId: memberList[index].belongId,
         position: newPosition,
       });
@@ -146,7 +146,7 @@ export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
   if (!userId) throw { url: "/login" };
   if (!isMember(clubId, userId)) throw { url: "/manage" };
 
-  const { data } = await axiosInstance.get(`/clubs/${clubId}/belongs`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
 
   return {
     clubId,
