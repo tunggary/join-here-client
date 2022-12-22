@@ -1,10 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@styles/pages/login.module.scss";
 import Header from "@components/common/Header";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Login({ loginInfo }) {
   const { back } = useRouter();
@@ -39,32 +39,23 @@ export default function Login({ loginInfo }) {
   };
 
   const login = async () => {
-    // const data = await axios
-    //   .post(
-    //     "http://3.36.36.87:8080/members/login",
-    //     {
-    //       id: loginId,
-    //       password,
-    //     },
-    //     {
-    //       withCredentials: true,
-    //     }
-    //   )
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
-    // console.log(data);
-    const data = await axios
-      .post("/api/login", {
-        loginId,
-        password,
-      })
+    const data = await axiosInstance
+      .post(
+        "/api/login",
+        {
+          loginId,
+          password,
+        },
+        {
+          baseURL: "http://localhost:3000",
+        }
+      )
       .catch(() => {
         alert("로그인 과정에서 오류가 발생했습니다. 다시 시도해주세요.");
         return;
       });
     if (data?.data?.error === "not_matching") {
-      alert("loginId혹은 비밀번호를 확인해주세요.");
+      alert("loginId 혹은 비밀번호를 확인해주세요.");
       setData({
         loginId: "",
         password: "",

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Header from "@components/common/Header";
@@ -8,6 +7,7 @@ import Plus from "@public/clublist/plus.svg";
 import Minus from "@public/clublist/minus.svg";
 import { blobToBase64, isManagement } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Recruitment({ loginInfo, clubId }) {
   const { push } = useRouter();
@@ -128,9 +128,8 @@ export default function Recruitment({ loginInfo, clubId }) {
       question: [...Object.values(resumeData).map(({ question }) => question)],
     };
 
-    console.log(submitData.poster);
     try {
-      await axios.post(`http://3.36.36.87:8080/clubs/${clubId}/announcements`, submitData);
+      await axiosInstance.post(`/clubs/${clubId}/announcements`, submitData);
       alert("성공적으로 모집공고를 등록했습니다.");
       push("/clublist?tab=all");
     } catch (error) {

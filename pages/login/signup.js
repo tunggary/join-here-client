@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
 import styles from "@styles/pages/signup.module.scss";
 import Header from "@components/common/Header";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Signup({ loginInfo }) {
   const { push } = useRouter();
@@ -78,21 +78,13 @@ export default function Signup({ loginInfo }) {
   };
 
   const signup = async () => {
-    const res = await axios.post(
-      "http://3.36.36.87:8080/members",
-      {
-        id: loginId,
-        name,
-        password,
-        birthday: `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`,
-        phone,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    await axiosInstance.post("/members", {
+      id: loginId,
+      name,
+      password,
+      birthday: `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`,
+      phone,
+    });
     alert("회원가입이 성공적으로 되었습니다.");
     push("/login");
   };

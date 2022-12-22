@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Header from "@components/common/Header";
@@ -9,6 +8,7 @@ import Form from "@components/common/inputTemplate/Form";
 import Input from "@components/common/inputTemplate/Input";
 import Title from "@components/common/inputTemplate/Title";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Register({ loginInfo, defaultInfo = false }) {
   const { push } = useRouter();
@@ -47,8 +47,8 @@ export default function Register({ loginInfo, defaultInfo = false }) {
 
   const onSubmit = async () => {
     if (defaultInfo) {
-      await axios
-        .patch("http://3.36.36.87:8080/clubs", {
+      await axiosInstance
+        .patch("/clubs", {
           clubId: defaultInfo.id,
           name: clubName,
           introduction: clubDesc,
@@ -62,8 +62,8 @@ export default function Register({ loginInfo, defaultInfo = false }) {
           return;
         });
     } else {
-      await axios
-        .post("http://3.36.36.87:8080/clubs", {
+      await axiosInstance
+        .post("/clubs", {
           id: loginInfo.userName,
           name: clubName,
           introduction: clubDesc,
@@ -132,7 +132,7 @@ export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {
   if (update) {
     if (!(await isManagement(clubId, userId))) throw { url: "/manage" };
 
-    const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}`);
+    const { data } = await axiosInstance.get(`/clubs/${clubId}`);
 
     return { defaultInfo: data.club };
   }

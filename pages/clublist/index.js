@@ -1,6 +1,5 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,6 +8,7 @@ import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import { categoryList, dictClub, dictArea } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
 
 export default function Home({ data, search, loginInfo }) {
   const {
@@ -85,13 +85,13 @@ export const getServerSideProps = ssrWrapper(async ({ context }) => {
   const { search } = context.query;
   const encodeURISearch = encodeURI(search);
   if (search) {
-    const { data } = await axios.get(`http://3.36.36.87:8080/clubs/search?query=${encodeURISearch}`);
+    const { data } = await axiosInstance.get(`/clubs/search?query=${encodeURISearch}`);
     return {
       search: encodeURISearch,
       data,
     };
   } else {
-    const { data } = await axios.get("http://3.36.36.87:8080/clubs");
+    const { data } = await axiosInstance.get("/clubs");
     return { data };
   }
 });
