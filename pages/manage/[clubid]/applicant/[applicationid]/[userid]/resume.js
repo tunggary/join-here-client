@@ -31,7 +31,7 @@ export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
   if (!userId) throw { url: "/login" };
   if (!(await isManagement(clubId, userId)) && userId !== resumeId) throw { url: "/manage" };
 
-  const { data } = await axiosInstance.get(`/members/${resumeId}/applications/${applicationId}`);
+  const data = await axiosInstance.get(`/members/${resumeId}/applications/${applicationId}`);
 
   return {
     clubId,

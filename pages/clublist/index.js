@@ -85,13 +85,13 @@ export const getServerSideProps = ssrWrapper(async ({ context }) => {
   const { search } = context.query;
   const encodeURISearch = encodeURI(search);
   if (search) {
-    const { data } = await axiosInstance.get(`/clubs/search?query=${encodeURISearch}`);
+    const data = await axiosInstance.get(`/clubs/search?query=${encodeURISearch}`);
     return {
       search: encodeURISearch,
       data,
     };
   } else {
-    const { data } = await axiosInstance.get("/clubs");
+    const data = await axiosInstance.get("/clubs");
     return { data };
   }
 });

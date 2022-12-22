@@ -88,13 +88,13 @@ function pad(number, length) {
 }
 
 export const isManagement = async (clubId, userId) => {
-  const { data } = await axiosInstance.get(`/clubs/${clubId}/belongs`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
   const result = data.find(({ memberId, position }) => memberId === userId && position !== "nor");
   return result !== undefined;
 };
 
 export const isMember = async (clubId, userId) => {
-  const { data } = await axiosInstance.get(`/clubs/${clubId}/belongs`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
   const result = data.find(({ memberId }) => memberId === userId);
   return result !== undefined;
 };

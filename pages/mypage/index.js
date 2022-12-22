@@ -166,11 +166,9 @@ export const getServerSideProps = ssrWrapper(async ({ userId }) => {
     axiosInstance.get(`/members/${userId}`), //
     axiosInstance.get(`/members/${userId}/belongs`),
     axiosInstance.get(`/members/${userId}/applications`),
-  ]).then(([userData, clubData, applicationData]) => {
-    return {
-      userData: userData.data,
-      clubData: clubData.data || [],
-      applicationData: applicationData.data,
-    };
-  });
+  ]).then(([userData, clubData, applicationData]) => ({
+    userData,
+    clubData: clubData || [],
+    applicationData,
+  }));
 });
