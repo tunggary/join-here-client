@@ -14,7 +14,7 @@ export default function MyApp({ Component, pageProps }) {
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const { id } = cookies(ctx);
+  const { user_id } = cookies(ctx);
 
   let pageProps = {};
   if (Component.getInitialProps) {
@@ -24,8 +24,8 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   pageProps = {
     ...pageProps,
     loginInfo: {
-      isLoggedIn: id ? true : false,
-      userName: id || "조인히어",
+      isLoggedIn: user_id ? true : false,
+      userName: user_id || "조인히어",
     },
   };
 
