@@ -62,7 +62,7 @@ export default function Header({ loginInfo, searchValue }) {
             <Link href="/clublist?tab=all">동아리 목록</Link>
           </li>
           <li className={styles.navList}>
-            <Link href="/register">동아리 등록</Link>
+            <Link href="/club/registration">동아리 등록</Link>
           </li>
           <li className={styles.navList}>
             <Link href="/manage">동아리 관리</Link>

@@ -57,7 +57,7 @@ export default function Manage({ loginInfo, data }) {
                   </li>
                 </Link>
                 {position === "pre" ? (
-                  <Link href={`/register?update=yes&clubId=${clubId}`}>
+                  <Link href={`/club/modification?clubId=${clubId}`}>
                     <li className={styles.element}>
                       동아리 정보 수정
                       <Arrow />
@@ -74,9 +74,8 @@ export default function Manage({ loginInfo, data }) {
 }
 
 export const getServerSideProps = ssrWrapper(async ({ userId }) => {
-  if (!userId) {
-    throw { url: "/login" };
-  }
+  if (!userId) throw { url: "/login" };
+
   const data = await axiosInstance.get(`/members/${userId}/belongs`);
   return {
     data: data || [],
