@@ -1,6 +1,4 @@
 import { useRouter } from "next/router";
-import styles from "@styles/pages/register.module.scss";
-import Header from "@components/common/Header";
 import ClubTemplate from "@components/common/Template/Club";
 import axiosInstance from "@utils/axios";
 import ssrWrapper from "@utils/wrapper";
@@ -29,12 +27,7 @@ export default function Registration({ loginInfo }) {
     router.push("/manage");
   };
 
-  return (
-    <>
-      <Header loginInfo={loginInfo} />
-      <ClubTemplate title="동아리 등록" onSubmit={onSubmit} submitText="등록하기" />
-    </>
-  );
+  return <ClubTemplate title="동아리 등록" onSubmit={onSubmit} submitText="등록하기" />;
 }
 
 export const getServerSideProps = ssrWrapper(async ({ userId }) => {

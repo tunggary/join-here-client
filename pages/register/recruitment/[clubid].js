@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Header from "@components/common/Header";
 import styles from "@styles/pages/register.module.scss";
 import Plus from "@public/clublist/plus.svg";
 import Minus from "@public/clublist/minus.svg";
@@ -139,7 +138,6 @@ export default function Recruitment({ loginInfo, clubId }) {
 
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
       <div className={styles.titleContainer}>모집공고 등록</div>
       <div className={styles.registerContainer}>
         <div className={styles.title}>기본정보</div>
