@@ -13,6 +13,6 @@ module.exports = {
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
-    prependData: `@import "styles/_mixins.scss";`,
+    prependData: '@import "styles/_mixins.scss"; @import "styles/_variables.scss";',
   },
 };
