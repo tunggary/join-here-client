@@ -14,6 +14,6 @@ export default async function login(req, res) {
       console.log(err.message);
       res.status(500);
     });
-  res.setHeader("Set-Cookie", `user_id=${data.data.id}; path=/;`);
+  res.setHeader("Set-Cookie", `user_id=${data.id}; path=/;`);
   res.status(200).json({ error: null });
 }
