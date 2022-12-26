@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  min-width: 1280px;
+  height: max-content;
+
+  .page_content {
+    margin: auto;
+    width: 100%;
+    height: max-content;
+    min-height: calc(100vh - $header_height - $footer_height);
+  }
+}
