@@ -1,6 +1,7 @@
 import cookies from "next-cookies";
 import Head from "next/head";
 import "@styles/global.scss";
+import Layout from "@components/Layout";
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -8,7 +9,9 @@ export default function MyApp({ Component, pageProps }) {
       <Head>
         <title>조인히어</title>
       </Head>
-      <Component {...pageProps} />
+      <Layout {...pageProps}>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
