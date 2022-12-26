@@ -1,5 +1,4 @@
 import Form from "@components/common/Form";
-import Header from "@components/common/Header";
 import { useForm } from "@hooks/useForm";
 import { dictArea, dictClub } from "@utils/util";
 import styles from "@styles/pages/register.module.scss";

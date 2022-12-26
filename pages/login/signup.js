@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "@styles/pages/signup.module.scss";
-import Header from "@components/common/Header";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 
@@ -100,7 +99,6 @@ export default function Signup({ loginInfo }) {
 
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
       <div className={styles.title}>회원가입</div>
       <section className={styles.signupContainer}>
         <div className={styles.input}>

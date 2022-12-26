@@ -1,5 +1,4 @@
 import styles from "@styles/pages/manage.module.scss";
-import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import Arrow from "@public/clublist/arrow-right.svg";
 import Image from "next/image";
@@ -11,7 +10,6 @@ import axiosInstance from "@utils/axios";
 export default function Manage({ loginInfo, data }) {
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
       <div className={styles.titleContainer}>동아리 관리</div>
       <div className={styles.contentContainer}>
         {data.map(({ belong, hasAnnouncement }, index) => {
@@ -25,7 +23,7 @@ export default function Manage({ loginInfo, data }) {
               <div className={styles.info}>
                 <div className={styles.title}>{name}</div>
                 <div className={styles.badge}>
-                  <div className={styles.category}>{categoryList.find(({ id }) => id === category).title}</div>
+                  <div className={styles.category}>{categoryList.find(({ id }) => id === category)?.title}</div>
                   <div className={styles.location}>
                     <Location />
                     {dictArea[area]}

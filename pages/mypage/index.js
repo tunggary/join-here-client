@@ -3,7 +3,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@styles/pages/mypage.module.scss";
-import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import { dictClub, dictArea, mypageList, stateDict } from "@utils/util";
 import Input from "@components/common/inputTemplate/Input";
@@ -86,7 +85,6 @@ export default function Home({ loginInfo, userData, clubData, applicationData })
 
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
         <div className={styles.tabListContainer}>
           <TabList className={styles.tabList}>
@@ -116,7 +114,7 @@ export default function Home({ loginInfo, userData, clubData, applicationData })
                   </div>
                   <div className={styles.clubInfo}>
                     <div className={styles.title}>{club.name}</div>
-                    <div className={styles.category}>{dictClub[club.category][0]}</div>
+                    <div className={styles.category}>{dictClub[club.category] ? dictClub[club.category][0] : club.category}</div>
                     <div className={styles.location}>
                       <Location />
                       {dictArea[club.area]}

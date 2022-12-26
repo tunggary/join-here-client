@@ -1,6 +1,4 @@
 import { useRouter } from "next/router";
-import Header from "@components/common/Header";
-import styles from "@styles/pages/register.module.scss";
 import { isManagement, blobToBase64 } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
@@ -30,12 +28,7 @@ export default function Modification({ loginInfo, defaultInfo }) {
     router.push("/manage");
   };
 
-  return (
-    <>
-      <Header loginInfo={loginInfo} />
-      <ClubTemplate title="동아리 정보 수정" onSubmit={onSubmit} defaultInfo={defaultInfo} submitText="수정하기" />
-    </>
-  );
+  return <ClubTemplate title="동아리 정보 수정" onSubmit={onSubmit} defaultInfo={defaultInfo} submitText="수정하기" />;
 }
 
 export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {

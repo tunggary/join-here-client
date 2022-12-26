@@ -4,7 +4,6 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import styles from "@styles/pages/club.module.scss";
-import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import Apply from "@public/clublist/apply.svg";
 import Scrap from "@public/clublist/scrap.svg";
@@ -100,7 +99,6 @@ export default function Club({ data, loginInfo, isBelong, clubId }) {
   };
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
       <div className={styles.topContainer}>
         <div className={styles.title}>
           {name}

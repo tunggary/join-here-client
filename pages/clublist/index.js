@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@styles/pages/clublist.module.scss";
-import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import { categoryList, dictClub, dictArea } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
@@ -31,7 +30,7 @@ export default function Home({ data, search, loginInfo }) {
               </div>
               <div className={styles.clubInfo}>
                 <div className={styles.title}>{club.name}</div>
-                <div className={styles.category}>{dictClub[club.category][0]}</div>
+                <div className={styles.category}>{dictClub[club.category] ? dictClub[club.category][0] : club.category}</div>
                 <div className={styles.location}>
                   <Location />
                   {dictArea[club.area]}
@@ -49,7 +48,7 @@ export default function Home({ data, search, loginInfo }) {
   };
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} searchValue={search ? decodeURI(search) : null} />
+      {/* <Header loginInfo={loginInfo} searchValue={search ? decodeURI(search) : null} /> */}
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
         <div className={styles.tabListContainer}>
           <TabList className={styles.tabList}>

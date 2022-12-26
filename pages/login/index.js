@@ -2,7 +2,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@styles/pages/login.module.scss";
-import Header from "@components/common/Header";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 
@@ -73,7 +72,6 @@ export default function Login({ loginInfo }) {
 
   return (
     <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
       <div className={styles.title}>로그인</div>
       <form className={styles.loginContainer} onSubmit={onSubmit} onKeyDown={onKeyPress}>
         <div className={styles.input}>
