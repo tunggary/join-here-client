@@ -1,0 +1,78 @@
+.container {
+  @include display-flex($dir: column, $gap: 23px);
+  .input_box {
+    width: 400px;
+    height: max-content;
+
+    h3 {
+      margin-bottom: 8px;
+    }
+
+    label {
+      width: max-content;
+      overflow: hidden;
+      @include display-flex($ali: center);
+      cursor: pointer;
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, max-content));
+      grid-row-gap: 8px;
+      justify-content: space-between;
+      padding: 15px;
+      li {
+        @include display-flex($jus: flex-start, $ali: center, $gap: 3px);
+      }
+    }
+
+    input[type="radio"] {
+      accent-color: var(--main);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      height: 60px;
+      padding: 0 14px;
+      font-size: var(--h6);
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    textarea {
+      width: 100%;
+      height: 180px;
+      resize: none;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 19px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      } /* chrome */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+
+  .input_border {
+    border-radius: 8px;
+    border: 2px solid var(--gray-hover);
+  }
+
+  button {
+    padding: 12px 10%;
+    margin: 10% 0;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    background-color: var(--main);
+    color: var(--white);
+    font-size: var(--h6);
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
