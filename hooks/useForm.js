@@ -15,5 +15,5 @@ export function useForm(initialValue) {
       [e.target.name]: newValue,
     }));
   }, []);
-  return { value, onChange };
+  return { value, setValue, onChange };
 }
