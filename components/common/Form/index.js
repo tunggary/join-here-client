@@ -1,3 +1,4 @@
+import { getDate } from "@utils/util";
 import Image from "next/image";
 import React, { useContext, memo, cloneElement, useRef, useEffect, useState } from "react";
 import { useMemo } from "react";
@@ -99,21 +100,7 @@ function InputFile({ name, value, onChange, alt, title }) {
 }
 
 function InputPeriod({ title, onChange }) {
-  const getToday = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return {
-      formal: `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`,
-      year,
-      month,
-      day,
-      date: new Date(date.setHours(0, 0, 0, 0)),
-    };
-  };
-
-  const { formal: today } = getToday();
+  const { formal: today } = getDate();
 
   const [maxStartDate, setMaxStartDate] = useState(null);
   const [minEndDate, setMinEndDate] = useState(today);
