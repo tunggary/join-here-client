@@ -56,6 +56,58 @@
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
     }
+
+    input[type="date"] {
+      font-family: inherit;
+      font-size: var(--title);
+      display: block;
+      position: relative;
+      height: 60px;
+      width: 43%;
+      text-align: center;
+      background: url(/input-calendar.svg) no-repeat right 22px center;
+    }
+    input[type="date"]::-webkit-clear-button,
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+    }
+    input[type="date"]::before {
+      content: attr(data-placeholder);
+      text-align: left;
+      padding-left: 22px;
+      width: 100%;
+    }
+    input[type="date"]:valid {
+      text-align: left;
+      padding-left: 14px;
+      background-position: right 14px center;
+    }
+    input[type="date"]:valid::before {
+      display: none;
+    }
+    input[data-placeholder]::before {
+      color: #757575;
+      font-size: var(--h6);
+    }
+
+    .input_date_wrapper {
+      width: 100%;
+      @include display-flex($jus: space-between, $gap: 2%);
+      span {
+        color: var(--gray-hover);
+        font-size: var(--h5);
+      }
+    }
   }
 
   .input_border {
