@@ -24,6 +24,19 @@
       margin-bottom: 2rem;
     }
 
+    .resume_wrapper {
+      position: relative;
+      .resume_minus {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 55%;
+        transform: translate(120%, -50%);
+      }
+    }
+
+    .resume_plus {
+      cursor: pointer;
     }
   }
 }
