@@ -1,3 +1,4 @@
+import { getDate } from "@utils/util";
 import Image from "next/image";
 import React, { useContext, memo, cloneElement, useRef, useEffect, useState } from "react";
 import { useMemo } from "react";
@@ -98,10 +99,56 @@ function InputFile({ name, value, onChange, alt, title }) {
   );
 }
 
-Form.Text = memo(InputText);
+function InputPeriod({ title, onChange }) {
+  const { formal: today } = getDate();
+
+  const [maxStartDate, setMaxStartDate] = useState(null);
+  const [minEndDate, setMinEndDate] = useState(today);
+
+  const onChangeStartDate = (e) => {
+    const newStartDate = e.target.value || today;
+    setMinEndDate(newStartDate);
+    onChange(e);
+  };
+
+  const onChangeEndDate = (e) => {
+    const newEndDate = e.target.value || null;
+    setMaxStartDate(newEndDate);
+    onChange(e);
+  };
+  return (
+    <InputWrapper title={title}>
+      <div className={styles.input_date_wrapper}>
+        <input
+          type="date" //
+          className={styles.input_border}
+          name="startDate"
+          data-placeholder="기간(시작)"
+          min={today}
+          max={maxStartDate}
+          onChange={onChangeStartDate}
+          required
+        />
+        <span>~</span>
+        <input
+          type="date" //
+          className={styles.input_border}
+          name="endDate"
+          data-placeholder="기간(종료)"
+          min={minEndDate}
+          onChange={onChangeEndDate}
+          required
+        />
+      </div>
+    </InputWrapper>
+  );
+}
+
 Form.Radio = InputRadioWrapper;
 Form.Radio.Button = memo(InputRadio);
+Form.Text = memo(InputText);
 Form.Image = memo(InputFile);
+Form.Period = memo(InputPeriod);
 Form.Submit = InputSubmit;
 
 export default Form;

@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
+import styles from "@styles/pages/register.module.scss";
 import { isManagement, blobToBase64 } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 import ClubTemplate from "@components/common/Template/Club";
+import Layout from "@components/common/Layout";
 
 export default function Modification({ loginInfo, defaultInfo }) {
   const router = useRouter();
@@ -28,7 +30,15 @@ export default function Modification({ loginInfo, defaultInfo }) {
     router.push("/manage");
   };
 
-  return <ClubTemplate title="동아리 정보 수정" onSubmit={onSubmit} defaultInfo={defaultInfo} submitText="수정하기" />;
+  return (
+    <Layout pageTitle="동아리 정보 수정">
+      <div className={styles.container}>
+        <div className={styles.registerContainer}>
+          <ClubTemplate onSubmit={onSubmit} defaultInfo={defaultInfo} submitText="수정하기" />;
+        </div>
+      </div>
+    </Layout>
+  );
 }
 
 export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {

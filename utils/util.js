@@ -13,6 +13,20 @@ export const blobToBase64 = (blob) => {
   });
 };
 
+export const getDate = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return {
+    formal: `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`,
+    year,
+    month,
+    day,
+    date: new Date(date.setHours(0, 0, 0, 0)),
+  };
+};
+
 export const stateDict = {
   all: "전체",
   pass: "합격",
