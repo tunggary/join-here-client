@@ -1,5 +1,5 @@
 import { memo } from "react";
-import styles from "@styles/pages/register.module.scss";
+import styles from "./Recruitment.module.scss";
 import { useForm } from "@hooks/useForm";
 import Form from "@components/common/Form";
 import Plus from "@public/clublist/plus.svg";
@@ -40,13 +40,13 @@ function Resume({ value, onChange, setValue }) {
       <h2>지원서 양식</h2>
       {Object.entries(value).map(([key, value]) => {
         return (
-          <div key={key} className={styles.resume_wrapper}>
+          <div key={key} className={styles.container}>
             <Form.Text name={key} placeholder="질문 입력" value={value} onChange={onChange} />
-            <Minus className={styles.resume_minus} value={key} onClick={onClickMinus} />
+            <Minus className={styles.minus} value={key} onClick={onClickMinus} />
           </div>
         );
       })}
-      <Plus className={styles.resume_plus} onClick={onClickPlus} />
+      <Plus className={styles.plus} onClick={onClickPlus} />
     </>
   );
 }

@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
-import styles from "@styles/pages/register.module.scss";
 import { blobToBase64, isManagement } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 import RecruitmentTemplate from "@components/common/Template/Recruitment";
+import PageWrapper from "@components/common/PageWrapper";
+import TemplateWrapper from "@components/common/Template/TemplateWrapper";
 
 export default function Recruitment({ loginInfo, clubId }) {
   const router = useRouter();
@@ -41,11 +42,11 @@ export default function Recruitment({ loginInfo, clubId }) {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.registerContainer}>
+    <PageWrapper pageTitle="모집공고 등록">
+      <TemplateWrapper>
         <RecruitmentTemplate onSubmit={onSubmit} />
-      </div>
-    </div>
+      </TemplateWrapper>
+    </PageWrapper>
   );
 }
 
