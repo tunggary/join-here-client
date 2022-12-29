@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  height: max-content;
+  min-height: calc(100vh - $header_height - $footer_height);
+  padding-bottom: 10rem;
+
+  .page_title {
+    width: 100%;
+    font-size: 3.125rem;
+    font-weight: 700;
+    background-color: var(--white);
+    @include display-flex;
+  }
+
+  .white {
+    background-color: var(--white);
+  }
+}
