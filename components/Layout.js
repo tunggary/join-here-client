@@ -6,7 +6,7 @@ export default function Layout({ children, ...props }) {
   return (
     <div className={styles.container}>
       <Header {...props} />
-      <main className={styles.page_content}>{children}</main>
+      <main>{children}</main>
       <Footer />
     </div>
   );
