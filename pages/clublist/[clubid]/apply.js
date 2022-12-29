@@ -1,8 +1,4 @@
 import { useState } from "react";
-import Layout from "@components/common/Layout";
-import Form from "@components/common/inputTemplate/Form";
-import Title from "@components/common/inputTemplate/Title";
-import Input from "@components/common/inputTemplate/Input";
 import { useRouter } from "next/router";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
@@ -43,16 +39,13 @@ export default function Apply({ loginInfo, data, userId, clubId }) {
       }
     }
   };
-  return (
-    <Layout loginInfo={loginInfo} pageTitle="동아리 지원하기">
-      <Form onClick={onSubmit} button="지원하기">
-        <Title>지원서 작성</Title>
-        {resume.map(({ questionId, content, answerContent }) => (
-          <Input key={questionId} id={questionId} name={content} label={content} value={answerContent} onChange={onChange} />
-        ))}
-      </Form>
-    </Layout>
-  );
+  return;
+  // <Form onClick={onSubmit} button="지원하기">
+  //   <Title>지원서 작성</Title>
+  //   {resume.map(({ questionId, content, answerContent }) => (
+  //     <Input key={questionId} id={questionId} name={content} label={content} value={answerContent} onChange={onChange} />
+  //   ))}
+  // </Form>
 }
 
 export const getServerSideProps = ssrWrapper(async ({ userId, context }) => {

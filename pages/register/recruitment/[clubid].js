@@ -4,7 +4,6 @@ import { blobToBase64, isManagement } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 import RecruitmentTemplate from "@components/common/Template/Recruitment";
-import Layout from "@components/common/Layout";
 
 export default function Recruitment({ loginInfo, clubId }) {
   const router = useRouter();
@@ -42,13 +41,11 @@ export default function Recruitment({ loginInfo, clubId }) {
   };
 
   return (
-    <Layout pageTitle="모집공고 등록">
-      <div className={styles.container}>
-        <div className={styles.registerContainer}>
-          <RecruitmentTemplate onSubmit={onSubmit} />
-        </div>
+    <div className={styles.container}>
+      <div className={styles.registerContainer}>
+        <RecruitmentTemplate onSubmit={onSubmit} />
       </div>
-    </Layout>
+    </div>
   );
 }
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Layout from "@components/common/Layout";
 import styles from "@styles/pages/member.module.scss";
 import Option from "@public/manage/option.svg";
 import Input from "@components/common/inputTemplate/Input";
@@ -92,51 +91,49 @@ export default function Member({ loginInfo, data, clubId }) {
   };
 
   return (
-    <Layout loginInfo={loginInfo} pageTitle="동아리원 보기">
-      <div className={styles.memberContainer}>
-        {myPosition === "pre" || myPosition === "man" ? (
-          <div className={styles.top}>
-            <Input id="plus" placeholder="ID로 동아리원 추가" value={plusId} onChange={(e) => setPlusId(e.target.value)} />
-            <button className={styles.plusButton} onClick={onClickAddButton}>
-              추가하기
-            </button>
-          </div>
-        ) : null}
-        <div className={styles.listContainer}>
-          <ul>
-            {memberList.map(({ memberName, memberId, position }, index) => (
-              <div key={memberId} className={styles.member}>
-                <h1 className={styles.name}>{memberName}</h1>
-                <h3 className={styles.id}>{memberId}</h3>
-                <h1 className={styles.class}>{positionList[position]}</h1>
-                {myPosition === "pre" && (
-                  <div className={styles.option}>
-                    <input type="checkbox" id={memberId} />
-                    <label htmlFor={memberId}>
-                      <Option />
-                      <div className={styles.modal} style={{ zIndex: 1 }}>
-                        {Object.keys(positionList)
-                          .filter((p) => p !== position)
-                          .map((p, idx) => (
-                            <div key={idx} className={styles.modalElement} data-position={p} data-index={index} onClick={onClickModal}>
-                              <span>{positionList[p]}</span>으로 변경
-                            </div>
-                          ))}
-                        {position !== "pre" && (
-                          <div className={`${styles.modalElement} ${styles.error}`} data-index={index} onClick={onClickDelete}>
-                            동아리 내보내기
-                          </div>
-                        )}
-                      </div>
-                    </label>
-                  </div>
-                )}
-              </div>
-            ))}
-          </ul>
+    <div className={styles.memberContainer}>
+      {myPosition === "pre" || myPosition === "man" ? (
+        <div className={styles.top}>
+          <Input id="plus" placeholder="ID로 동아리원 추가" value={plusId} onChange={(e) => setPlusId(e.target.value)} />
+          <button className={styles.plusButton} onClick={onClickAddButton}>
+            추가하기
+          </button>
         </div>
+      ) : null}
+      <div className={styles.listContainer}>
+        <ul>
+          {memberList.map(({ memberName, memberId, position }, index) => (
+            <div key={memberId} className={styles.member}>
+              <h1 className={styles.name}>{memberName}</h1>
+              <h3 className={styles.id}>{memberId}</h3>
+              <h1 className={styles.class}>{positionList[position]}</h1>
+              {myPosition === "pre" && (
+                <div className={styles.option}>
+                  <input type="checkbox" id={memberId} />
+                  <label htmlFor={memberId}>
+                    <Option />
+                    <div className={styles.modal} style={{ zIndex: 1 }}>
+                      {Object.keys(positionList)
+                        .filter((p) => p !== position)
+                        .map((p, idx) => (
+                          <div key={idx} className={styles.modalElement} data-position={p} data-index={index} onClick={onClickModal}>
+                            <span>{positionList[p]}</span>으로 변경
+                          </div>
+                        ))}
+                      {position !== "pre" && (
+                        <div className={`${styles.modalElement} ${styles.error}`} data-index={index} onClick={onClickDelete}>
+                          동아리 내보내기
+                        </div>
+                      )}
+                    </div>
+                  </label>
+                </div>
+              )}
+            </div>
+          ))}
+        </ul>
       </div>
-    </Layout>
+    </div>
   );
 }
 
