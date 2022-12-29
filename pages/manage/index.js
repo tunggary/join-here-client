@@ -6,11 +6,11 @@ import Link from "next/link";
 import { categoryList, dictArea, dictPosition } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
+import PageWrapper from "@components/common/PageWrapper";
 
 export default function Manage({ loginInfo, data }) {
   return (
-    <div className={styles.container}>
-      <div className={styles.titleContainer}>동아리 관리</div>
+    <PageWrapper pageTitle="동아리 관리">
       <div className={styles.contentContainer}>
         {data.map(({ belong, hasAnnouncement }, index) => {
           const {
@@ -67,7 +67,7 @@ export default function Manage({ loginInfo, data }) {
           );
         })}
       </div>
-    </div>
+    </PageWrapper>
   );
 }
 
