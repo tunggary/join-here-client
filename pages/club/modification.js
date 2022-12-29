@@ -4,6 +4,7 @@ import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 import ClubTemplate from "@components/common/Template/Club";
 import PageWrapper from "@components/common/PageWrapper";
+import TemplateWrapper from "@components/common/Template/TemplateWrapper";
 
 export default function Modification({ loginInfo, defaultInfo }) {
   const router = useRouter();
@@ -31,6 +32,9 @@ export default function Modification({ loginInfo, defaultInfo }) {
 
   return (
     <PageWrapper pageTitle="동아리 정보 수정">
+      <TemplateWrapper>
+        <ClubTemplate onSubmit={onSubmit} defaultInfo={defaultInfo} submitText="수정하기" />
+      </TemplateWrapper>
     </PageWrapper>
   );
 }
