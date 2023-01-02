@@ -100,7 +100,7 @@ export default function Applicant({ loginInfo, data, clubId }) {
                 <h2 className={styles.name}>{memberName}</h2>
                 <h3 className={styles.date}>{formatting(new Date(applicationTime))}</h3>
                 <h3 className={`${styles[passState]}`}>{stateDict[passState]}</h3>
-                <Link href={`/manage/${clubId}/applicant/${applicationId}/${memberId}/resume`}>
+                <Link href={`/manage/${clubId}/applicant/${applicationId}/${memberId}`}>
                   <h3 className={styles.resume}>
                     <p>상세보기</p> <Arrow />
                   </h3>
