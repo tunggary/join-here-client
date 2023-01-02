@@ -28,7 +28,7 @@ function InputWrapper({ children, title }) {
   );
 }
 
-function InputText({ name, value, onChange, title, multiline, placeholder }) {
+function InputText({ name, value, onChange, title, multiline, placeholder, ...props }) {
   const onChangeTextarea = (e) => {
     onChange(e);
     autoResizeTextarea(e);
@@ -47,9 +47,9 @@ function InputText({ name, value, onChange, title, multiline, placeholder }) {
   return (
     <InputWrapper title={title}>
       {multiline ? ( // 멀티라인인 경우 textarea로 렌더링
-        <textarea className={styles.input_border} name={name} defaultValue={value} onChange={onChangeTextarea} placeholder={placeholder} />
+        <textarea className={styles.input_border} name={name} defaultValue={value} onChange={onChangeTextarea} placeholder={placeholder} {...props} />
       ) : (
-        <input className={styles.input_border} type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <input className={styles.input_border} type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} {...props} />
       )}
     </InputWrapper>
   );
