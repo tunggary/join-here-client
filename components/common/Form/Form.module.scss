@@ -26,6 +26,14 @@
       }
     }
 
+    .readonly {
+      width: 100%;
+      height: max-content;
+      padding: 13px 14px;
+      font-size: var(--h6);
+      word-break: break-all;
+    }
+
     input[type="radio"] {
       accent-color: var(--main);
     }
