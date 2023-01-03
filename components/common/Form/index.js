@@ -51,7 +51,7 @@ function InputText({ name, value, onChange, title, multiline, placeholder, reado
       ) : multiline ? ( // 멀티라인인 경우 textarea로 렌더링
         <textarea className={styles.input_border} name={name} defaultValue={value} onChange={onChangeTextarea} placeholder={placeholder} {...props} />
       ) : (
-        <input className={styles.input_border} type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} {...props} />
+        <input className={styles.input_border} type={name === "password" ? "password" : "text"} name={name} value={value} onChange={onChange} placeholder={placeholder} {...props} />
       )}
     </InputWrapper>
   );
