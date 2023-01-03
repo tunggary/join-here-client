@@ -4,7 +4,7 @@ export function useForm(initialValue, setFunction) {
   const [value, setValue] = useState(initialValue);
   const onChange = useCallback(
     (e) => {
-      let newValue = e.target.value;
+      let newValue = setFunction ? setFunction(e) : e.target.value;
 
       if (e.target.type === "file") {
         if (!e.target.files || e.target.files.length === 0) return;
@@ -13,7 +13,7 @@ export function useForm(initialValue, setFunction) {
 
       setValue((prev) => ({
         ...prev,
-        [e.target.name]: setFunction ? setFunction(e) : newValue,
+        [e.target.name]: newValue,
       }));
     },
     [setFunction]
