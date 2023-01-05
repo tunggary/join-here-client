@@ -5,86 +5,16 @@ import Link from "next/link";
 import styles from "@styles/pages/mypage.module.scss";
 import Location from "@public/clublist/location.svg";
 import { dictClub, dictArea, mypageList, stateDict } from "@utils/util";
-import Input from "@components/common/inputTemplate/Input";
-import Form from "@components/common/inputTemplate/Form";
 import Arrow from "@public/manage/arrow-right.svg";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
+import PageWrapper from "@components/common/PageWrapper";
+import PersonalInfo from "@components/MyPage/PersonalInfo";
 
-export default function Home({ loginInfo, userData, clubData, applicationData }) {
+export default function Home({ loginInfo, clubData, applicationData }) {
   const [index, setIndex] = useState(0);
-
-  const [data, setData] = useState({
-    name: userData.name,
-    birth: userData.birthday.replaceAll("-", ""),
-    phone: userData.phone,
-  });
-
-  const [check, setCheck] = useState({
-    password: false,
-  });
-
-  const { name, birth, phone } = data;
-
-  const onChange = (e) => {
-    const { value, id } = e.target;
-
-    if (id === "birth" && value.length > 8) return;
-    if (id === "phone" && value.length > 11) return;
-
-    if (id === "confirm" || id === "password") {
-      if (value === "") {
-        setCheck({
-          ...check,
-          password: false,
-        });
-      } else {
-        setCheck({
-          ...check,
-          password: (id === "confirm" && password === value) || (id === "password" && confirm === value),
-        });
-      }
-    }
-
-    setData({
-      ...data,
-      [id]: value,
-    });
-  };
-
-  const onSubmit = () => {
-    if (name === "") {
-      alert("이름을 입력해주세요.");
-      return;
-    }
-    if (birth.length !== 8) {
-      alert("생년월일 8자리를 입력해주세요.");
-      return;
-    }
-    if (phone.length < 10 || phone.length > 11) {
-      alert("핸드폰 번호를 입력해주세요");
-      return;
-    }
-    signup();
-  };
-
-  const signup = async () => {
-    try {
-      await axiosInstance.patch("/members", {
-        id: userData.id,
-        name,
-        password: userData.password,
-        birthday: `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`,
-        phone,
-      });
-      alert("성공적으로 수정했습니다.");
-    } catch (error) {
-      alert("잠시후 다시 시도해주세요.");
-    }
-  };
-
   return (
-    <div className={styles.container}>
+    <PageWrapper>
       <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
         <div className={styles.tabListContainer}>
           <TabList className={styles.tabList}>
@@ -97,13 +27,7 @@ export default function Home({ loginInfo, userData, clubData, applicationData })
         </div>
         <div className={styles.tabPannelContainer}>
           <TabPanel>
-            <section className={styles.userDataContainer}>
-              <Form button="수정하기" onClick={onSubmit}>
-                <Input id="name" name="name" label="이름" value={name} placeholder="이름을 입력해주세요" onChange={onChange} />
-                <Input id="birth" name="birth" label="생년월일" value={birth} placeholder="생년월일을 입력해주세요" onChange={onChange} />
-                <Input id="phone" name="phone" label="핸드폰" value={phone} placeholder="핸드폰 번호를 입력해주세요" onChange={onChange} />
-              </Form>
-            </section>
+            <PersonalInfo userId={loginInfo.userName} />
           </TabPanel>
           <TabPanel>
             <section className={styles.clubContainer}>
@@ -151,7 +75,7 @@ export default function Home({ loginInfo, userData, clubData, applicationData })
           </TabPanel>
         </div>
       </Tabs>
-    </div>
+    </PageWrapper>
   );
 }
 
@@ -161,11 +85,9 @@ export const getServerSideProps = ssrWrapper(async ({ userId }) => {
   }
 
   return await Promise.all([
-    axiosInstance.get(`/members/${userId}`), //
-    axiosInstance.get(`/members/${userId}/belongs`),
+    axiosInstance.get(`/members/${userId}/belongs`), //
     axiosInstance.get(`/members/${userId}/applications`),
-  ]).then(([userData, clubData, applicationData]) => ({
-    userData,
+  ]).then(([clubData, applicationData]) => ({
     clubData: clubData || [],
     applicationData,
   }));
