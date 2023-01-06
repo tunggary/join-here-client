@@ -12,6 +12,7 @@
   display: flex;
   align-items: flex-end;
   background-color: white;
+  margin-top: -2rem;
 
   .tabList {
     background-color: white;
@@ -47,10 +48,10 @@
   }
 
   .clubContainer {
-    width: 65rem;
+    width: max-content;
     margin: auto;
-    @include display-flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, max-content));
     row-gap: 2rem;
     column-gap: 4rem;
 
@@ -152,10 +153,10 @@
   }
 
   .applicationContainer {
-    width: 65rem;
+    width: max-content;
     margin: auto;
-    @include display-flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, max-content));
     column-gap: 4rem;
     row-gap: 2rem;
 

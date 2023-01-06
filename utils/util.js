@@ -83,6 +83,12 @@ export const dictPosition = {
   nor: "회원",
 };
 
+export const dictTab = {
+  personal: 0,
+  club: 1,
+  applied: 2,
+};
+
 export const formatting = (date) => {
   const yyyy = date.getFullYear().toString();
   const MM = pad(date.getMonth() + 1, 2);
