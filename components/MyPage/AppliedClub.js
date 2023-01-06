@@ -3,7 +3,7 @@ import styles from "@styles/pages/mypage.module.scss";
 import Arrow from "@public/manage/arrow-right.svg";
 import { stateDict } from "@utils/util";
 
-export default function ApplyClub({ applicationData, userId }) {
+export default function AppliedClub({ applicationData, userId }) {
   return (
     <section className={styles.applicationContainer}>
       {applicationData.map((club) => (

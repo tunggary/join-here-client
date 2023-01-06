@@ -7,7 +7,7 @@ import axiosInstance from "@utils/axios";
 import PageWrapper from "@components/common/PageWrapper";
 import PersonalInfo from "@components/MyPage/PersonalInfo";
 import BelongClub from "@components/MyPage/BelongClub";
-import ApplyClub from "@components/MyPage/ApplyClub";
+import AppliedClub from "@components/MyPage/AppliedClub";
 import { useRouter } from "next/router";
 
 export default function MyPage({ loginInfo, clubData, applicationData }) {
@@ -42,7 +42,7 @@ export default function MyPage({ loginInfo, clubData, applicationData }) {
             <BelongClub clubData={clubData} />
           </TabPanel>
           <TabPanel>
-            <ApplyClub applicationData={applicationData} userId={loginInfo.userName} />
+            <AppliedClub applicationData={applicationData} userId={loginInfo.userName} />
           </TabPanel>
         </div>
       </Tabs>
