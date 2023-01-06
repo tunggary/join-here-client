@@ -6,11 +6,11 @@ import PageWrapper from "@components/common/PageWrapper";
 import TemplateWrapper from "@components/common/Template/TemplateWrapper";
 import Form from "@components/common/Form";
 
-export default function Resume({ data, clubId }) {
+export default function Resume({ data }) {
   const router = useRouter();
 
   const backToList = () => {
-    router.push(`/manage/${clubId}/applicant`);
+    router.back();
   };
 
   return (
@@ -36,8 +36,5 @@ export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
 
   const data = await axiosInstance.get(`/members/${resumeId}/applications/${applicationId}`);
 
-  return {
-    clubId,
-    data: data || [],
-  };
+  return { data: data || [] };
 });
