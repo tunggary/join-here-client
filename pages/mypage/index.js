@@ -1,24 +1,35 @@
 import { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import styles from "@styles/pages/mypage.module.scss";
-import { mypageList } from "@utils/util";
+import { dictTab, mypageList } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 import PageWrapper from "@components/common/PageWrapper";
 import PersonalInfo from "@components/MyPage/PersonalInfo";
 import BelongClub from "@components/MyPage/BelongClub";
 import ApplyClub from "@components/MyPage/ApplyClub";
+import { useRouter } from "next/router";
 
-export default function Home({ loginInfo, clubData, applicationData }) {
-  const [index, setIndex] = useState(0);
+export default function MyPage({ loginInfo, clubData, applicationData }) {
+  const router = useRouter();
+
+  const defaultTab = dictTab[router.query.tab] || 0;
+  const [index, setIndex] = useState(defaultTab);
+
+  const onClickTabList = (index) => {
+    setIndex(index);
+    const tab = Object.keys(dictTab).find((key) => dictTab[key] === index);
+    router.push(`/mypage?tab=${tab}`, undefined, { shallow: true });
+  };
+
   return (
     <PageWrapper>
-      <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
+      <Tabs selectedIndex={index} onSelect={onClickTabList}>
         <div className={styles.tabListContainer}>
           <TabList className={styles.tabList}>
             {mypageList.map((ele, idx) => (
               <Tab key={idx}>
-                <div className={index == idx ? styles.active : undefined}>{ele.title}</div>
+                <div className={index === idx ? styles.active : null}>{ele.title}</div>
               </Tab>
             ))}
           </TabList>
@@ -31,7 +42,7 @@ export default function Home({ loginInfo, clubData, applicationData }) {
             <BelongClub clubData={clubData} />
           </TabPanel>
           <TabPanel>
-            <ApplyClub applicationData={applicationData} />
+            <ApplyClub applicationData={applicationData} userId={loginInfo.userName} />
           </TabPanel>
         </div>
       </Tabs>
