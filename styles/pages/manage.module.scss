@@ -66,9 +66,8 @@
       text-align: center;
       font-size: 1.25rem;
       font-weight: 500;
-      margin-top: 0.5rem;
       margin-right: 0.8rem;
-      @include display-flex($dir: column, $gap: 0.8rem);
+      @include display-flex($dir: column, $gap: 1.2rem);
       .element {
         position: relative;
         width: 100%;
