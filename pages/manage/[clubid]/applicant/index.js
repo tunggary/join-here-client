@@ -1,10 +1,11 @@
 import { useState } from "react";
-import styles from "@styles/pages/applicant.module.scss";
-import { formatting, isManagement, stateDict } from "@utils/util";
-import Arrow from "@public/clublist/arrow-right.svg";
 import Link from "next/link";
+import styles from "@styles/pages/applicant.module.scss";
+import Arrow from "@public/clublist/arrow-right.svg";
 import ssrWrapper from "@utils/wrapper";
+import { formatting, isManagement, stateDict } from "@utils/util";
 import axiosInstance from "@utils/axios";
+import PageWrapper from "@components/common/PageWrapper";
 
 export default function Applicant({ loginInfo, data, clubId }) {
   const [tab, setTab] = useState("all");
@@ -79,56 +80,58 @@ export default function Applicant({ loginInfo, data, clubId }) {
     });
   };
   return (
-    <div className={styles.container}>
-      <div className={styles.tab}>
-        {Object.entries(stateDict).map(([ele, kor], index) => (
-          <div key={index} className={`${styles.tabElement} ${tab === ele ? styles.active : null}`} onClick={() => setTab(ele)}>
-            {kor}
+    <PageWrapper>
+      <div className={styles.container}>
+        <div className={styles.tab}>
+          {Object.entries(stateDict).map(([ele, kor], index) => (
+            <div key={index} className={`${styles.tabElement} ${tab === ele ? styles.active : null}`} onClick={() => setTab(ele)}>
+              {kor}
+            </div>
+          ))}
+        </div>
+        <div className={styles.applicantContainer}>
+          <h1 className={styles.total}>총 {applicantList.length}명</h1>
+          <ul className={styles.applicantList}>
+            {applicantList
+              .filter(({ passState }) => passState === tab || tab === "all")
+              .map(({ memberName, memberId, applicationTime, applicationId, passState, checked }, index) => (
+                <label key={index} htmlFor={`id-${index}`} className={styles.applicant}>
+                  <div className={styles.checkbox}>
+                    <input type="checkbox" checked={checked} id={`id-${index}`} data-index={index} onChange={onClickApplicant} />
+                  </div>
+                  <h2 className={styles.name}>{memberName}</h2>
+                  <h3 className={styles.date}>{formatting(new Date(applicationTime))}</h3>
+                  <h3 className={`${styles[passState]}`}>{stateDict[passState]}</h3>
+                  <Link href={`/manage/${clubId}/applicant/${applicationId}/${memberId}`}>
+                    <h3 className={styles.resume}>
+                      <p>상세보기</p> <Arrow />
+                    </h3>
+                  </Link>
+                </label>
+              ))}
+          </ul>
+          <div className={styles.buttonContainer} onClick={onClickStateButton}>
+            <button className={`${styles.button} ${styles.pass}`} data-state="pass">
+              합격
+            </button>
+            <button className={`${styles.button} ${styles.fail}`} data-state="fail">
+              불합격
+            </button>
+            <button className={`${styles.button} ${styles.hold}`} data-state="hold">
+              미결정
+            </button>
           </div>
-        ))}
-      </div>
-      <div className={styles.applicantContainer}>
-        <h1 className={styles.total}>총 {applicantList.length}명</h1>
-        <ul className={styles.applicantList}>
-          {applicantList
-            .filter(({ passState }) => passState === tab || tab === "all")
-            .map(({ memberName, memberId, applicationTime, applicationId, passState, checked }, index) => (
-              <label key={index} htmlFor={`id-${index}`} className={styles.applicant}>
-                <div className={styles.checkbox}>
-                  <input type="checkbox" checked={checked} id={`id-${index}`} data-index={index} onChange={onClickApplicant} />
-                </div>
-                <h2 className={styles.name}>{memberName}</h2>
-                <h3 className={styles.date}>{formatting(new Date(applicationTime))}</h3>
-                <h3 className={`${styles[passState]}`}>{stateDict[passState]}</h3>
-                <Link href={`/manage/${clubId}/applicant/${applicationId}/${memberId}`}>
-                  <h3 className={styles.resume}>
-                    <p>상세보기</p> <Arrow />
-                  </h3>
-                </Link>
-              </label>
-            ))}
-        </ul>
-        <div className={styles.buttonContainer} onClick={onClickStateButton}>
-          <button className={`${styles.button} ${styles.pass}`} data-state="pass">
-            합격
+        </div>
+        <div className={styles.submit}>
+          <button className={styles.submitButton} onClick={onClickTemporarySave}>
+            임시 저장하기
           </button>
-          <button className={`${styles.button} ${styles.fail}`} data-state="fail">
-            불합격
-          </button>
-          <button className={`${styles.button} ${styles.hold}`} data-state="hold">
-            미결정
+          <button className={styles.submitButton} onClick={onClickPermanentSave}>
+            최종 완료하기
           </button>
         </div>
       </div>
-      <div className={styles.submit}>
-        <button className={styles.submitButton} onClick={onClickTemporarySave}>
-          임시 저장하기
-        </button>
-        <button className={styles.submitButton} onClick={onClickPermanentSave}>
-          최종 완료하기
-        </button>
-      </div>
-    </div>
+    </PageWrapper>
   );
 }
 
