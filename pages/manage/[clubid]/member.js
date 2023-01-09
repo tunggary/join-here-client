@@ -1,49 +1,22 @@
 import { useState } from "react";
 import styles from "@styles/pages/member.module.scss";
-import Option from "@public/manage/option.svg";
-import Input from "@components/common/inputTemplate/Input";
 import ssrWrapper from "@utils/wrapper";
-import { isMember } from "@utils/util";
+import { isMember, isManagement } from "@utils/util";
 import axiosInstance from "@utils/axios";
+import PageWrapper from "@components/common/PageWrapper";
+import MemberTemplate from "@components/common/Template/Member";
+import User from "@components/Manage/User";
 
-export default function Member({ loginInfo, data, clubId }) {
-  const [plusId, setPlusId] = useState("");
+export default function Member({ userId, data, clubId }) {
   const [memberList, setMemberList] = useState(data);
 
   const getMyPosition = (memberList) => {
     for (const { memberId, position } of memberList) {
-      if (memberId === loginInfo.userName) return position;
+      if (memberId === userId) return position;
     }
     return null;
   };
   const [myPosition, setMyPosition] = useState(getMyPosition(data));
-
-  const positionList = {
-    pre: "회장",
-    man: "매니저",
-    nor: "부원",
-  };
-
-  const onClickAddButton = async () => {
-    const newMemberList = await addMember(plusId);
-    if (newMemberList === null) return setPlusId("");
-    updateMember(newMemberList);
-  };
-
-  const onClickModal = async ({ target }) => {
-    const position = target.dataset.position || target.parentNode.dataset.position;
-    const index = target.dataset.index || target.parentNode.dataset.index;
-
-    if (!position || !index) return;
-    const newMemberList = await changePosition(position, Number(index));
-    updateMember(newMemberList);
-  };
-
-  const onClickDelete = async ({ target }) => {
-    const index = target.dataset.index;
-    const newMemberList = await deleteMember(index);
-    updateMember(newMemberList);
-  };
 
   const updateMember = (newMemberList) => {
     if (newMemberList === null) return;
@@ -51,89 +24,68 @@ export default function Member({ loginInfo, data, clubId }) {
     setMyPosition(getMyPosition(newMemberList));
   };
 
-  const deleteMember = async (index) => {
+  const onClickModal = ({ currentTarget }) => {
+    const element = currentTarget.dataset.element;
+    const memberId = currentTarget.dataset.memberid;
+    const newPosition = currentTarget.dataset.position;
+
+    switch (element) {
+      case "delete":
+        onSubmitDeleteMember(memberId);
+        break;
+      case "change":
+        onSubmitChangePosition(newPosition, memberId);
+        break;
+    }
+  };
+
+  const onSubmitDeleteMember = async (memberId) => {
     try {
       const data = await axiosInstance.delete(`/clubs/${clubId}/belongs`, {
         data: {
-          belongId: memberList[index].belongId,
+          belongId: memberList.find((member) => member.memberId === memberId).belongId,
         },
       });
-      return data;
-    } catch (error) {
-      alert("회장은 최소 1명 이상입니다");
-      return null;
+      updateMember(data);
+    } catch {
+      alert("회원을 내보낼 수 없습니다.");
     }
   };
 
-  const addMember = async (memberId) => {
-    try {
-      const data = await axiosInstance.post(`/clubs/${clubId}/belongs`, {
-        memberId,
-      });
-      return data;
-    } catch (error) {
-      alert("해당 ID가 존재하지 않습니다.");
-      return null;
-    }
-  };
-
-  const changePosition = async (newPosition, index) => {
+  const onSubmitChangePosition = async (newPosition, memberId) => {
     try {
       const data = await axiosInstance.patch(`/clubs/${clubId}/belongs`, {
-        belongId: memberList[index].belongId,
+        belongId: memberList.find((member) => member.memberId === memberId).belongId,
         position: newPosition,
       });
-      return data;
-    } catch (error) {
-      alert("회장은 최소 1명 이상이어야 합니다.");
-      return null;
+      updateMember(data);
+    } catch {
+      alert("직책을 변경할 수 없습니다.");
     }
   };
 
+  const onSubmitUserId = async (input) => {
+    try {
+      const data = await axiosInstance.post(`/clubs/${clubId}/belongs`, {
+        memberId: input,
+      });
+      updateMember(data);
+    } catch {
+      alert("해당 ID가 존재하지 않습니다.");
+    }
+  };
+  console.log(memberList);
   return (
-    <div className={styles.memberContainer}>
-      {myPosition === "pre" || myPosition === "man" ? (
-        <div className={styles.top}>
-          <Input id="plus" placeholder="ID로 동아리원 추가" value={plusId} onChange={(e) => setPlusId(e.target.value)} />
-          <button className={styles.plusButton} onClick={onClickAddButton}>
-            추가하기
-          </button>
-        </div>
-      ) : null}
-      <div className={styles.listContainer}>
-        <ul>
-          {memberList.map(({ memberName, memberId, position }, index) => (
-            <div key={memberId} className={styles.member}>
-              <h1 className={styles.name}>{memberName}</h1>
-              <h3 className={styles.id}>{memberId}</h3>
-              <h1 className={styles.class}>{positionList[position]}</h1>
-              {myPosition === "pre" && (
-                <div className={styles.option}>
-                  <input type="checkbox" id={memberId} />
-                  <label htmlFor={memberId}>
-                    <Option />
-                    <div className={styles.modal} style={{ zIndex: 1 }}>
-                      {Object.keys(positionList)
-                        .filter((p) => p !== position)
-                        .map((p, idx) => (
-                          <div key={idx} className={styles.modalElement} data-position={p} data-index={index} onClick={onClickModal}>
-                            <span>{positionList[p]}</span>으로 변경
-                          </div>
-                        ))}
-                      {position !== "pre" && (
-                        <div className={`${styles.modalElement} ${styles.error}`} data-index={index} onClick={onClickDelete}>
-                          동아리 내보내기
-                        </div>
-                      )}
-                    </div>
-                  </label>
-                </div>
-              )}
-            </div>
+    <PageWrapper>
+      <div className={styles.memberContainer}>
+        {isManagement(clubId, userId) && <MemberTemplate onSubmit={onSubmitUserId} />}
+        <div className={styles.listContainer}>
+          {memberList.map((data) => (
+            <User key={data.memberId} {...data} isOption={myPosition === "pre"} onClickModal={onClickModal} />
           ))}
-        </ul>
+        </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
 
@@ -146,6 +98,7 @@ export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
   const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
 
   return {
+    userId,
     clubId,
     data: data || [],
   };
