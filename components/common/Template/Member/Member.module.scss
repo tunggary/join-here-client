@@ -1,0 +1,9 @@
+.input_container {
+  position: absolute;
+  top: 2rem;
+  left: 3rem;
+  @include display-flex($gap: 1rem);
+  .plus_button {
+    width: 10rem;
+  }
+}

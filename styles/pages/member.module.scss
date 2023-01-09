@@ -1,100 +1,78 @@
 .memberContainer {
-  width: 90%;
-  padding-bottom: 4rem;
-
-  .top {
-    margin-top: 4rem;
-    display: flex;
-
-    .plusButton {
-      width: 10.6rem;
-      height: 3.5rem;
-      background-color: var(--main);
-      color: var(--white);
-      border: none;
-      outline: none;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      font-weight: 700;
-      margin-left: 1rem;
-      margin-top: 0.5rem;
-      cursor: pointer;
-    }
-  }
+  position: relative;
+  background-color: var(--white);
+  width: max-content;
+  padding: 9rem 3rem 4rem 3rem;
+  border-radius: 1rem;
+  margin: auto;
 
   .listContainer {
-    width: 100%;
-    min-height: 45rem;
     border: 1px solid var(--gray-hover);
-    margin-top: 4rem;
-    padding: 5rem 8rem;
+    padding: 5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
 
-    ul {
-      width: 100%;
-      @include display-flex($jus: space-between, $gap: 4rem);
-      flex-wrap: wrap;
+    .member {
+      position: relative;
+      width: 27.8rem;
+      height: 5rem;
+      border: 1px solid var(--gray-hover);
+      border-radius: 0.5rem;
+      @include display-flex($jus: space-around);
+      padding: 0 1rem;
+      font-size: var(--h4);
+      font-weight: var(--bold);
 
-      .member {
-        width: 27.8rem;
-        height: 5rem;
-        border: 1px solid var(--gray-hover);
-        border-radius: 0.5rem;
+      .name {
+        width: 30%;
+      }
 
-        display: grid;
-        grid-template-columns: 25% 33% 27% 15%;
+      .id {
+        width: 35%;
+        font-size: var(--h6);
+        color: var(--gray-hover);
+      }
+      .class {
+        text-align: center;
+        width: 22%;
+        color: var(--main);
+      }
 
-        & > h1,
-        > h3,
-        > div {
-          width: 100%;
-          height: 100%;
-          @include display-flex;
-        }
-        h1 {
-          font-size: 1.6rem;
-          font-weight: 700;
-        }
-        h3 {
-          font-size: 1.2rem;
-          font-weight: 700;
-          color: var(--gray-hover);
-        }
-        .class {
-          color: var(--main);
-        }
-        .option {
-          position: relative;
-          input {
-            display: none;
+      .option {
+        input {
+          display: none;
 
-            &:checked + label .modal {
-              display: flex;
-            }
+          &:checked + label .modal {
+            display: flex;
           }
-          label {
-            cursor: pointer;
-            margin-top: 0.3rem;
-          }
+        }
+        label {
+          cursor: pointer;
+          width: 30px;
+          height: 30px;
+          display: block;
+        }
 
-          .modal {
-            font-size: 1rem;
-            font-weight: 500;
-            width: max-content;
-            position: absolute;
-            right: -1px;
-            top: 5.2rem;
-            border: 1px solid var(--gray-hover);
-            border-radius: 0.5rem;
-            padding: 0.8rem 1rem;
-            background-color: var(--white);
-            @include display-flex($dir: column, $gap: 0.6rem);
-            display: none;
-            span {
-              color: var(--main);
-            }
-            .error {
-              color: #cc0a00;
-            }
+        .modal {
+          font-size: 1rem;
+          font-weight: 500;
+          width: max-content;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          transform: translateY(105%);
+          border: 1px solid var(--gray-hover);
+          border-radius: 0.5rem;
+          padding: 0.8rem 1rem;
+          background-color: var(--white);
+          @include display-flex($dir: column, $gap: 0.6rem);
+          display: none;
+          span {
+            color: var(--main);
+          }
+          .error {
+            color: #cc0a00;
           }
         }
       }

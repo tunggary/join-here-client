@@ -11,20 +11,19 @@
     height: 16rem;
     border-radius: 0.6rem;
     background-color: white;
-    display: flex;
-    justify-content: space-between;
+    @include display-flex($jus: space-between);
     padding: 1.8rem 2.5rem;
-    img {
-      object-fit: contain;
+
+    .left_section {
+      position: relative;
+      width: 12rem;
+      height: 12rem;
     }
 
-    .info {
-      width: 40%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-left: 2rem;
+    .center_section {
+      width: 15rem;
+      margin-left: 0.8rem;
+      @include display-flex($dir: column);
       .title {
         font-size: 2.5rem;
         font-weight: var(--bold);
@@ -39,7 +38,6 @@
           height: 1rem;
           border-radius: 5px;
           text-align: center;
-          line-height: 1rem;
           font-size: 0.6rem;
           font-weight: var(--bold);
         }
@@ -63,22 +61,22 @@
       }
     }
 
-    .list {
-      width: 30%;
+    .right_section {
+      width: 9rem;
       text-align: center;
       font-size: 1.25rem;
       font-weight: 500;
-      margin-top: 0.5rem;
-      @include display-flex($dir: column, $gap: 0.8rem);
+      margin-right: 0.8rem;
+      @include display-flex($dir: column, $gap: 1.2rem);
       .element {
-        width: 100%;
-        height: 20%;
-        cursor: pointer;
         position: relative;
+        width: 100%;
+        cursor: pointer;
         svg {
           position: absolute;
           right: 0;
-          top: 0;
+          top: 50%;
+          transform: translate(160%, -50%);
         }
       }
     }
