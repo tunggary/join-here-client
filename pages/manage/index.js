@@ -8,7 +8,7 @@ import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 import PageWrapper from "@components/common/PageWrapper";
 
-export default function Manage({ loginInfo, data }) {
+export default function Manage({ data }) {
   return (
     <PageWrapper pageTitle="동아리 관리">
       <div className={styles.contentContainer}>
@@ -18,9 +18,11 @@ export default function Manage({ loginInfo, data }) {
             position,
           } = belong;
           return (
-            <div key={index} className={styles.clubContainer}>
-              <Image src={image || "/clublist/default.png"} alt="" width={192} height={192} />
-              <div className={styles.info}>
+            <section key={index} className={styles.clubContainer}>
+              <div className={styles.left_section}>
+                <Image src={image || "/clublist/default.png"} alt={"동아리 포스터"} layout={"fill"} objectFit={"contain"} />
+              </div>
+              <div className={styles.center_section}>
                 <div className={styles.title}>{name}</div>
                 <div className={styles.badge}>
                   <div className={styles.category}>{categoryList.find(({ id }) => id === category)?.title}</div>
@@ -31,7 +33,7 @@ export default function Manage({ loginInfo, data }) {
                   <div className={`${styles.class}`}>{dictPosition[position]}</div>
                 </div>
               </div>
-              <ul className={styles.list}>
+              <ul className={styles.right_section}>
                 {position === "pre" ? (
                   <Link href={`/register/recruitment/${clubId}`}>
                     <li className={styles.element}>
@@ -63,7 +65,7 @@ export default function Manage({ loginInfo, data }) {
                   </Link>
                 ) : null}
               </ul>
-            </div>
+            </section>
           );
         })}
       </div>
@@ -75,7 +77,5 @@ export const getServerSideProps = ssrWrapper(async ({ userId }) => {
   if (!userId) throw { url: "/login" };
 
   const data = await axiosInstance.get(`/members/${userId}/belongs`);
-  return {
-    data: data || [],
-  };
+  return { data: data || [] };
 });
