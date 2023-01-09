@@ -22,7 +22,7 @@ function Form({ children, onSubmit }) {
 function InputWrapper({ children, title }) {
   return (
     <div className={styles.input_box}>
-      <h3>{title}</h3>
+      {title && <h3>{title}</h3>}
       {children}
     </div>
   );
