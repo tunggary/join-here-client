@@ -14,13 +14,13 @@ export default function Manage({ data }) {
       <div className={styles.contentContainer}>
         {data.map(({ belong, hasAnnouncement }, index) => {
           const {
-            club: { id: clubId, name, category, area, image },
+            club: { id: clubId, name, category, area, imageUrl },
             position,
           } = belong;
           return (
             <section key={index} className={styles.clubContainer}>
               <div className={styles.left_section}>
-                <Image src={image || "/clublist/default.png"} alt={"동아리 포스터"} layout={"fill"} objectFit={"contain"} />
+                <Image src={imageUrl || "/clublist/default.png"} alt={`${name} 메인 포스터`} layout={"fill"} objectFit={"contain"} />
               </div>
               <div className={styles.center_section}>
                 <div className={styles.title}>{name}</div>

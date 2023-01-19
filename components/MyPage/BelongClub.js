@@ -11,7 +11,7 @@ export default function BelongClub({ clubData }) {
       {clubData.map(({ belong: { club } }) => (
         <div key={club.id} className={styles.club}>
           <div className={styles.poster}>
-            <Image src={club.image || "/clublist/default.png"} alt="동아리 사진" width={115} height={163} />
+            <Image src={club.imageUrl || "/clublist/default.png"} alt="동아리 사진" width={115} height={163} />
           </div>
           <div className={styles.clubInfo}>
             <div className={styles.title}>{club.name}</div>
