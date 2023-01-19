@@ -1,4 +1,4 @@
-import Option from "@public/manage/option.svg";
+import Option from "@public/common/option.svg";
 import styles from "@styles/pages/member.module.scss";
 import { dictPosition } from "@utils/util";
 
