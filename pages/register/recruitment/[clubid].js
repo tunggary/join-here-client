@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { blobToBase64, isManagement } from "@utils/util";
+import { getFormData, isManagement } from "@utils/util";
 import ssrWrapper from "@utils/wrapper";
 import axiosInstance from "@utils/axios";
 import RecruitmentTemplate from "@components/common/Template/Recruitment";
@@ -26,18 +26,23 @@ export default function Recruitment({ loginInfo, clubId }) {
 
   const onSubmit = async (value) => {
     if (!validationCheck(value)) return;
-    const submitData = {
+
+    const formData = getFormData({
       ...value,
       id: loginInfo.userName,
-      poster: value.poster ? await blobToBase64(value.poster) : null,
-    };
+      image: value.poster,
+    });
 
     try {
-      await axiosInstance.post(`/clubs/${clubId}/announcements`, submitData);
+      await axiosInstance.post(`/clubs/${clubId}/announcements`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       alert("성공적으로 모집공고를 등록했습니다.");
       router.push("/clublist?tab=all");
     } catch (error) {
-      alert("서버 오류입니다. 잠시후 다시 시도해주세요");
+      alert("잠시후 다시 시도해주세요");
     }
   };
 

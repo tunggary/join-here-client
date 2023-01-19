@@ -1,16 +1,10 @@
 import axiosInstance from "@utils/axios";
 
-export const blobToBase64 = (blob) => {
-  let reader = new FileReader();
-  let base64data;
-  reader.readAsDataURL(blob);
-
-  return new Promise((resolve) => {
-    reader.onloadend = function () {
-      base64data = reader.result;
-      resolve(base64data);
-    };
-  });
+export const getFormData = ({ image, ...data }) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("request", new Blob([JSON.stringify(data)], { type: "application/json" }));
+  return formData;
 };
 
 export const getDate = () => {
