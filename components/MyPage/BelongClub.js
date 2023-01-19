@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "@styles/pages/mypage.module.scss";
 import Location from "@public/clublist/location.svg";
-import Arrow from "@public/manage/arrow-right.svg";
+import Arrow from "@public/common/arrow-right.svg";
 import { dictClub, dictArea } from "@utils/util";
 
 export default function BelongClub({ clubData }) {
@@ -24,7 +24,7 @@ export default function BelongClub({ clubData }) {
             <div className={styles.view}>
               <span>조회수 {club.view}</span> <span>찜한수 {club.scrap}</span>
             </div>
-            <Link href={`/manage/${club.id}/member`}>
+            <Link href={`/club/${club.id}/member`}>
               <div className={styles.link}>
                 동아리원 보기
                 <Arrow />

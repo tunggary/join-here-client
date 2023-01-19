@@ -5,7 +5,7 @@ import { isMember, isManagement } from "@utils/util";
 import axiosInstance from "@utils/axios";
 import PageWrapper from "@components/common/PageWrapper";
 import MemberTemplate from "@components/common/Template/Member";
-import User from "@components/Manage/User";
+import User from "@components/club/User";
 
 export default function Member({ userId, data, clubId }) {
   const [memberList, setMemberList] = useState(data);
