@@ -9,14 +9,10 @@ import Form from "@components/common/Form";
 export default function Resume({ data }) {
   const router = useRouter();
 
-  const backToList = () => {
-    router.back();
-  };
-
   return (
     <PageWrapper>
       <TemplateWrapper>
-        <Form onSubmit={backToList}>
+        <Form onSubmit={router.back}>
           <h2>지원서</h2>
           {data.map(({ questionId, questionContent, answerContent }) => (
             <Form.Text key={questionId} title={questionContent} value={answerContent} readonly />
@@ -29,7 +25,8 @@ export default function Resume({ data }) {
 }
 
 export const getServerSideProps = ssrWrapper(async ({ context, userId }) => {
-  const { userid: resumeId, applicationid: applicationId, clubid: clubId } = context.params;
+  const { applicationid: applicationId, clubid: clubId } = context.params;
+  const { id: resumeId } = context.query;
 
   if (!userId) throw { url: "/login" };
   if (!(await isManagement(clubId, userId)) && userId !== resumeId) throw { url: "/manage" };
