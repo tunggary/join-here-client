@@ -9,7 +9,7 @@ module.exports = {
     return config;
   },
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "join-here.s3.ap-northeast-2.amazonaws.com"],
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
