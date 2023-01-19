@@ -35,7 +35,7 @@ export default function Manage({ data }) {
               </div>
               <ul className={styles.right_section}>
                 {position === "pre" ? (
-                  <Link href={`/register/recruitment/${clubId}`}>
+                  <Link href={`/club/${clubId}/recruitment`}>
                     <li className={styles.element}>
                       모집공고 등록
                       <Arrow />
@@ -43,14 +43,14 @@ export default function Manage({ data }) {
                   </Link>
                 ) : null}
                 {position === "pre" && hasAnnouncement ? (
-                  <Link href={`/manage/${clubId}/applicant`}>
+                  <Link href={`/club/${clubId}/applicant`}>
                     <li className={styles.element}>
                       지원자 관리
                       <Arrow />
                     </li>
                   </Link>
                 ) : null}
-                <Link href={`/manage/${clubId}/member`}>
+                <Link href={`/club/${clubId}/member`}>
                   <li className={styles.element}>
                     동아리원 보기
                     <Arrow />
