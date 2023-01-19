@@ -11,6 +11,11 @@ export const blobToBase64 = (blob) => {
       resolve(base64data);
     };
   });
+export const getFormData = ({ image, ...data }) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("request", new Blob([JSON.stringify(data)], { type: "application/json" }));
+  return formData;
 };
 
 export const getDate = () => {
