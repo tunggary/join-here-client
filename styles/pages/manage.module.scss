@@ -24,6 +24,7 @@
       width: 15rem;
       margin-left: 0.8rem;
       @include display-flex($dir: column);
+      word-break: break-all;
       .title {
         font-size: 2.5rem;
         font-weight: var(--bold);
