@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "@styles/components/Header.module.scss";
+import styles from "./Header.module.scss";
 import { useState } from "react";
 import { useRouter } from "next/router";
 

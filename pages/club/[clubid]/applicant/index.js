@@ -7,7 +7,7 @@ import { formatting, isManagement, stateDict } from "@utils/util";
 import axiosInstance from "@utils/axios";
 import PageWrapper from "@components/common/PageWrapper";
 
-export default function Applicant({ loginInfo, data, clubId }) {
+export default function Applicant({ data, clubId }) {
   const [tab, setTab] = useState("all");
   const [applicantList, setApplicantList] = useState(
     data.map((applicant) => {
@@ -102,7 +102,12 @@ export default function Applicant({ loginInfo, data, clubId }) {
                   <h2 className={styles.name}>{memberName}</h2>
                   <h3 className={styles.date}>{formatting(new Date(applicationTime))}</h3>
                   <h3 className={`${styles[passState]}`}>{stateDict[passState]}</h3>
-                  <Link href={`/manage/${clubId}/applicant/${applicationId}/${memberId}`}>
+                  <Link
+                    href={{
+                      pathname: `/club/${clubId}/applicant/${applicationId}`,
+                      query: { id: memberId },
+                    }}
+                  >
                     <h3 className={styles.resume}>
                       <p>상세보기</p> <Arrow />
                     </h3>
