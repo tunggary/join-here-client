@@ -25,7 +25,7 @@ export default function Login() {
           password: value.password,
         },
         {
-          baseURL: "http://localhost:3000",
+          baseURL: process.env.NEXT_PUBLIC_LOCAL_API_URL,
         }
       );
       router.back();
