@@ -1,0 +1,15 @@
+.container {
+  width: 60rem;
+  height: max-content;
+  padding-top: 2.75rem;
+  background-color: white;
+  border-radius: 1rem;
+  margin: 0 auto;
+
+  h1,
+  h2 {
+    font-size: var(--h2);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}

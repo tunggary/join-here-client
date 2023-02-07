@@ -1,36 +1,31 @@
 import styles from "@styles/pages/manage.module.scss";
-import Header from "@components/common/Header";
 import Location from "@public/clublist/location.svg";
 import Arrow from "@public/clublist/arrow-right.svg";
-import cookies from "next-cookies";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
 import { categoryList, dictArea, dictPosition } from "@utils/util";
+import ssrWrapper from "@utils/wrapper";
+import axiosInstance from "@utils/axios";
+import PageWrapper from "@components/common/PageWrapper";
 
-export default function Manage({ loginInfo, data }) {
+export default function Manage({ data }) {
   return (
-    <div className={styles.container}>
-      <Header loginInfo={loginInfo} />
-      <div className={styles.titleContainer}>동아리 관리</div>
+    <PageWrapper pageTitle="동아리 관리">
       <div className={styles.contentContainer}>
         {data.map(({ belong, hasAnnouncement }, index) => {
           const {
-            club: { id: clubId, name, category, area, image },
+            club: { id: clubId, name, category, area, imageUrl },
             position,
           } = belong;
           return (
-            <div key={index} className={styles.clubContainer}>
-              <Image
-                src={"https://images.unsplash.com/photo-1663841226199-a35e5b9c7261?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=192&q=80"}
-                alt=""
-                width={192}
-                height={192}
-              ></Image>
-              <div className={styles.info}>
+            <section key={index} className={styles.clubContainer}>
+              <div className={styles.left_section}>
+                <Image src={imageUrl || "/clublist/default.png"} alt={`${name} 메인 포스터`} layout={"fill"} objectFit={"contain"} />
+              </div>
+              <div className={styles.center_section}>
                 <div className={styles.title}>{name}</div>
                 <div className={styles.badge}>
-                  <div className={styles.category}>{categoryList.find(({ id }) => id === category).title}</div>
+                  <div className={styles.category}>{categoryList.find(({ id }) => id === category)?.title}</div>
                   <div className={styles.location}>
                     <Location />
                     {dictArea[area]}
@@ -38,9 +33,9 @@ export default function Manage({ loginInfo, data }) {
                   <div className={`${styles.class}`}>{dictPosition[position]}</div>
                 </div>
               </div>
-              <ul className={styles.list}>
+              <ul className={styles.right_section}>
                 {position === "pre" ? (
-                  <Link href={`/register/recruitment/${clubId}`}>
+                  <Link href={`/club/${clubId}/recruitment`}>
                     <li className={styles.element}>
                       모집공고 등록
                       <Arrow />
@@ -48,21 +43,21 @@ export default function Manage({ loginInfo, data }) {
                   </Link>
                 ) : null}
                 {position === "pre" && hasAnnouncement ? (
-                  <Link href={`/manage/${clubId}/applicant`}>
+                  <Link href={`/club/${clubId}/applicant`}>
                     <li className={styles.element}>
                       지원자 관리
                       <Arrow />
                     </li>
                   </Link>
                 ) : null}
-                <Link href={`/manage/${clubId}/member`}>
+                <Link href={`/club/${clubId}/member`}>
                   <li className={styles.element}>
                     동아리원 보기
                     <Arrow />
                   </li>
                 </Link>
                 {position === "pre" ? (
-                  <Link href={`/register?update=yes&clubId=${clubId}`}>
+                  <Link href={`/club/modification?clubId=${clubId}`}>
                     <li className={styles.element}>
                       동아리 정보 수정
                       <Arrow />
@@ -70,20 +65,17 @@ export default function Manage({ loginInfo, data }) {
                   </Link>
                 ) : null}
               </ul>
-            </div>
+            </section>
           );
         })}
       </div>
-    </div>
+    </PageWrapper>
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { id: userId } = cookies(ctx);
-  const { data } = await axios.get(`http://3.36.36.87:8080/members/${userId}/belongs`);
-  return {
-    props: {
-      data: data || [],
-    },
-  };
-}
+export const getServerSideProps = ssrWrapper(async ({ userId }) => {
+  if (!userId) throw { url: "/login" };
+
+  const data = await axiosInstance.get(`/members/${userId}/belongs`);
+  return { data: data || [] };
+});

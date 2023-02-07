@@ -1,98 +1,83 @@
-.container {
-  min-width: 90rem;
-  width: 100%;
-  min-height: 100vh;
-  padding-bottom: 5rem;
-  background-color: #e8e8e8;
-
-  .titleContainer {
-    width: 100%;
-    height: 15.68rem;
+.contentContainer {
+  width: 90rem;
+  min-height: 30rem;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
+  .clubContainer {
+    width: 44rem;
+    height: 16rem;
+    border-radius: 0.6rem;
     background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    font-weight: var(--bold);
-  }
+    @include display-flex($jus: space-between);
+    padding: 1.8rem 2.5rem;
 
-  .contentContainer {
-    width: 90rem;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 2rem;
-    padding: 4rem 0;
-    grid-row-gap: 2rem;
-    .clubContainer {
-      width: 44rem;
-      height: 16rem;
-      border-radius: 0.6rem;
-      background-color: white;
-      display: flex;
-      justify-content: space-between;
-      padding: 1.8rem 2.5rem;
-      .info {
-        width: 40%;
+    .left_section {
+      position: relative;
+      width: 12rem;
+      height: 12rem;
+    }
+
+    .center_section {
+      width: 15rem;
+      margin-left: 0.8rem;
+      @include display-flex($dir: column);
+      word-break: break-all;
+      .title {
+        font-size: 2.5rem;
+        font-weight: var(--bold);
+      }
+
+      .badge {
+        margin-top: 0.4rem;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .title {
-          font-size: 2.5rem;
+        gap: 0.8rem;
+        div {
+          width: 3.6rem;
+          height: 1rem;
+          border-radius: 5px;
+          text-align: center;
+          font-size: 0.6rem;
           font-weight: var(--bold);
         }
 
-        .badge {
-          margin-top: 0.4rem;
+        .category {
+          color: var(--category);
+          background-color: var(--contour);
+        }
+
+        .location {
+          width: max-content;
           display: flex;
-          gap: 0.8rem;
-          div {
-            width: 3.6rem;
-            height: 1rem;
-            border-radius: 5px;
-            text-align: center;
-            line-height: 1rem;
-            font-size: 0.6rem;
-            font-weight: var(--bold);
-          }
+          align-items: center;
+          justify-content: space-between;
+        }
 
-          .category {
-            color: var(--category);
-            background-color: var(--contour);
-          }
-
-          .location {
-            width: max-content;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-
-          .class {
-            color: white;
-            background-color: var(--main);
-          }
+        .class {
+          color: white;
+          background-color: var(--main);
         }
       }
+    }
 
-      .list {
-        width: 30%;
-        text-align: center;
-        font-size: 1.25rem;
-        font-weight: 500;
-        margin-top: 0.5rem;
-        @include display-flex($dir: column, $gap: 0.8rem);
-        .element {
-          width: 100%;
-          height: 20%;
-          cursor: pointer;
-          position: relative;
-          svg {
-            position: absolute;
-            right: 0;
-            top: 0.5rem;
-          }
+    .right_section {
+      width: 9rem;
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-right: 0.8rem;
+      @include display-flex($dir: column, $gap: 1.2rem);
+      .element {
+        position: relative;
+        width: 100%;
+        cursor: pointer;
+        svg {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translate(160%, -50%);
         }
       }
     }

@@ -1,0 +1,140 @@
+.container {
+  @include display-flex($dir: column, $gap: 23px);
+  .input_box {
+    width: 400px;
+    height: max-content;
+
+    h3 {
+      margin-bottom: 8px;
+    }
+
+    label {
+      width: max-content;
+      overflow: hidden;
+      @include display-flex($ali: center);
+      cursor: pointer;
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, max-content));
+      grid-row-gap: 8px;
+      justify-content: space-between;
+      padding: 15px;
+      li {
+        @include display-flex($jus: flex-start, $ali: center, $gap: 3px);
+      }
+    }
+
+    .readonly {
+      width: 100%;
+      height: max-content;
+      padding: 13px 14px;
+      font-size: var(--h6);
+      word-break: break-all;
+    }
+
+    input[type="radio"] {
+      accent-color: var(--main);
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      height: 60px;
+      padding: 0 14px;
+      font-size: var(--h6);
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    textarea {
+      width: 100%;
+      height: 180px;
+      resize: none;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 19px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      } /* chrome */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+
+    input[type="date"] {
+      font-family: inherit;
+      font-size: var(--title);
+      display: block;
+      position: relative;
+      height: 60px;
+      width: 43%;
+      text-align: center;
+      background: url(/input-calendar.svg) no-repeat right 22px center;
+    }
+    input[type="date"]::-webkit-clear-button,
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+    }
+    input[type="date"]::before {
+      content: attr(data-placeholder);
+      text-align: left;
+      padding-left: 22px;
+      width: 100%;
+    }
+    input[type="date"]:valid {
+      text-align: left;
+      padding-left: 14px;
+      background-position: right 14px center;
+    }
+    input[type="date"]:valid::before {
+      display: none;
+    }
+    input[data-placeholder]::before {
+      color: #757575;
+      font-size: var(--h6);
+    }
+
+    .input_date_wrapper {
+      width: 100%;
+      @include display-flex($jus: space-between, $gap: 2%);
+      span {
+        color: var(--gray-hover);
+        font-size: var(--h5);
+      }
+    }
+  }
+
+  .input_border {
+    border-radius: 8px;
+    border: 2px solid var(--gray-hover);
+  }
+
+  button {
+    padding: 15px 10%;
+    margin: 10% 0;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    background-color: var(--main);
+    color: var(--white);
+    font-size: var(--h6);
+    font-weight: 700;
+    cursor: pointer;
+  }
+}

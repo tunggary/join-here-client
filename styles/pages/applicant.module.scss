@@ -1,8 +1,11 @@
 .container {
+  background-color: var(--white);
   position: relative;
-  width: 51.5rem;
+  width: 57.5rem;
   height: max-content;
-  padding: 4rem 0 13rem 0;
+  padding: 4rem 3rem 13rem 3rem;
+  margin: auto;
+  border-radius: 1rem;
 
   button {
     color: var(--white);

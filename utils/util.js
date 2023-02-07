@@ -1,4 +1,38 @@
-import axios from "axios";
+import axiosInstance from "@utils/axios";
+
+export const getFormData = ({ image, ...data }) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("request", new Blob([JSON.stringify(data)], { type: "application/json" }));
+  return formData;
+};
+
+export const getDate = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return {
+    formal: `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`,
+    year,
+    month,
+    day,
+    date: new Date(date.setHours(0, 0, 0, 0)),
+  };
+};
+
+export const stateDict = {
+  all: "전체",
+  pass: "합격",
+  fail: "불합격",
+  hold: "미결정",
+};
+
+export const mypageList = [
+  { id: "update", title: "내 정보 수정" },
+  { id: "belong", title: "소속 동아리" },
+  { id: "apply", title: "지원 동아리" },
+];
 
 export const categoryList = [
   { id: "all", title: "전체" },
@@ -43,6 +77,12 @@ export const dictPosition = {
   nor: "회원",
 };
 
+export const dictTab = {
+  personal: 0,
+  club: 1,
+  applied: 2,
+};
+
 export const formatting = (date) => {
   const yyyy = date.getFullYear().toString();
   const MM = pad(date.getMonth() + 1, 2);
@@ -62,13 +102,13 @@ function pad(number, length) {
 }
 
 export const isManagement = async (clubId, userId) => {
-  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/belongs`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
   const result = data.find(({ memberId, position }) => memberId === userId && position !== "nor");
   return result !== undefined;
 };
 
 export const isMember = async (clubId, userId) => {
-  const { data } = await axios.get(`http://3.36.36.87:8080/clubs/${clubId}/belongs`);
+  const data = await axiosInstance.get(`/clubs/${clubId}/belongs`);
   const result = data.find(({ memberId }) => memberId === userId);
   return result !== undefined;
 };

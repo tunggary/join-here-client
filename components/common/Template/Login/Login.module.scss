@@ -1,0 +1,25 @@
+.container {
+  position: relative;
+  width: 33rem;
+  height: max-content;
+  padding-top: 2.75rem;
+  padding-bottom: 3rem;
+  background-color: white;
+  border-radius: 1rem;
+  margin: 0 auto;
+
+  h1 {
+    font-size: var(--h2);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .signup {
+    position: absolute;
+    bottom: 2.8rem;
+    font-size: var(--title);
+    font-weight: 700;
+    color: var(--gray-hover);
+    cursor: pointer;
+  }
+}

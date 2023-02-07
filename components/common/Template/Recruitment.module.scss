@@ -1,0 +1,15 @@
+.container {
+  position: relative;
+}
+
+.minus {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 55%;
+  transform: translate(120%, -50%);
+}
+
+.plus {
+  cursor: pointer;
+}

@@ -50,12 +50,18 @@ a {
 }
 
 button,
-input,
-select,
-textarea {
+select {
+  cursor: pointer;
   &:focus {
     outline: none;
     box-shadow: none;
+  }
+}
+
+input,
+textarea {
+  &:focus {
+    outline: none;
   }
 }
 
